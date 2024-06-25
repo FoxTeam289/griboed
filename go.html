@@ -482,7 +482,9 @@
     { name: 'Леса Винницкой области', coords: [49.2331, 28.4682], rating: 8, mushrooms: ['Белый гриб', 'Подберезовик'] },
     { name: 'Леса Ровенской области', coords: [50.6199, 26.2516], rating: 8, mushrooms: ['Подосиновик', 'Лисичка'] },
     { name: 'Леса Киевской области', coords: [50.4501, 30.5234], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Масленок'] },
-    { name: 'Леса Черкасской области', coords: [49.4444, 32.0598], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] }
+    { name: 'Леса Черкасской области', coords: [49.4444, 32.0598], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] },
+    { name: 'Американский национальный лес', coords: [40.7128, -74.0060], rating: 9, mushrooms: ['Морелла', 'Chanterelle', 'Lobster mushroom'] },
+    { name: 'Yellowstone National Park Forest', coords: [44.4280, -110.5885], rating: 8, mushrooms: ['Morel', 'Bolete', 'Chanterelle'] }
 ];
 
 var mushroomZones = [
@@ -724,11 +726,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             forests.forEach(function(forest, index) {
-                var placemark = new ymaps.Placemark(forest.coords, { 
-                    balloonContent: `<b>${forest.name}</b><br>Рейтинг: <span id="forestRating-${index}">N/A</span><br>Грибы: <span id="forestMushrooms-${index}">N/A</span>`,
-                }, { preset: 'islands#greenForestCircleIcon' });
-                map.geoObjects.add(placemark);
-            });
+    var placemark = new ymaps.Placemark(forest.coords, { 
+        balloonContent: `<b>${forest.name}</b><br>Рейтинг: <span id="forestRating-${index}">${forest.rating}</span><br>Грибы: <span id="forestMushrooms-${index}">${forest.mushrooms.join(', ')}</span>`,
+    }, { preset: 'islands#greenForestCircleIcon' });
+
+    map.geoObjects.add(placemark);
+});
+
 
             var forestSelect = document.getElementById('forestSelect');
             forests.forEach(function(forest, index) {
@@ -834,16 +838,55 @@ function setMushroomZone() {
 
 
 function searchNearbyPanoramas() {
-        var forestIndex = document.getElementById('forestSelect').value;
-        var forest = forests[forestIndex];
-        ymaps.panorama.locate(forest.coords).done(function (panoramas) {
-            if (panoramas.length > 0) {
-                var player = new ymaps.panorama.Player('map', panoramas[0], { width: '100%', height: '100%' });
-            } else {
-                alert('Поблизости панорам не найдено.');
+    // Get the selected forest index from the dropdown
+    var forestIndex = document.getElementById('forestSelect').value;
+    
+    // Get the coordinates of the selected forest
+    var forestCoords = forests[forestIndex].coords;
+    
+    // Clear existing panoramas if any
+    clearPanoramas();
+
+    // Search for nearby panoramas around the forest coordinates
+    ymaps.panorama.locate(forestCoords).then(function (panoramas) {
+        // Panoramas found, iterate over each and display them
+        panoramas.forEach(function (panorama, index) {
+            // Create a placemark for each panorama
+            var placemark = new ymaps.Placemark(panorama.position, {
+                balloonContentHeader: panorama.name,
+                balloonContentBody: panorama.description
+            }, {
+                preset: 'islands#blueCircleIcon'
+            });
+            
+            // Add the placemark to the map
+            map.geoObjects.add(placemark);
+            
+            // Optionally, open the balloon of the first panorama
+            if (index === 0) {
+                placemark.balloon.open();
             }
         });
-    }
+        
+        // Optionally, center the map on the first panorama
+        if (panoramas.length > 0) {
+            map.setCenter(panoramas[0].position);
+        }
+    }, function (error) {
+        // Handle error if panorama search fails
+        console.error('Error searching panoramas:', error);
+    });
+}
+
+function clearPanoramas() {
+    // Remove all panoramas from the map
+    map.geoObjects.each(function (geoObject) {
+        if (geoObject instanceof ymaps.Placemark) {
+            map.geoObjects.remove(geoObject);
+        }
+    });
+}
+
 
     function setForestLocation() {
         var forestIndex = document.getElementById('forestSelect').value;
@@ -1022,6 +1065,8 @@ const zones = await response.json();
 document.addEventListener('DOMContentLoaded', function() {
     loadMushroomZones();
 });
+
+
 </script>
 <script>
     function savePage() {
@@ -1073,18 +1118,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
 
-        // Пример вызова функции при загрузке страницы для загрузки панорам для первой зоны в массиве
-        document.addEventListener('DOMContentLoaded', function() {
-            findNearbyPanoramas();
-        });
-          // Function to manually set ratings and mushrooms found in forests
-          function setForestData(index, rating, mushrooms) {
-            document.getElementById(`forestRating-${index}`).innerText = rating;
-            document.getElementById(`forestMushrooms-${index}`).innerText = mushrooms;
-        }
 
-        // Example usage: setting data for the first forest
-        setForestData(0, 5, 'Белые грибы, Лисички');
+// Функция для установки данных о рейтинге и грибах для указанного леса
+function setForestData(index, rating, mushrooms) {
+    // Проверяем, что переданный индекс существует в массиве forests
+    if (index >= 0 && index < forests.length) {
+        var forest = forests[index];
+        // Устанавливаем рейтинг и список грибов для указанного леса
+        document.getElementById(`forestRating-${index}`).innerText = forest.rating;
+        document.getElementById(`forestMushrooms-${index}`).innerText = forest.mushrooms.join(', ');
+    } else {
+        console.error('Invalid index provided:', index);
+    }
+}
+
+// Функция для установки данных для всех лесов
+function setAllForestsData() {
+    forests.forEach(function(forest, index) {
+        setForestData(index, forest.rating, forest.mushrooms);
+    });
+}
+
+// Вызов функции для установки данных для всех лесов при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    setAllForestsData();
+});
 </script>
 <script>
 function showChoose() {
