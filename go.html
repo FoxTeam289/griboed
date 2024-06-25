@@ -85,71 +85,64 @@
             z-index: 100;
             height: 50px;
         }
-    nav.show-menu {
-        height: auto;
-    }
-
-    nav a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        transition: transform 0.3s;
-    }
-
-    nav a:hover {
-        background-color: #ddd;
-        color: black;
-    }
-
-    nav a.active {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    .menu-button {
-        display: none;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        z-index: 10;
-        transition: transform 0.3s;
-    }
-
-    .menu-button.open {
-        transform: rotate(180deg);
-    }
-
-    @media screen and (max-width: 600px) {
+        nav.show-menu {
+            height: auto;
+        }
         nav a {
-            float: none;
-            width: 100%;
-            text-align: left;
-            transform: translateX(-100%);
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        nav a.active {
+            background-color: #4CAF50;
+            color: white;
         }
         .menu-button {
-            display: block;
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s;
         }
-        nav.show-menu a {
-            transform: translateX(0);
+        .menu-button.open {
+            transform: rotate(180deg);
         }
-    }
-
-    .controls.open {
-        opacity: 0;
-        visibility: hidden;
-    }
-    .controls.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+        @media screen and (max-width: 600px) {
+            nav a {
+                float: none;
+                width: 100%;
+                text-align: left;
+                transform: translateX(-100%);
+            }
+            .menu-button {
+                display: block;
+            }
+            nav.show-menu a {
+                transform: translateX(0);
+            }
+        }
+        .controls.open {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .controls.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
         /* Стиль кнопки */
         button {
             background-color: #4CAF50;
@@ -160,26 +153,9 @@
             border-radius: 5px;
             font-size: 16px;
         }
-
         button:hover {
             background-color: #45a049;
         }
-
-        /* Стиль кнопки */
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
         /* Модальное окно */
         .modal {
             display: none;
@@ -196,12 +172,10 @@
             align-items: center;
             animation: fadeIn 0.3s;
         }
-
         @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity: 1;}
         }
-
         /* Модальное содержимое */
         .modal-content {
             background-color: #fff;
@@ -212,12 +186,10 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             animation: slideIn 0.3s;
         }
-
         @keyframes slideIn {
             from {transform: translateY(-50px);}
             to {transform: translateY(0);}
         }
-
         /* Кнопка закрытия */
         .close {
             color: #aaa;
@@ -225,25 +197,21 @@
             font-size: 28px;
             font-weight: bold;
         }
-
         .close:hover,
         .close:focus {
             color: #000;
             text-decoration: none;
             cursor: pointer;
         }
-
         /* Стиль формы */
         form {
             display: flex;
             flex-direction: column;
         }
-
         label {
             margin-bottom: 10px;
             font-weight: bold;
         }
-
         input[type="text"] {
             padding: 10px;
             margin-bottom: 20px;
@@ -251,11 +219,9 @@
             border-radius: 5px;
             font-size: 16px;
         }
-
         input[type="text"]:focus {
             border-color: #4CAF50;
         }
-
         form button {
             background-color: #4CAF50;
             color: white;
@@ -266,7 +232,6 @@
             font-size: 16px;
             align-self: flex-end;
         }
-
         form button:hover {
             background-color: #45a049;
         }
@@ -281,7 +246,7 @@
             max-width: 100%;
             height: auto;
         }
-</style>
+    </style>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
@@ -308,7 +273,7 @@
             <button id="choose_two" style="display: none;" onclick="voteMushroomZone(false)"><i class="fas fa-thumbs-down"></i> Нет грибов</button>
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
             <button onclick="window.location.href='foxyprofi.itch.io/griboed'"><i class="fas fa-download"></i> Сохранить изменения</button>
-            <button onclick="loadMushroomZones()"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
+            <button onclick="loadZones()"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
     </div>
 </main>
    <!-- Модальное окно -->
@@ -325,6 +290,79 @@
         </form>
     </div>
 </div>
+  <!-- Модальное окно -->
+  <div style="display: none;" id="myModal2" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal2()">x</span>
+        <h2>Оценить грибную зону</h2>
+        <label for="zoneName">Название зоны:</label>
+        <input type="text" id="zoneName" name="zoneName" required><br><br>
+
+        <label for="rating">Рейтинг:</label>
+        <input type="number" id="rating" name="rating" min="1" max="10" required><br><br>
+
+        <button onclick="sendZoneRating()">Отправить оценку</button>
+    </div>
+</div>
+
+<script>
+    // Функция для открытия модального окна
+    function openModal2() {
+        document.getElementById('myModal2').style.display = 'block';
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal2() {
+        document.getElementById('myModal2').style.display = 'none';
+    }
+
+    // Функция для отправки оценки в Telegram
+    function sendZoneRating() {
+        const zoneName = document.getElementById('zoneName').value;
+        const rating = document.getElementById('rating').value;
+
+        // Замените 'YOUR_BOT_TOKEN' на актуальный токен вашего Telegram бота
+        const botToken = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
+        // Замените 'YOUR_CHAT_ID' на chat_id, куда нужно отправлять сообщения
+        const chatId = '7208967084';
+
+        // URL для отправки сообщения через сервис, поддерживающий CORS (например, CORS Anywhere)
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        // Текст сообщения для отправки
+        const messageText = `Оценка грибной зоны:\n${zoneName}\nРейтинг: ${rating}`;
+
+        // Данные для отправки POST запроса
+        const data = {
+            chat_id: chatId,
+            text: messageText
+        };
+
+        // Опции для fetch запроса
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        };
+
+        // Отправка POST запроса к API Telegram через сервис, поддерживающий CORS
+        fetch(proxyUrl + telegramApiUrl, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Message sent successfully:', data);
+                alert('Оценка успешно отправлена!');
+                closeModal(); // Закрыть модальное окно после успешной отправки
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert('Произошла ошибка при отправке оценки.');
+                closeModal(); // Закрыть модальное окно при ошибке
+            });
+    }
+</script>
 
 <script>
     // Получаем модальное окно
@@ -396,388 +434,351 @@
 
 
     var map, userPlacemark, mushroomZonePlacemark, forestPlacemark, targetPlacemark, multiRoute;
-    var forests = [
-        { name: 'Борщевский лес', coords: [55.756, 37.617], panorama: '' },
-        { name: 'Подмосковный лес', coords: [55.751, 37.618], panorama: '' },
-        { name: 'Лес в районе Новорижского шоссе', coords: [55.695, 37.534], panorama: '' },
-        { name: 'Лесной массив "Измайлово"', coords: [55.793, 37.814], panorama: '' },
-        { name: 'Битцевский лес', coords: [55.634, 37.576], panorama: '' },
-        { name: 'Лосиновский лес', coords: [55.647, 37.541], panorama: '' },
-        { name: 'Лес в районе Клязьминского водохранилища', coords: [55.902, 37.562], panorama: '' },
-        { name: 'Лес в районе Волжского водохранилища', coords: [55.717, 49.213], panorama: '' },
-        { name: 'Лес в районе Озера Селигер', coords: [57.053, 33.263], panorama: '' },
-        { name: 'Лес в районе Зеленограда', coords: [55.994, 37.214], panorama: '' },
-        { name: 'Лес в районе Пушкино', coords: [56.017, 37.847], panorama: '' },
-        { name: 'Лес в районе Мытищ', coords: [55.910, 37.736], panorama: '' },
-        { name: 'Лес в районе Черноголовки', coords: [56.010, 38.379], panorama: '' },
-        { name: 'Лес в районе Шатуры', coords: [55.574, 39.539], panorama: '' },
-        { name: 'Лес в районе Сергиева Посада', coords: [56.306, 38.130], panorama: '' },
-        { name: 'Лес в районе Раменского', coords: [55.573, 38.226], panorama: '' },
-        { name: 'Лес в районе Воскресенска', coords: [55.312, 38.645], panorama: '' },
-        { name: 'Лес в районе Люберец', coords: [55.681, 37.898], panorama: '' },
-        { name: 'Лес в районе Подольска', coords: [55.436, 37.568], panorama: '' },
-        { name: 'Лес в районе Троицка', coords: [55.471, 37.305], panorama: '' },
-        { name: 'Лес в районе Домодедово', coords: [55.441, 37.747], panorama: '' },
-        { name: 'Лес в районе Наро-Фоминска', coords: [55.378, 36.740], panorama: '' },
-        { name: 'Лес в районе Обнинска', coords: [55.089, 36.615], panorama: '' },
-        { name: 'Лес в районе Балабаново', coords: [55.178, 36.677], panorama: '' },
-        {
-"name": "Белицкий лес",
-"coords": [52.967, 27.553],
-"panorama": ""
-},
-{
-"name": "Березинский биосферный заповедник",
-"coords": [54.625, 28.233],
-"panorama": ""
-},
-{
-"name": "Национальный парк 'Беловежская пуща'",
-"coords": [52.731, 23.834],
-"panorama": ""
-},
-{
-"name": "Налибокская пуща",
-"coords": [54.082, 26.535],
-"panorama": ""
-},
-{
-"name": "Национальный парк 'Припятский'",
-"coords": [52.213, 27.334],
-"panorama": ""
-},
-{
-"name": "Рудский лес",
-"coords": [54.150, 27.922],
-"panorama": ""
-},
-{
-"name": "Озерский лес",
-"coords": [53.400, 26.150],
-"panorama": ""
-},
-{
-"name": "Национальный парк 'Браславские озера'",
-"coords": [55.633, 27.033],
-"panorama": ""
-},
-{
-"name": "Шарковщинский лес",
-"coords": [54.733, 26.400],
-"panorama": ""
-},
-{
-"name": "Червенский лес",
-"coords": [53.700, 28.400],
-"panorama": ""
-},
-{ name: 'Кременские леса', coords: [49.0848, 33.4204], panorama: '' }, { name: 'Национальный природный парк "Сколевские Бескиды"', coords: [48.8667, 23.4667], panorama: '' }, { name: 'Леса Полтавской области', coords: [49.5883, 34.5514], panorama: '' }, { name: 'Леса Львовской области', coords: [49.8397, 24.0297], panorama: '' }, { name: 'Леса Закарпатской области', coords: [48.6208, 22.2879], panorama: '' }, { name: 'Леса Житомирской области', coords: [50.2547, 28.6587], panorama: '' }, { name: 'Леса Волынской области', coords: [50.7472, 25.3257], panorama: '' }, { name: 'Леса Черниговской области', coords: [51.4982, 31.2893], panorama: '' }, { name: 'Леса Харьковской области', coords: [49.9935, 36.2304], panorama: '' }, { name: 'Леса Ровенской области', coords: [50.6231, 26.2276], panorama: '' },
-  { 
-    "name": "Olympic National Forest", 
-    "coords": [47.7150, -123.4936], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Mount Hood National Forest", 
-    "coords": [45.3736, -121.6959], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Sierra National Forest", 
-    "coords": [37.3213, -119.5553], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Tongass National Forest", 
-    "coords": [56.3494, -133.1108], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Cleveland National Forest", 
-    "coords": [32.7756, -116.6297], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Allegheny National Forest", 
-    "coords": [41.6500, -78.8666], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Gifford Pinchot National Forest", 
-    "coords": [46.2010, -121.9805], 
-    "panorama": "" 
-  },
-  { 
-    "name": "White Mountain National Forest", 
-    "coords": [44.0693, -71.3021], 
-    "panorama": "" 
-  },
-  { 
-    "name": "Pisgah National Forest", 
-    "coords": [35.6313, -82.3452], 
-    "panorama": "" 
-  },
-  { 
-    "name": "George Washington and Jefferson National Forests", 
-    "coords": [37.7243, -79.5203], 
-    "panorama": "" 
-  }
-    ];
-    var mushroomZones = [
+     // Данные лесов
+     var forests = [
+    { name: 'Борщевский лес', coords: [55.756, 37.617], rating: 7, mushrooms: ['Подберезовик', 'Белый гриб', 'Рыжик', 'Лисичка'] },
+    { name: 'Подмосковный лес', coords: [55.751, 37.618], rating: 8, mushrooms: ['Белый гриб', 'Подберезовик', 'Масленок', 'Лисичка'] },
+    { name: 'Лес в районе Новорижского шоссе', coords: [55.695, 37.534], rating: 6, mushrooms: ['Подберезовик', 'Масленок', 'Рыжик'] },
+    { name: 'Лесной массив "Измайлово"', coords: [55.793, 37.814], rating: 7, mushrooms: ['Подосиновик', 'Подберезовик', 'Опята'] },
+    { name: 'Битцевский лес', coords: [55.634, 37.576], rating: 7, mushrooms: ['Масленок', 'Подберезовик', 'Лисичка'] },
+    { name: 'Лосиновский лес', coords: [55.647, 37.541], rating: 6, mushrooms: ['Рыжик', 'Белый гриб', 'Масленок'] },
+    { name: 'Лес в районе Клязьминского водохранилища', coords: [55.902, 37.562], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: 'Лес в районе Волжского водохранилища', coords: [55.717, 49.213], rating: 5, mushrooms: ['Масленок', 'Подосиновик'] },
+    { name: 'Лес в районе Озера Селигер', coords: [57.053, 33.263], rating: 9, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик', 'Рыжик'] },
+    { name: 'Лес в районе Зеленограда', coords: [55.994, 37.214], rating: 7, mushrooms: ['Подберезовик', 'Масленок'] },
+    { name: 'Лес в районе Пушкино', coords: [56.017, 37.847], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: 'Лес в районе Мытищ', coords: [55.910, 37.736], rating: 7, mushrooms: ['Подосиновик', 'Масленок'] },
+    { name: 'Лес в районе Черноголовки', coords: [56.010, 38.379], rating: 7, mushrooms: ['Белый гриб', 'Подберезовик'] },
+    { name: 'Лес в районе Шатуры', coords: [55.574, 39.539], rating: 6, mushrooms: ['Масленок', 'Подосиновик'] },
+    { name: 'Лес в районе Сергиева Посада', coords: [56.306, 38.130], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: 'Лес в районе Раменского', coords: [55.573, 38.226], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] },
+    { name: 'Лес в районе Воскресенска', coords: [55.312, 38.645], rating: 6, mushrooms: ['Рыжик', 'Масленок'] },
+    { name: 'Лес в районе Люберец', coords: [55.681, 37.898], rating: 6, mushrooms: ['Подберезовик', 'Рыжик'] },
+    { name: 'Лес в районе Подольска', coords: [55.436, 37.568], rating: 7, mushrooms: ['Масленок', 'Лисичка'] },
+    { name: 'Лес в районе Троицка', coords: [55.471, 37.305], rating: 6, mushrooms: ['Рыжик', 'Подосиновик'] },
+    { name: 'Лес в районе Домодедово', coords: [55.441, 37.747], rating: 7, mushrooms: ['Белый гриб', 'Масленок'] },
+    { name: 'Лес в районе Наро-Фоминска', coords: [55.378, 36.740], rating: 8, mushrooms: ['Белый гриб', 'Подосиновик', 'Лисичка'] },
+    { name: 'Лес в районе Обнинска', coords: [55.089, 36.615], rating: 7, mushrooms: ['Подберезовик', 'Масленок'] },
+    { name: 'Лес в районе Балабаново', coords: [55.178, 36.677], rating: 6, mushrooms: ['Рыжик', 'Подосиновик'] },
+    { name: "Белицкий лес", coords: [52.967, 27.553], rating: 7, mushrooms: ['Подосиновик', 'Масленок'] },
+    { name: "Березинский биосферный заповедник", coords: [54.625, 28.233], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: "Национальный парк 'Беловежская пуща'", coords: [52.731, 23.834], rating: 9, mushrooms: ['Белый гриб', 'Рыжик', 'Лисичка'] },
+    { name: "Налибокская пуща", coords: [54.082, 26.535], rating: 7, mushrooms: ['Подосиновик', 'Масленок'] },
+    { name: "Национальный парк 'Припятский'", coords: [52.213, 27.334], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: "Рудский лес", coords: [54.150, 27.922], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] },
+    { name: "Озерский лес", coords: [53.400, 26.150], rating: 6, mushrooms: ['Рыжик', 'Масленок'] },
+    { name: "Национальный парк 'Браславские озера'", coords: [55.633, 27.033], rating: 9, mushrooms: ['Белый гриб', 'Подосиновик', 'Лисичка'] },
+    { name: "Шарковщинский лес", coords: [54.733, 26.400], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] },
+    { name: "Червенский лес", coords: [53.700, 28.400], rating: 6, mushrooms: ['Рыжик', 'Масленок'] },
+    { name: 'Кременские леса', coords: [49.0848, 33.4204], rating: 7, mushrooms: ['Подосиновик', 'Масленок'] },
+    { name: 'Национальный природный парк "Сколевские Бескиды"', coords: [48.8667, 23.4667], rating: 9, mushrooms: ['Белый гриб', 'Лисичка', 'Подосиновик'] },
+    { name: 'Леса Полтавской области', coords: [49.5883, 34.5514], rating: 8, mushrooms: ['Белый гриб', 'Масленок', 'Подберезовик'] },
+    { name: 'Леса Львовской области', coords: [49.8397, 24.0297], rating: 8, mushrooms: ['Подосиновик', 'Лисичка'] },
+    { name: 'Леса Закарпатской области', coords: [48.6208, 22.2879], rating: 8, mushrooms: ['Белый гриб', 'Подосиновик'] },
+    { name: 'Леса Житомирской области', coords: [50.2547, 28.6587], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] },
+    { name: 'Леса Волынской области', coords: [50.7472, 25.3257], rating: 7, mushrooms: ['Подосиновик', 'Рыжик'] },
+    { name: 'Леса Черниговской области', coords: [51.4914, 31.3027], rating: 7, mushrooms: ['Масленок', 'Лисичка'] },
+    { name: 'Леса Харьковской области', coords: [49.9935, 36.2304], rating: 7, mushrooms: ['Подосиновик', 'Масленок'] },
+    { name: 'Леса Винницкой области', coords: [49.2331, 28.4682], rating: 8, mushrooms: ['Белый гриб', 'Подберезовик'] },
+    { name: 'Леса Ровенской области', coords: [50.6199, 26.2516], rating: 8, mushrooms: ['Подосиновик', 'Лисичка'] },
+    { name: 'Леса Киевской области', coords: [50.4501, 30.5234], rating: 8, mushrooms: ['Белый гриб', 'Лисичка', 'Масленок'] },
+    { name: 'Леса Черкасской области', coords: [49.4444, 32.0598], rating: 7, mushrooms: ['Масленок', 'Подберезовик'] }
+];
+
+var mushroomZones = [
     {
         "name": "Боровые леса Подмосковья",
         "latitude": 55.500,
-        "longitude": 37.000
+        "longitude": 37.000,
+        "review": 8.0
     },
     {
         "name": "Леса Карелии",
         "latitude": 62.000,
-        "longitude": 32.000
+        "longitude": 32.000,
+        "review": 8.0
     },
     {
         "name": "Тайга Красноярского края",
         "latitude": 56.010,
-        "longitude": 92.872
+        "longitude": 92.872,
+        "review": 8.5
     },
     {
         "name": "Леса Алтая",
         "latitude": 51.475,
-        "longitude": 85.008
+        "longitude": 85.008,
+        "review": 8.0
     },
     {
         "name": "Леса Ханты-Мансийского автономного округа",
         "latitude": 60.000,
-        "longitude": 70.000
+        "longitude": 70.000,
+        "review": 8.0
     },
     {
         "name": "Тайга на Камчатке",
         "latitude": 56.132,
-        "longitude": 158.618
+        "longitude": 158.618,
+        "review": 8.5
     },
     {
         "name": "Леса Приамурья",
         "latitude": 50.000,
-        "longitude": 128.000
+        "longitude": 128.000,
+        "review": 7.5
     },
     {
         "name": "Леса Чукотки",
         "latitude": 66.000,
-        "longitude": 170.000
+        "longitude": 170.000,
+        "review": 7.0
     },
     {
         "name": "Тайга Якутии",
         "latitude": 63.000,
-        "longitude": 129.000
+        "longitude": 129.000,
+        "review": 7.5
     },
     {
         "name": "Бор на Саянах",
         "latitude": 53.431,
-        "longitude": 91.021
+        "longitude": 91.021,
+        "review": 7.0
     },
     {
         "name": "Леса Пермского края",
         "latitude": 58.000,
-        "longitude": 56.000
+        "longitude": 56.000,
+        "review": 7.5
     },
     {
         "name": "Грибная зона",
         "latitude": 47.735195,
-        "longitude": 25.654194
+        "longitude": 25.654194,
+        "review": 9.5
     },
     {
         "name": "Грибная зона",
         "latitude": 47.787216,
-        "longitude": 25.689701
+        "longitude": 25.689701,
+        "review": 9.5
     },
     {
         "name": "Грибная зона",
         "latitude": 47.799820,
-        "longitude": 25.637493
+        "longitude": 25.637493,
+        "review": 9.5
     },
     {
         "name": "Грибная зона",
         "latitude": 55.902607,
-        "longitude": 37.483002
+        "longitude": 37.483002,
+        "review": 9.0
     },
     {
         "name": "Минская область",
         "latitude": 53.902,
-        "longitude": 27.562
-        },
-        {
+        "longitude": 27.562,
+        "review": 5.0
+    },
+    {
         "name": "Брестская область",
         "latitude": 52.097,
-        "longitude": 23.734
-        },
-        {
+        "longitude": 23.734,
+        "review": 5.0
+    },
+    {
         "name": "Витебская область",
         "latitude": 55.184,
-        "longitude": 30.204
-        },
-        {
+        "longitude": 30.204,
+        "review": 5.5
+    },
+    {
         "name": "Могилевская область",
         "latitude": 53.894,
-        "longitude": 30.331
-        },
-        {
+        "longitude": 30.331,
+        "review": 5.0
+    },
+    {
         "name": "Гомельская область",
         "latitude": 52.434,
-        "longitude": 30.975
-        },
-        {
+        "longitude": 30.975,
+        "review": 5.0
+    },
+    {
         "name": "Гродненская область",
         "latitude": 53.688,
-        "longitude": 23.825
-        },
-        {
-            "name": "Киевская область, Бородянка",
-            "latitude": 50.6395,
-            "longitude": 29.9183
-            },
-            {
-            "name": "Киевская область, Вышгород",
-            "latitude": 50.5838,
-            "longitude": 30.4898
-            },
-            {
-            "name": "Окрестности озера Синевир",
-            "latitude": 48.6222,
-            "longitude": 23.6697
-            },
-            {
-            "name": "Львовская область, Лумшоры",
-            "latitude": 48.6345,
-            "longitude": 22.9021
-            },
-            {
-            "name": "Харьковская область",
-            "latitude": 49.9935,
-            "longitude": 36.2304
-            },
-            {
-            "name": "Днепропетровская область",
-            "latitude": 48.4647,
-            "longitude": 35.0462
-            },
-            {
-            "name": "Закарпатская область",
-            "latitude": 48.6208,
-            "longitude": 22.2879
-            },
-            {
-            "name": "Одесская область",
-            "latitude": 46.4825,
-            "longitude": 30.7233
-            },
-            {
-            "name": "Луганская область",
-            "latitude": 48.5740,
-            "longitude": 39.3078
-            },
-            {
-            "name": "Винницкая область",
-            "latitude": 49.2328,
-            "longitude": 28.4690
-            },
-  {
-    "name": "Hoh Rain Forest",
-    "latitude": 47.8605,
-    "longitude": -123.9345
-  },
-  {
-    "name": "Lake Quinault",
-    "latitude": 47.4685,
-    "longitude": -123.8844
-  },
-  {
-    "name": "Zigzag Mountain",
-    "latitude": 45.3425,
-    "longitude": -121.9702
-  },
-  {
-    "name": "Salmon-Huckleberry Wilderness",
-    "latitude": 45.2001,
-    "longitude": -121.8838
-  },
-  {
-    "name": "Nelder Grove",
-    "latitude": 37.4719,
-    "longitude": -119.5887
-  },
-  {
-    "name": "Dinkey Lakes Wilderness",
-    "latitude": 37.0961,
-    "longitude": -119.0884
-  }
-
+        "longitude": 23.825,
+        "review": 5.5
+    },
+    {
+        "name": "Киевская область, Бородянка",
+        "latitude": 50.6395,
+        "longitude": 29.9183,
+        "review": 6.0
+    },
+    {
+        "name": "Киевская область, Вышгород",
+        "latitude": 50.5838,
+        "longitude": 30.4898,
+        "review": 6.0
+    },
+    {
+        "name": "Окрестности озера Синевир",
+        "latitude": 48.6222,
+        "longitude": 23.6697,
+        "review": 5.0
+    },
+    {
+        "name": "Львовская область, Лумшоры",
+        "latitude": 48.6345,
+        "longitude": 22.9021,
+        "review": 5.0
+    },
+    {
+        "name": "Харьковская область",
+        "latitude": 49.9935,
+        "longitude": 36.2304,
+        "review": 5.0
+    },
+    {
+        "name": "Днепропетровская область",
+        "latitude": 48.4647,
+        "longitude": 35.0462,
+        "review": 5.0
+    },
+    {
+        "name": "Закарпатская область",
+        "latitude": 48.6208,
+        "longitude": 22.2879,
+        "review": 5.0
+    },
+    {
+        "name": "Одесская область",
+        "latitude": 46.4825,
+        "longitude": 30.7233,
+        "review": 5.0
+    },
+    {
+        "name": "Луганская область",
+        "latitude": 48.5740,
+        "longitude": 39.3078,
+        "review": 5.0
+    },
+    {
+        "name": "Винницкая область",
+        "latitude": 49.2328,
+        "longitude": 28.4690,
+        "review": 5.0
+    },
+    {
+        "name": "Hoh Rain Forest",
+        "latitude": 47.8605,
+        "longitude": -123.9345,
+        "review": 9.0
+    },
+    {
+        "name": "Lake Quinault",
+        "latitude": 47.4685,
+        "longitude": -123.8844,
+        "review": 9.0
+    },
+    {
+        "name": "Zigzag Mountain",
+        "latitude": 45.3425,
+        "longitude": -121.9702,
+        "review": 8.5
+    },
+    {
+        "name": "Salmon-Huckleberry Wilderness",
+        "latitude": 45.2001,
+        "longitude": -121.8838,
+        "review": 8.5
+    },
+    {
+        "name": "Nelder Grove",
+        "latitude": 37.4719,
+        "longitude": -119.5887,
+        "review": 7.5
+    },
+    {
+        "name": "Dinkey Lakes Wilderness",
+        "latitude": 37.0961,
+        "longitude": -119.0884,
+        "review": 7.5
+    }
 ];
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        ymaps.ready(init);
-        loadZones();
-    });
 
-    function init() {
-        map = new ymaps.Map('map', {
-            center: [55.751574, 37.573856],
-            zoom: 10
+document.addEventListener('DOMContentLoaded', function() {
+            ymaps.ready(init);
+            loadZones();
         });
 
-        forests.forEach(function(forest, index) {
-            var placemark = new ymaps.Placemark(forest.coords, { balloonContent: forest.name }, { preset: 'islands#greenForestCircleIcon' });
-            map.geoObjects.add(placemark);
-        });
-
-        var forestSelect = document.getElementById('forestSelect');
-        forests.forEach(function(forest, index) {
-            var option = document.createElement('option');
-            option.value = index;
-            option.textContent = forest.name;
-            forestSelect.appendChild(option);
-        });
-
-        map.events.add('click', function (e) {
-            var coords = e.get('coords');
-            if (userPlacemark) {
-                if (multiRoute) {
-                    map.geoObjects.remove(multiRoute);
-                }
-                multiRoute = new ymaps.multiRouter.MultiRoute({
-                    referencePoints: [
-                        userPlacemark.geometry.getCoordinates(),
-                        coords
-                    ],
-                    params: {
-                        routingMode: 'auto'
-                    }
-                }, {
-                    boundsAutoApply: true
-                });
-                map.geoObjects.add(multiRoute);
-            } else {
-                alert('Ваше местоположение не установлено.');
-            }
-        });
-    }
-
-    function setUserLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var coords = [position.coords.latitude, position.coords.longitude];
-                if (userPlacemark) {
-                    userPlacemark.geometry.setCoordinates(coords);
-                } else {
-                    userPlacemark = new ymaps.Placemark(coords, { balloonContent: 'Вы здесь!' }, { preset: 'islands#redIcon' });
-                    map.geoObjects.add(userPlacemark);
-                }
-                map.setCenter(coords, 15);
-                userPlacemark.balloon.open();
+        function init() {
+            map = new ymaps.Map('map', {
+                center: [55.751574, 37.573856],
+                zoom: 10
             });
-        } else {
-            alert('Геолокация не поддерживается вашим браузером');
+
+            forests.forEach(function(forest, index) {
+                var placemark = new ymaps.Placemark(forest.coords, { 
+                    balloonContent: `<b>${forest.name}</b><br>Рейтинг: <span id="forestRating-${index}">N/A</span><br>Грибы: <span id="forestMushrooms-${index}">N/A</span>`,
+                }, { preset: 'islands#greenForestCircleIcon' });
+                map.geoObjects.add(placemark);
+            });
+
+            var forestSelect = document.getElementById('forestSelect');
+            forests.forEach(function(forest, index) {
+                var option = document.createElement('option');
+                option.value = index;
+                option.textContent = forest.name;
+                forestSelect.appendChild(option);
+            });
+
+            map.events.add('click', function (e) {
+                var coords = e.get('coords');
+                if (userPlacemark) {
+                    if (multiRoute) {
+                        map.geoObjects.remove(multiRoute);
+                    }
+                    multiRoute = new ymaps.multiRouter.MultiRoute({
+                        referencePoints: [
+                            userPlacemark.geometry.getCoordinates(),
+                            coords
+                        ],
+                        params: {
+                            routingMode: 'auto'
+                        }
+                    }, {
+                        boundsAutoApply: true
+                    });
+                    map.geoObjects.add(multiRoute);
+                } else {
+                    alert('Ваше местоположение не установлено.');
+                }
+            });
         }
-    }
+
+        function setUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var coords = [position.coords.latitude, position.coords.longitude];
+                    if (userPlacemark) {
+                        userPlacemark.geometry.setCoordinates(coords);
+                    } else {
+                        userPlacemark = new ymaps.Placemark(coords, { balloonContent: 'Вы здесь!' }, { preset: 'islands#redIcon' });
+                        map.geoObjects.add(userPlacemark);
+                    }
+                    map.setCenter(coords, 15);
+                    userPlacemark.balloon.open();
+                });
+            } else {
+                alert('Геолокация не поддерживается вашим браузером');
+            }
+        }
 
     async function sendCoordinatesToTelegram(coords) {
     const telegramToken = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
@@ -931,17 +932,15 @@ function searchNearbyPanoramas() {
 }
 
 
-function loadMushroomZones() {
-    mushroomZones.forEach(function(zone) {
-        var placemark = new ymaps.Placemark([zone.latitude, zone.longitude], {
-            balloonContentBody: zone.name}, {
-            preset: 'islands#yellowIcon'
-        });
-        // Добавление метки на карту (map уже должна быть доступна здесь)
+function loadZones() {
+    mushroomZones.forEach(function(zone, index) {
+        var placemark = new ymaps.Placemark([zone.latitude, zone.longitude], { 
+            balloonContent: `<b>${zone.name}</b><br>Рейтинг: <span id="zoneRating-${index}">${zone.review}</span>`,
+        }, { preset: 'islands#violetCircleIcon' });
         map.geoObjects.add(placemark);
-        
     });
 }
+
 
   //async function saveMushroomZone(coords) {
 //const response = await fetch('save_zones.php', {
@@ -1074,18 +1073,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
 
-        // Функция для поиска ближайших панорам для выбранной зоны
-        function findNearbyPanoramas() {
-            var selectedZone = mushroomZones[0]; // Здесь нужно выбрать реальную зону, например, из выпадающего списка или другого интерфейса
-            var latitude = selectedZone.coords[0];
-            var longitude = selectedZone.coords[1];
-            loadPanoramas(latitude, longitude);
-        }
-
         // Пример вызова функции при загрузке страницы для загрузки панорам для первой зоны в массиве
         document.addEventListener('DOMContentLoaded', function() {
             findNearbyPanoramas();
         });
+          // Function to manually set ratings and mushrooms found in forests
+          function setForestData(index, rating, mushrooms) {
+            document.getElementById(`forestRating-${index}`).innerText = rating;
+            document.getElementById(`forestMushrooms-${index}`).innerText = mushrooms;
+        }
+
+        // Example usage: setting data for the first forest
+        setForestData(0, 5, 'Белые грибы, Лисички');
 </script>
 <script>
 function showChoose() {
