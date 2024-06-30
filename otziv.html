@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Написать отзыв о лесах - Mushfind</title>
+    <meta name="description" content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам.">
+    <meta name="keywords" content="написать отзыв, отзывы о лесах, оценка лесов, грибные места">
+    <link rel="canonical" href="https://mushfind.ru/otziv.html">
+    <meta property="og:title" content="Написать отзыв о лесах - Mushfind">
+    <meta property="og:description" content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам.">
+    <meta property="og:url" content="https://mushfind.ru/otziv.html">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ 
+    ym(97708246, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true,
+         ecommerce:"dataLayer"
+    });
+ </script>
+ <noscript><div><img src="https://mc.yandex.ru/watch/97708246" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ <!-- /Yandex.Metrika counter -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* General styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* Progress bar styles */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: #ccc;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #4caf50;
+        }
+
+        /* Review form styles */
+        .review-form {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .review-form h2, .review-form label {
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .review-form label {
+            display: block;
+        }
+
+        .review-form input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .review-form input[type="number"], .review-form input[type="text"], .review-form textarea, .review-form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .review-form input[type="text"][readonly] {
+            background-color: #f1f1f1;
+        }
+
+        .review-form .mushroom-buttons, .review-form .impression-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .review-form .mushroom-buttons button, .review-form .impression-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: #4caf50;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .review-form .mushroom-buttons button:hover, .review-form .impression-buttons button:hover {
+            background: #45a049;
+        }
+
+        .neon-button {
+            padding: 15px 25px;
+            border: none;
+            background: #4caf50;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .neon-button:hover {
+            background: #45a049;
+        }
+
+        /* Responsive layout adjustments */
+        @media (max-width: 768px) {
+            .review-form {
+                padding: 10px;
+            }
+
+            .review-form .mushroom-buttons button, .review-form .impression-buttons button {
+                flex: 100%;
+            }
+        }
+
+        /* Navigation menu styles */
+        nav {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background: #444;
+            border-radius: 4px;
+        }
+
+        /* Mobile menu */
+        @media (max-width: 768px) {
+            nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: height 0.3s ease;
+            z-index: 100;
+            height: 50px;
+        }
+        nav.show-menu {
+            height: auto;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        nav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .menu-button {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s;
+        }
+
+        .menu-button.open {
+            transform: rotate(180deg);
+        }
+
+        @media screen and (max-width: 600px) {
+            nav a {
+                float: none;
+                width: 100%;
+                text-align: left;
+                transform: translateX(-100%);
+            }
+            .menu-button {
+                display: block;
+            }
+            nav.show-menu a {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="bestforest.html">Лучшие леса</a>
+        <a class="active" href="otziv.html">Написать отзыв</a>
+        <a href="go.html">Лесной навигатор</a>
+        <a href="documentation.html">Документация</a>
+        <button class="menu-button" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+    <div class="container">
+        <h1>Страница отзывов</h1>
+        <form class="review-form" id="reviewForm">
+            <h2>Выберите лес:</h2>
+            <label>
+                <input type="radio" name="forest" value="Лес ботанического сада" checked> Лес "ботанического сада"
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес улицы Вильгельма Пика"> Лес улицы "Вильгельма Пика"
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Леса Московской Области/Подмосковья"> Леса Московской Области/Подмосковья
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Леса городского округа Клин"> Леса городского округа Клин
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес микрорайона Сноуицы-Серзино"> Лес микрорайона Сноуицы-Серзино
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Грибной лес"> Грибной лес
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес городка имени Баумана"> Лес городка имени Баумана
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес парка лосиного острова"> Лес парка лосиного острова
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес городского округа Королёв"> Лес городского округа Королёв
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес мичуринского сквера"> Лес мичуринского сквера
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Кошкин лес"> Кошкин лес
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Шолоховский лес"> Шолоховский лес
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес сосновая аллея"> Лес "сосновая аллея"
+            </label>
+            <label>
+                <input type="radio" name="forest" value="Лес парка культуры и отдыха"> Лес парка культуры и отдыха
+            </label>
+            <label>
+                <input type="radio" id="customForestRadio" name="forest" value="custom"> Свой лес
+                <input type="text" id="customForestInput" oninput="updateCustomForest()" placeholder="Введите название леса">
+            </label>
+            <label>
+                <input type="radio" id="customForestRadio" name="forest" value="custom"> Своя грибная зона
+                <input type="text" id="customForestInput" oninput="updateCustomForest()" placeholder="Введите название грибной зоны">
+            </label>
+
+            <h2>Выберите грибы:</h2>
+            <div class="mushroom-buttons">
+                <button type="button" onclick="addMushroom('Лисички')">Лисички</button>
+                <button type="button" onclick="addMushroom('Подосиновики')">Подосиновики</button>
+                <button type="button" onclick="addMushroom('Подберезовики')">Подберезовики</button>
+                <button type="button" onclick="addMushroom('Белые грибы')">Белые грибы</button>
+                <button type="button" onclick="addMushroom('Опята')">Опята</button>
+                <button type="button" onclick="addMushroom('Грузди')">Грузди</button>
+                <button type="button" onclick="addMushroom('Сыроежки')">Сыроежки</button>
+                <button type="button" onclick="addMushroom('Маслята')">Маслята</button>
+                <button type="button" onclick="addMushroom('Волнушки')">Волнушки</button>
+                <button type="button" onclick="addMushroom('Сморчки')">Сморчки</button>
+                <button type="button" onclick="addMushroom('Рыжики')">Рыжики</button>
+                <button type="button" onclick="addMushroom('Польские грибы')">Польские грибы</button>
+                <button type="button" onclick="addMushroom('Шампиньоны')">Шампиньоны</button>
+                <button type="button" onclick="addMushroom('Ложные опята')">Ложные опята</button>
+                <button type="button" onclick="addMushroom('Поганки')">Поганки</button>
+            </div>
+
+            <h2>Оценка (0 - плохо, 10 - отлично):</h2>
+            <input type="number" name="rating" min="0" max="10" required>
+
+            <h2>Впечатления от похода:</h2>
+            <div class="impression-buttons">
+                <button type="button" onclick="addImpression('Хорошо')">Хорошо</button>
+                <button type="button" onclick="addImpression('Отлично')">Отлично</button>
+                <button type="button" onclick="addImpression('Средне')">Средне</button>
+                <button type="button" onclick="addImpression('Плохо')">Плохо</button>
+                <button type="button" onclick="addImpression('Ужасно')">Ужасно</button>
+                <button type="button" onclick="addImpression('Супер')">Супер</button>
+                <button type="button" onclick="addImpression('Весело')">Весело</button>
+                <button type="button" onclick="addImpression('Скучно')">Скучно</button>
+                <button type="button" onclick="addImpression('Опасно')">Опасно</button>
+            </div>
+
+            <h2>Дата похода:</h2>
+            <input type="text" name="date" value="" readonly>
+
+            <h2>Описание:</h2>
+            <textarea name="description" rows="5" required></textarea>
+<button class="neon-button"  type="submit">Отправить</button>
+              </form>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menuButton = document.querySelector('.menu-button');
+            const nav = document.querySelector('nav');
+            menuButton.classList.toggle('open');
+            nav.classList.toggle('show-menu');
+        }
+
+        window.onscroll = function() {updateProgressBar()};
+
+        function updateProgressBar() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }
+
+        function addMushroom(mushroom) {
+            const description = document.querySelector('textarea[name="description"]');
+            description.value += mushroom + ', ';
+        }
+
+        function addImpression(impression) {
+            const description = document.querySelector('textarea[name="description"]');
+            description.value += impression + ', ';
+        }
+
+        function updateCustomForest() {
+            const customForestInput = document.getElementById('customForestInput');
+            const customForestRadio = document.getElementById('customForestRadio');
+            if (customForestInput.value.trim()) {
+                customForestRadio.value = customForestInput.value;
+            } else {
+                customForestRadio.value = 'custom';
+            }
+        }
+
+        document.querySelector('input[name="date"]').value = new Date().toLocaleDateString();
+
+        document.getElementById('reviewForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const token = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
+            const chatId = '7208967084';
+            const formData = new FormData(event.target);
+
+            const message = `
+Лес: ${formData.get('forest')}
+Грибы: ${formData.get('description')}
+Оценка: ${formData.get('rating')}
+Впечатления: ${formData.get('description')}
+Дата похода: ${formData.get('date')}
+Описание: ${formData.get('description')}
+            `;
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Отзыв успешно отправлен!');
+                } else {
+                    alert('Ошибка при отправке отзыва.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ошибка при отправке отзыва.');
+            });
+        });
+    </script>
+</body>
+</html>
