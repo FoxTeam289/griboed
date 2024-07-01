@@ -408,6 +408,7 @@ iframe {
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
             <button onclick="window.location.href='foxyprofi.itch.io/griboed'"><i class="fas fa-download"></i> Сохранить изменения</button>
             <button onclick="OpenMapI('https://гдегрибы.рф')"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
+            <button id="toggleButton"><i class="fa-solid fa-eye-slash"></i>Скрыть элементы</button>
     </div>
 </main>
 
@@ -415,6 +416,43 @@ iframe {
     <div id="iframeContainer"></div>
     <button id="closeIframeBtn" onclick="closeIframe()">Закрыть</button>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.nav-links');
+    const navLinks = document.querySelectorAll('.nav-links li');
+    const toggleButton = document.getElementById('toggleButton');
+    const controls = document.querySelector('.controls');
+
+    // Toggle nav for mobile view
+    document.querySelector('.logo').addEventListener('click', () => {
+        nav.classList.toggle('nav-active');
+
+        // Animate links
+        navLinks.forEach((link, index) => {
+            if (link.style.animation) {
+                link.style.animation = '';
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+            }
+        });
+    });
+
+    // Active link highlighting
+    const links = document.querySelectorAll('.nav-links a');
+    links.forEach(link => {
+        link.addEventListener('click', function() {
+            links.forEach(navLink => navLink.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Toggle controls visibility
+    toggleButton.addEventListener('click', () => {
+        controls.classList.toggle('hidden');
+    });
+});
+
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
       const nav = document.querySelector('.nav-links');
