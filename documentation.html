@@ -151,7 +151,9 @@ body {
 
 .button {
   animation: slideIn 0.5s ease-out;
-}.navbar {
+}
+
+  .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -159,6 +161,8 @@ body {
     background-color: #228B22;
     z-index: 1000; /* Ensure the navbar is on top */
     position: relative;
+    width: 100%; /* Ensure the navbar takes the full width */
+    top: 0; /* Ensure the navbar is at the top */
 }
 
 .logo {
@@ -194,7 +198,7 @@ body {
     .nav-links {
         display: none;
         position: fixed;
-        top: 80px;
+        top: 60px; /* Adjust top position to ensure visibility */
         right: 0;
         background-color: #228B22;
         width: 100%;
@@ -321,7 +325,7 @@ body {
     </div>
   </div> 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
 
@@ -348,7 +352,6 @@ body {
         });
     });
 });
-
 
   </script>
   <script src="404.js"></script>
