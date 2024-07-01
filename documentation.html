@@ -151,8 +151,7 @@ body {
 
 .button {
   animation: slideIn 0.5s ease-out;
-}
-.navbar {
+}.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -194,13 +193,14 @@ body {
 @media screen and (max-width: 768px) {
     .nav-links {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 80px;
         right: 0;
         background-color: #228B22;
         width: 100%;
         flex-direction: column;
         align-items: center;
+        z-index: 999; /* Ensure the menu is on top */
     }
 
     .nav-links.nav-active {
