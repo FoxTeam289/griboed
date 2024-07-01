@@ -13,8 +13,7 @@
 	<link rel="canonical" href="https://mushfind.ru">
 	<meta property="og:title" content="Mushfind - Найдите лучшие леса и грибные зоны">
 	<meta property="og:description" content="Mushfind помогает вам находить грибные зоны и лучшие леса с отзывами пользователей. Используйте наш навигатор, чтобы не заблудиться в лесу.">
-	<meta property="og:image" content="icon.png">
-	
+	<link rel="icon" href="icon.png" type="image/png">
 	<!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
 	(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -47,16 +46,18 @@
 
 	<div class="wrapper">
 		<div class="content">
-			<nav>
-				<a class="active" href="index.html">Главная</a>
-				<a href="bestforest.html">Лучшие леса</a>
-				<a href="otziv.html">Написать отзыв</a>
-				<a href="go.html">Лесной навигатор</a>
-				<a href="documentation.html">Документация</a>
-				<button class="menu-button" onclick="toggleMenu()">
-					<i class="fa-solid fa-bars"></i>
-				</button>
-			</nav>
+			<header>
+				<nav class="navbar">
+					<div class="logo">Mushfind</div>
+					<ul class="nav-links">
+						<li><a class="active" href="index.html">Главная</a></li>
+						<li><a href="bestforest.html">Лучшие леса</a></li>
+						<li><a href="otziv.html">Написать отзыв</a></li>
+						<li><a href="go.html">Лесной навигатор</a></li>
+						<li><a href="documentation.html">Документация</a></li>
+					</ul>
+				</nav>
+			</header>
 			<div class="table-container">
 				<div class="main-text">
 					Грибоед <span class="mushroom-icon">🍄</span>
@@ -87,16 +88,36 @@
 				<div class="copy2">*Могут, но это не точно.</div>
 			</article>
 			<script>
-				function toggleMenu() {
-					var nav = document.querySelector('nav');
-					var controls = document.querySelector('.controls');
-					var menuButton = document.querySelector('.menu-button');
-					
-					nav.classList.toggle('show-menu');
-					controls.classList.toggle('open');
-					menuButton.classList.toggle('open');
-				}
-			</script>
+				document.addEventListener('DOMContentLoaded', () => {
+				  const nav = document.querySelector('.nav-links');
+				  const navLinks = document.querySelectorAll('.nav-links li');
+			  
+				  // Toggle nav for mobile view
+				  document.querySelector('.logo').addEventListener('click', () => {
+					  nav.classList.toggle('nav-active');
+			  
+					  // Animate links
+					  navLinks.forEach((link, index) => {
+						  if (link.style.animation) {
+							  link.style.animation = '';
+						  } else {
+							  link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+						  }
+					  });
+				  });
+			  
+				  // Active link highlighting
+				  const links = document.querySelectorAll('.nav-links a');
+				  links.forEach(link => {
+					  link.addEventListener('click', function() {
+						  links.forEach(navLink => navLink.classList.remove('active'));
+						  this.classList.add('active');
+					  });
+				  });
+			  });
+			  
+			  
+				</script>
 		</div>
 	</div>
 
