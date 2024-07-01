@@ -130,7 +130,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 50px;
     background-color: #228B22;
     z-index: 1000; /* Ensure the navbar is on top */
     position: relative;
