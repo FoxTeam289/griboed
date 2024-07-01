@@ -105,7 +105,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 50px;
+    padding: 20px;
     background-color: #228B22;
     z-index: 1000; /* Ensure the navbar is on top */
     position: relative;
@@ -416,12 +416,24 @@ iframe {
     <div id="iframeContainer"></div>
     <button id="closeIframeBtn" onclick="closeIframe()">Закрыть</button>
 </div>
+
+
+</script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('toggleButton').addEventListener('click', function() {
+    const controls = document.querySelectorAll('.controls, .navbar');
+    controls.forEach(element => {
+        if (element.classList.contains('hidden')) {
+            element.classList.remove('hidden');
+        } else {
+            element.classList.add('hidden');
+        }
+    });
+});
+
+   document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
-    const toggleButton = document.getElementById('toggleButton');
-    const controls = document.querySelector('.controls');
 
     // Toggle nav for mobile view
     document.querySelector('.logo').addEventListener('click', () => {
@@ -445,44 +457,7 @@ iframe {
             this.classList.add('active');
         });
     });
-
-    // Toggle controls visibility
-    toggleButton.addEventListener('click', () => {
-        controls.classList.toggle('hidden');
-    });
 });
-
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const nav = document.querySelector('.nav-links');
-      const navLinks = document.querySelectorAll('.nav-links li');
-  
-      // Toggle nav for mobile view
-      document.querySelector('.logo').addEventListener('click', () => {
-          nav.classList.toggle('nav-active');
-  
-          // Animate links
-          navLinks.forEach((link, index) => {
-              if (link.style.animation) {
-                  link.style.animation = '';
-              } else {
-                  link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-              }
-          });
-      });
-  
-      // Active link highlighting
-      const links = document.querySelectorAll('.nav-links a');
-      links.forEach(link => {
-          link.addEventListener('click', function() {
-              links.forEach(navLink => navLink.classList.remove('active'));
-              this.classList.add('active');
-          });
-      });
-  });
-  
-  
     </script>
 <div id="popup">
     <div id="popup-content">
