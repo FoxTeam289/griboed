@@ -56,6 +56,26 @@
 						<li><a href="documentation.html">Документация</a></li>
 					</ul>
 				</nav>
+				<div class="popup-container hidden" id="popup">
+					<div class="popup-content">
+						<h2>Как вам наш сайт?</h2>
+						<div class="stars" id="stars">
+							<span class="star" data-value="1">&#9733;</span>
+							<span class="star" data-value="2">&#9733;</span>
+							<span class="star" data-value="3">&#9733;</span>
+							<span class="star" data-value="4">&#9733;</span>
+							<span class="star" data-value="5">&#9733;</span>
+							<span class="star" data-value="6">&#9733;</span>
+							<span class="star" data-value="7">&#9733;</span>
+							<span class="star" data-value="8">&#9733;</span>
+							<span class="star" data-value="9">&#9733;</span>
+							<span class="star" data-value="10">&#9733;</span>
+						</div>
+						<p id="thank-you" class="hidden">Мы очень ценим вашу обратную связь! И были бы очень рады получить эту оценку в Яндекс картах</p>
+						<button id="leave-review" class="hidden">Оставить отзыв в Яндекс картах</button>
+						<button id="close-popup">Закрыть</button>
+					</div>
+				</div>
 			<div class="table-container">
 				<div class="main-text">
 					Грибоед <span class="mushroom-icon">🍄</span>
@@ -114,7 +134,43 @@
 				  });
 			  });
 			  
-			  
+			  document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star');
+    const thankYouMessage = document.getElementById('thank-you');
+    const leaveReviewButton = document.getElementById('leave-review');
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('close-popup');
+
+    // Check if the popup was previously closed
+    if (!localStorage.getItem('popupClosed')) {
+        // Show popup after a delay
+        setTimeout(() => {
+            popup.classList.remove('hidden');
+        }, 5000); // Delay in milliseconds
+    }
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            stars.forEach(s => s.classList.remove('selected'));
+            star.classList.add('selected');
+            const rating = star.getAttribute('data-value');
+
+            thankYouMessage.classList.remove('hidden');
+            leaveReviewButton.classList.remove('hidden');
+        });
+    });
+
+    leaveReviewButton.addEventListener('click', () => {
+        window.location.href = 'https://yandex.ru/profile/36546910735/';
+    });
+
+    closePopupButton.addEventListener('click', () => {
+        popup.classList.add('hidden');
+        localStorage.setItem('popupClosed', 'true');
+    });
+});
+
+
 				</script>
 		</div>
 	</div>
