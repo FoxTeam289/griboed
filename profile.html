@@ -148,118 +148,127 @@
     </footer>
 
     <script>
-       // Загрузка данных профилей из profiles.json
-async function loadProfiles() {
-    const response = await fetch('profiles.json');
-    const profiles = await response.json();
-    displayProfiles(profiles);
-}
+        // Загрузка данных профилей из localStorage
+        function loadProfiles() {
+            const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+            displayProfiles(profiles);
+        }
 
-// Отображение профилей на странице
-function displayProfiles(profiles) {
-    const profilesContainer = document.getElementById('profiles');
-    profilesContainer.innerHTML = '';
+        // Отображение профилей на странице
+        function displayProfiles(profiles) {
+            const profilesContainer = document.getElementById('profiles');
+            profilesContainer.innerHTML = '';
 
-    profiles.forEach(profile => {
-        const profileElement = document.createElement('div');
-        profileElement.className = 'profile';
-        profileElement.innerHTML = `
-            <h3>${profile.username}</h3>
-            <img src="${profile.profilePhoto}" alt="Фото профиля">
-            <p>Уровень: ${profile.level}</p>
-            <p>Очки: ${profile.points}</p>
-            <div>
-                <h4>Посты:</h4>
-                ${profile.posts.map(post => `
-                    <div class="post">
-                        <p>${post.text}</p>
-                        ${post.photo ? `<img src="${post.photo}" alt="Фото поста">` : ''}
+            profiles.forEach(profile => {
+                const profileElement = document.createElement('div');
+                profileElement.className = 'profile';
+                profileElement.innerHTML = `
+                    <h3>${profile.username}</h3>
+                    <img src="${profile.profilePhoto}" alt="Фото профиля">
+                    <p>Уровень: ${profile.level}</p>
+                    <p>Очки: ${profile.points}</p>
+                    <div>
+                        <h4>Посты:</h4>
+                        ${profile.posts.map(post => `
+                            <div class="post">
+                                <p>${post.text}</p>
+                                ${post.photo ? `<img src="${post.photo}" alt="Фото поста">` : ''}
+                            </div>
+                        `).join('')}
                     </div>
-                `).join('')}
-            </div>
-        `;
-        profilesContainer.appendChild(profileElement);
-    });
-}
+                `;
+                profilesContainer.appendChild(profileElement);
+            });
+        }
 
-// Создание нового профиля
-async function createProfile() {
-    const username = document.getElementById('username').value;
-    const profilePhoto = document.getElementById('profilePhoto').files[0];
+        // Создание нового профиля
+        function createProfile() {
+            const username = document.getElementById('username').value;
+            const profilePhoto = document.getElementById('profilePhoto').files[0];
 
-    if (!username) {
-        alert('Имя пользователя обязательно');
-        return;
-    }
+            if (!username) {
+                alert('Имя пользователя обязательно');
+                return;
+            }
 
-    const profiles = await fetch('profiles.json').then(res => res.json());
+            const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
 
-    if (profiles.some(profile => profile.username === username)) {
-        alert('Имя пользователя уже существует');
-        return;
-    }
+            if (profiles.some(profile => profile.username === username)) {
+                alert('Имя пользователя уже существует');
+                return;
+            }
 
-    const profile = {
-        username,
-        profilePhoto: URL.createObjectURL(profilePhoto),
-        level: 1, // Начальный уровень
-        points: 0, // Начальные очки
-        posts: [] // Начальные посты
-    };
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const profile = {
+                    username,
+                    profilePhoto: e.target.result,
+                    level: 1, // Начальный уровень
+                    points: 0, // Начальные очки
+                    posts: [] // Начальные посты
+                };
 
-    profiles.push(profile);
-    saveProfiles(profiles);
-    displayProfiles(profiles);
-}
+                profiles.push(profile);
+                saveProfiles(profiles);
+                displayProfiles(profiles);
+            };
+            reader.readAsDataURL(profilePhoto);
+        }
 
-// Создание нового поста
-async function createPost() {
-    const username = document.getElementById('postUsername').value;
-    const postText = document.getElementById('postText').value;
-    const postPhoto = document.getElementById('postPhoto').files[0];
+        // Создание нового поста
+        function createPost() {
+            const username = document.getElementById('postUsername').value;
+            const postText = document.getElementById('postText').value;
+            const postPhoto = document.getElementById('postPhoto').files[0];
 
-    if (!username || !postText) {
-        alert('Имя пользователя и текст поста обязательны');
-        return;
-    }
+            if (!username || !postText) {
+                alert('Имя пользователя и текст поста обязательны');
+                return;
+            }
 
-    const profiles = await fetch('profiles.json').then(res => res.json());
-    const profile = profiles.find(profile => profile.username === username);
+            const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+            const profile = profiles.find(profile => profile.username === username);
 
-    if (!profile) {
-        alert('Пользователь не найден');
-        return;
-    }
+            if (!profile) {
+                alert('Пользователь не найден');
+                return;
+            }
 
-    const post = {
-        text: postText,
-        photo: postPhoto ? URL.createObjectURL(postPhoto) : null
-    };
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const post = {
+                    text: postText,
+                    photo: postPhoto ? e.target.result : null
+                };
 
-    profile.posts.push(post);
-    saveProfiles(profiles);
-    displayProfiles(profiles);
-}
+                profile.posts.push(post);
+                saveProfiles(profiles);
+                displayProfiles(profiles);
+            };
 
-// Сохранение профилей в profiles.json
-async function saveProfiles(profiles) {
-    const response = await fetch('save_profiles.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(profiles)
-    });
+            if (postPhoto) {
+                reader.readAsDataURL(postPhoto);
+            } else {
+                const post = {
+                    text: postText,
+                    photo: null
+                };
 
-    if (!response.ok) {
-        alert('Ошибка сохранения профилей');
-    }
-}
+                profile.posts.push(post);
+                saveProfiles(profiles);
+                displayProfiles(profiles);
+            }
+        }
 
-// Загрузка профилей при загрузке страницы
-window.onload = function() {
-    loadProfiles();
-};
+        // Сохранение профилей в localStorage
+        function saveProfiles(profiles) {
+            localStorage.setItem('profiles', JSON.stringify(profiles));
+        }
+
+        // Загрузка профилей при загрузке страницы
+        window.onload = function() {
+            loadProfiles();
+        };
     </script>
 </body>
 </html>
