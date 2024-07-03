@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профили пользователей</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #77aaff 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: #77aaff;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #cccccc;
+            font-weight: bold;
+        }
+        footer {
+            padding: 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #333;
+            text-align: center;
+        }
+        .profile-form, .post-form {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .profile-form input[type="text"],
+        .profile-form input[type="file"],
+        .post-form input[type="text"],
+        .post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .profile-form button, .post-form button {
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .profile-form button:hover, .post-form button:hover {
+            background: #77aaff;
+        }
+        .profiles, .posts {
+            margin-top: 20px;
+        }
+        .profile, .post {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .profile img, .post img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>MushFind</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="index.html">Главная</a></li>
+                    <li><a href="profiles.html">Профили</a></li>
+                    <li><a href="map.html">Карта</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="profile-form">
+            <h2>Создать профиль</h2>
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" placeholder="Введите уникальное имя пользователя">
+            <label for="profilePhoto">Фото профиля</label>
+            <input type="file" id="profilePhoto">
+            <button onclick="createProfile()">Создать профиль</button>
+        </section>
+
+        <section class="post-form">
+            <h2>Создать пост</h2>
+            <label for="postUsername">Имя пользователя</label>
+            <input type="text" id="postUsername" placeholder="Введите имя пользователя">
+            <label for="postText">Текст поста</label>
+            <textarea id="postText" rows="4" placeholder="Напишите что-нибудь..."></textarea>
+            <label for="postPhoto">Фото поста</label>
+            <input type="file" id="postPhoto">
+            <button onclick="createPost()">Создать пост</button>
+        </section>
+
+        <section class="profiles" id="profiles">
+            <h2>Профили пользователей</h2>
+            <!-- Профили будут загружаться сюда -->
+        </section>
+    </div>
+
+    <footer>
+        <p>MushFind &copy; 2024</p>
+    </footer>
+
+    <script>
+        // Загрузка данных профилей из profiles.json
+async function loadProfiles() {
+    const response = await fetch('profiles.json');
+    const profiles = await response.json();
+    displayProfiles(profiles);
+}
+
+// Отображение профилей на странице
+function displayProfiles(profiles) {
+    const profilesContainer = document.getElementById('profiles');
+    profilesContainer.innerHTML = '';
+
+    profiles.forEach(profile => {
+        const profileElement = document.createElement('div');
+        profileElement.className = 'profile';
+        profileElement.innerHTML = `
+            <h3>${profile.username}</h3>
+            <img src="${profile.profilePhoto}" alt="Фото профиля">
+            <p>Уровень: ${profile.level}</p>
+            <p>Очки: ${profile.points}</p>
+            <div>
+                <h4>Посты:</h4>
+                ${profile.posts.map(post => `
+                    <div class="post">
+                        <p>${post.text}</p>
+                        ${post.photo ? `<img src="${post.photo}" alt="Фото поста">` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        profilesContainer.appendChild(profileElement);
+    });
+}
+
+// Создание нового профиля
+async function createProfile() {
+    const username = document.getElementById('username').value;
+    const profilePhoto = document.getElementById('profilePhoto').files[0];
+
+    if (!username) {
+        alert('Имя пользователя обязательно');
+        return;
+    }
+
+    const profiles = await fetch('profiles.json').then(res => res.json());
+
+    if (profiles.some(profile => profile.username === username)) {
+        alert('Имя пользователя уже существует');
+        return;
+    }
+
+    const profile = {
+        username,
+        profilePhoto: URL.createObjectURL(profilePhoto),
+        level: 1, // Начальный уровень
+        points: 0, // Начальные очки
+        posts: [] // Начальные посты
+    };
+
+    profiles.push(profile);
+    saveProfiles(profiles);
+    displayProfiles(profiles);
+}
+
+// Создание нового поста
+async function createPost() {
+    const username = document.getElementById('postUsername').value;
+    const postText = document.getElementById('postText').value;
+    const postPhoto = document.getElementById('postPhoto').files[0];
+
+    if (!username || !postText) {
+        alert('Имя пользователя и текст поста обязательны');
+        return;
+    }
+
+    const profiles = await fetch('profiles.json').then(res => res.json());
+    const profile = profiles.find(profile => profile.username === username);
+
+    if (!profile) {
+        alert('Пользователь не найден');
+        return;
+    }
+
+    const post = {
+        text: postText,
+        photo: postPhoto ? URL.createObjectURL(postPhoto) : null
+    };
+
+    profile.posts.push(post);
+    saveProfiles(profiles);
+    displayProfiles(profiles);
+}
+
+// Сохранение профилей в profiles.json
+async function saveProfiles(profiles) {
+    const response = await fetch('save_profiles.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(profiles)
+    });
+
+    if (!response.ok) {
+        alert('Ошибка сохранения профилей');
+    }
+}
+
+// Загрузка профилей при загрузке страницы
+window.onload = function() {
+    loadProfiles();
+};
+    </script>
+</body>
+</html>
