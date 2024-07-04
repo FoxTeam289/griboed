@@ -33,7 +33,7 @@
 
 
     <style>
-        body {
+                body {
             font-family: 'Roboto', sans-serif;
             background: #f4f4f9;
             margin: 0;
@@ -52,7 +52,7 @@
             font-family: 'Montserrat', sans-serif;
             color: #007bff;
         }
-        .post, .admin-panel, .profile, .auth-panel {
+        .post, .admin-panel, .profile, .auth-panel, .chat-panel {
             border: 1px solid #ddd;
             padding: 15px;
             margin-bottom: 15px;
@@ -102,6 +102,24 @@
         .post img {
             max-width: 100%;
             border-radius: 5px;
+        }
+        .chat {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .special-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
         .navbar {
     display: flex;
@@ -219,6 +237,8 @@
             <button onclick="toggleAdminPanel()">Добавить пост</button>
             <button onclick="showChangePassword()">Сменить пароль</button>
             <button onclick="showChangeUsername()">Сменить ник</button>
+            <input type="text" id="searchUser" placeholder="Поиск пользователя">
+            <button onclick="searchUser()">Поиск</button>
         </div>
 
         <div class="admin-panel hidden">
@@ -251,6 +271,24 @@
         <div id="posts">
             <h2>Посты</h2>
         </div>
+
+        <div id="user-profile" class="hidden">
+            <h2>Профиль пользователя</h2>
+            <p>Имя пользователя: <span id="profileUsername"></span></p>
+            <p>Подписчики: <span id="profileSubscriberCount"></span></p>
+            <div id="profilePosts"></div>
+            <button onclick="inviteToHike()">Пригласить на совместный поход</button>
+        </div>
+
+        <div class="chat-panel hidden">
+            <h2>Чат</h2>
+            <div class="chat" id="chat">
+                <!-- Сообщения будут добавляться сюда -->
+            </div>
+            <textarea id="chatMessage" placeholder="Введите сообщение..."></textarea>
+            <button onclick="sendMessage()">Отправить</button>
+            <button onclick="sendSpecialMessage()">Мы готовы</button>
+        </div>
     </div>
 <script>
        document.addEventListener('DOMContentLoaded', () => {
@@ -280,18 +318,51 @@
 					  });
 				  });
 			  });
-    const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
+              const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
         const TELEGRAM_CHAT_ID = '7208967084';
 
-        let data = {
+        let data =
+{
     "users": [
         { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['foxyprofi'], "subscriberCount": 1 },
         { "username": "foxyprofi", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 0 }
     ],
     "posts": [
         { "id": 1, "user": "Грибоед", "content": "Приветствуем вас на нашем форуме! Он создан для того, чтобы люди могли делиться своими грибными находками. Мы надеемся, что этот форум поможет вам.", "image": "https://sun9-65.userapi.com/impg/PCN8t1e-5YKrOMDtffJNB3FsqCDDx3FYwbkzFQ/jKGuLsc4b38.jpg?quality=96&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,512x512&sign=3d257cf6f8abc6066cbfb8234b6affde&from=bu&u=PyHl_oJdHyVZ6h3_eLMMlHlZfmHXzQv3xV2zL5n5WTo&cs=512x512", "likes": 1, "likedBy": ['foxyprofi'], "comments": [] }
+    ],
+    "subscriptions": [],
+    "hikeInvitations": [
+        {
+            "inviter": "user1",
+            "invitee": "user2",
+            "status": "pending" // Возможные значения: "pending", "accepted", "declined"
+        }
+    ],
+    "chats": [
+        {
+            "id": "foxyprofi-Грибоед",
+            "users": ["foxyprofi", "Грибоед"],
+            "messages": [
+                { "sender": "foxyprofi2", "receiver": "user2", "text": "Привет!", "special": false },
+                { "sender": "Грибоед", "receiver": "user1", "text": "Привет! Как дела?", "special": false }
+            ],
+            "specialMessages": [
+                { 
+                    "sender": "user1", 
+                    "receiver": "user2", 
+                    "text": "Мы готовы! Город: Москва, Время: 12:00, Email: example@example.com, Телефон: 1234567890",
+                    "city": "Москва",
+                    "time": "12:00",
+                    "email": "example@example.com",
+                    "phone": "1234567890"
+                }
+            ]
+        }
     ]
 }
+
+        let currentUser = null;
+        let currentChat = null;
 
         function showLogin() {
             document.getElementById('login-section').classList.remove('hidden');
@@ -328,6 +399,7 @@
             const password = document.getElementById('loginPassword').value;
             const user = data.users.find(u => u.username === username && u.password === password);
             if (user) {
+                currentUser = user;
                 document.querySelector('#username span').textContent = username;
                 document.querySelector('#subscriberCount span').textContent = user.subscriberCount;
                 document.querySelector('.auth-panel').classList.add('hidden');
@@ -344,7 +416,7 @@
             if (data.users.find(u => u.username === username)) {
                 document.getElementById('registerError').textContent = 'Имя пользователя уже существует';
             } else {
-                const newUser = { username, password, subscribers: [], subscriberCount: 0 };
+                const newUser = { username, password, subscribers: [], subscriberCount: 0, posts: [] };
                 data.users.push(newUser);
                 alert('Аккаунт создан! Ожидайте подтверждения.');
                 sendToTelegram(newUser, 'newUser');
@@ -386,6 +458,18 @@
                 formData.append('text', message);
             } else if (type === 'changeUsername') {
                 message = `Пользователь ${data.oldUsername} хочет сменить ник.\nНовый ник: ${data.newUsername}`;
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('text', message);
+            } else if (type === 'hikeInvitation') {
+                message = `Пользователь ${data.inviter} пригласил пользователя ${data.invitee} на совместный поход.`;
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('text', message);
+            } else if (type === 'hikeResponse') {
+                message = `Пользователь ${data.invitee} ${data.response} приглашение пользователя ${data.inviter} на совместный поход.`;
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('text', message);
+            } else if (type === 'chatMessage') {
+                message = `Сообщение от ${data.sender} к ${data.receiver}: ${data.message}`;
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('text', message);
             }
@@ -557,9 +641,145 @@
             }
         }
 
+        function searchUser() {
+            const searchUsername = document.getElementById('searchUser').value;
+            const user = data.users.find(u => u.username === searchUsername);
+            if (user) {
+                document.querySelector('.profile').classList.add('hidden');
+                document.getElementById('user-profile').classList.remove('hidden');
+                document.getElementById('profileUsername').textContent = user.username;
+                document.getElementById('profileSubscriberCount').textContent = user.subscriberCount;
+                renderUserPosts(user);
+            } else {
+                alert('Пользователь не найден');
+            }
+        }
+
+        function renderUserPosts(user) {
+            const profilePostsContainer = document.getElementById('profilePosts');
+            profilePostsContainer.innerHTML = '';
+
+            user.posts.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+                postDiv.innerHTML = `
+                    <p>${post.content}</p>
+                    ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
+                    <p>Автор: ${post.user}</p>
+                    <div class="comment-section">
+                        <h4>Комментарии</h4>
+                        ${post.comments.map(comment => `
+                            <div class="comment">
+                                <p><strong>${comment.user}:</strong> ${comment.text}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                profilePostsContainer.appendChild(postDiv);
+            });
+        }
+
+        function inviteToHike() {
+    const invitee = document.getElementById('profileUsername').textContent;
+    const inviter = document.querySelector('#username span').textContent;
+    const invitation = { inviter: inviter, invitee: invitee, status: 'pending' };
+    data.hikeInvitations.push(invitation);
+    sendToTelegram({ inviter: inviter, invitee: invitee }, 'hikeInvitation');
+    alert('Приглашение отправлено!');
+    createChat(inviter, invitee);
+}
+
+function createChat(foxyprofi, Грибоед) {
+    const chatId = `${foxyprofi}-${Грибоед}`;
+    if (!data.chats.find(chat => chat.id === chatId)) {
+        const newChat = { id: chatId, users: [foxyprofi, Грибоед], messages: [], specialMessages: [] };
+        data.chats.push(newChat);
+        currentChat = newChat;
+        document.querySelector('.chat-panel').classList.remove('hidden');
+        renderChat();
+    } else {
+        currentChat = data.chats.find(chat => chat.id === chatId);
+        document.querySelector('.chat-panel').classList.remove('hidden');
+        renderChat();
+    }
+}
+
+function renderChat() {
+    const chatContainer = document.getElementById('chat');
+    chatContainer.innerHTML = '';
+
+    currentChat.messages.forEach(message => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chat-message';
+        messageDiv.textContent = `${message.sender}: ${message.text}`;
+        chatContainer.appendChild(messageDiv);
+    });
+
+    currentChat.specialMessages.forEach(message => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'special-message';
+        messageDiv.textContent = `${message.sender}: ${message.text}`;
+        chatContainer.appendChild(messageDiv);
+    });
+}
+
+function sendMessage() {
+    const messageText = document.getElementById('chatMessage').value;
+    const sender = document.querySelector('#username span').textContent;
+    const receiver = currentChat.users.find(user => user !== sender);
+    const message = { sender: sender, receiver: receiver, text: messageText, special: false };
+    currentChat.messages.push(message);
+    sendToTelegram({ sender: sender, receiver: receiver, message: messageText }, 'chatMessage');
+    renderChat();
+    document.getElementById('chatMessage').value = '';
+}
+
+function sendSpecialMessage() {
+    const sender = document.querySelector('#username span').textContent;
+    const receiver = currentChat.users.find(user => user !== sender);
+    const city = prompt('Введите город:');
+    const time = prompt('Введите время:');
+    const email = prompt('Введите email:');
+    const phone = prompt('Введите номер телефона (необязательно):');
+    const specialMessageText = `Мы готовы! Город: ${city}, Время: ${time}, Email: ${email}, Телефон: ${phone}`;
+    const specialMessage = { sender: sender, receiver: receiver, text: specialMessageText, city: city, time: time, email: email, phone: phone };
+    currentChat.specialMessages.push(specialMessage);
+    sendToTelegram({ sender: sender, receiver: receiver, message: specialMessageText }, 'chatMessage');
+    renderChat();
+}
+
+function acceptHike(inviter, invitee) {
+    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
+    invitation.status = 'accepted';
+    alert('Приглашение принято!');
+    sendToTelegram({ inviter: inviter, invitee: invitee, response: 'принял' }, 'hikeResponse');
+    createChat(inviter, invitee);
+}
+
+function declineHike(inviter, invitee) {
+    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
+    invitation.status = 'declined';
+    alert('Приглашение отклонено!');
+    sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
+}
+
+function cancelHike(inviter, invitee) {
+    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
+    if (invitation.status === 'accepted') {
+        invitation.status = 'declined';
+        alert('Поход отменен!');
+        sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
+    }
+}
+
         document.addEventListener('DOMContentLoaded', () => {
             renderPosts();
         });
+    </script>
+
+</body>
+</html>
+            
     </script>
 
 </body>
