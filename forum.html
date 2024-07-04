@@ -193,6 +193,9 @@
         transform: translateX(0);
     }
 }
+.chat-panel.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -237,6 +240,7 @@
             <button onclick="toggleAdminPanel()">Добавить пост</button>
             <button onclick="showChangePassword()">Сменить пароль</button>
             <button onclick="showChangeUsername()">Сменить ник</button>
+            <button onclick="toggleInvitationContainer()">Показать приглашения</button>
             <input type="text" id="searchUser" placeholder="Поиск пользователя">
             <button onclick="searchUser()">Поиск</button>
         </div>
@@ -280,6 +284,8 @@
             <button onclick="inviteToHike()">Пригласить на совместный поход</button>
         </div>
 
+        <div id="invitation-container" class="hidden"></div>
+
         <div class="chat-panel hidden">
             <h2>Чат</h2>
             <div class="chat" id="chat">
@@ -321,406 +327,536 @@
               const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
         const TELEGRAM_CHAT_ID = '7208967084';
 
-        let data =
-{
-    "users": [
-        { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['foxyprofi'], "subscriberCount": 1 },
-        { "username": "foxyprofi", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 0 }
-    ],
-    "posts": [
-        { "id": 1, "user": "Грибоед", "content": "Приветствуем вас на нашем форуме! Он создан для того, чтобы люди могли делиться своими грибными находками. Мы надеемся, что этот форум поможет вам.", "image": "https://sun9-65.userapi.com/impg/PCN8t1e-5YKrOMDtffJNB3FsqCDDx3FYwbkzFQ/jKGuLsc4b38.jpg?quality=96&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,512x512&sign=3d257cf6f8abc6066cbfb8234b6affde&from=bu&u=PyHl_oJdHyVZ6h3_eLMMlHlZfmHXzQv3xV2zL5n5WTo&cs=512x512", "likes": 1, "likedBy": ['foxyprofi'], "comments": [] }
-    ],
-    "subscriptions": [],
-    "hikeInvitations": [
-        {
-            "inviter": "user1",
-            "invitee": "user2",
-            "status": "pending" // Возможные значения: "pending", "accepted", "declined"
-        }
-    ],
-    "chats": [
-        {
-            "id": "foxyprofi-Грибоед",
-            "users": ["foxyprofi", "Грибоед"],
-            "messages": [
-                { "sender": "foxyprofi2", "receiver": "user2", "text": "Привет!", "special": false },
-                { "sender": "Грибоед", "receiver": "user1", "text": "Привет! Как дела?", "special": false }
+        let data = {
+            "users": [
+                { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['foxyprofi'], "subscriberCount": 1 },
+                { "username": "tema12", "password": "ktUc1s_r5B", "subscribers": [], "subscriberCount": 0 },
+                { "username": "=SM=", "password": "Nk1PbJi_13", "subscribers": [], "subscriberCount": 0 },
+                { "username": "MikeR", "password": "m-09tBaKVc", "subscribers": [], "subscriberCount": 0 },
+                { "username": "Tol_Tolich", "password": "ocY9_0BXlM", "subscribers": [], "subscriberCount": 0 },
+                { "username": "NatalyaBur", "password": "oT1kiJ6_Os", "subscribers": [], "subscriberCount": 0 },
+                { "username": "художник Федотов", "password": "P51MWZsr_X", "subscribers": [], "subscriberCount": 0 },
+                { "username": "tak1973", "password": "ku69HK_7l3", "subscribers": [], "subscriberCount": 0 },
+                { "username": "foxyprofi", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 0 }
             ],
-            "specialMessages": [
-                { 
-                    "sender": "user1", 
-                    "receiver": "user2", 
-                    "text": "Мы готовы! Город: Москва, Время: 12:00, Email: example@example.com, Телефон: 1234567890",
-                    "city": "Москва",
-                    "time": "12:00",
-                    "email": "example@example.com",
-                    "phone": "1234567890"
-                }
-            ]
-        }
-    ]
+            "posts": [
+                { "id": 1, "user": "tema12", "content": "Доброго дня! 30 градусная жара отбила желание многих грибников ходить по лесу. А также желание самих грибов вылезать из земли. Но самые смелые грибы были сегодня охвачены. Около десяти переростков оставлены на рассаду)))", "image": "https://forum.toadstool.ru/uploads/monthly_2024_07/20240701_134148.thumb.jpg.2a5c090e067fa1b2fc2122c2a5e4377f.jpg", "likes": 16, "likedBy": ['tak1973', 'художник Федотов', 'NatalyaBur', 'Tol_Tolich', 'MikeR', '=SM='], "comments": [
+                    { user: 'tak1973', text: 'Сегодня также решил проверить наличие грибов. Удивительно, но очень много белых! Только собирать не чего, одни переростки. Такое впечатление, что в выходные никто за грибами и не ходил. Теперь жалею, что в воскресенье не сходил по грибы. Я б этот отчёт не писал бы, если бы не эти грибы.' },
+                    { user: 'MikeR', text: 'Погода  удачно простерилизовала лес от грибников. А тут было. Далеко не в полную силу, но хвоя выпускает эдулисы.' },
+                    { user: 'художник Федотов', text: 'Да они прошли уже месяц назад….' },
+                    { user: 'NatalyaBur', text: '@tak1973 @MikeR вот уж правда удивили так удивили)' },
+                    { user: 'Tol_Tolich', text: 'Немного запоздалый отчёт последнего дня первого летнего месяца. Ожидания солидного урожая лис с проверенной поляны были почему-то не оправданы действительностью. Может в этом виновата довольно хорошо притоптанная тропинка при входе в лес? Хотя ни срезов, ни микролис я не встретил.' },
+                    { user: 'MikeR', text: 'В размышлениях о грибных судьбах редко вспоминаем мы Якоба Хендрика нашего Вант-Гоффа. Правило его гласит, что при повышении температуры на 10 градусов скорость реакций повышается в 2 -4 раза. Биохимические реакции, регулирующие рост грибов, не сильно отличаются от чисто химических. С результатом сталкиваемся часто. Зашёл на место, где дня 4 тому были редкие мелкие выполни, а сейчас этот лес заполнен унылыми шляпяками. Кондиции уже немного.' },
+                    { user: '=SM=', text: '... только лисички этот закон не изучили :)' },
+                    { user: 'MikeR', text: 'Может, и им он известен, но не скоростью единой... У ракеты, вон, та еще скорость может быть. А как не хватит горючего или окислителя... Но тут и на лисичек пожаловаться не могу. Хорошо растут.' },
+                    { user: '=SM=', text: 'В этом году и горючего, и окислителя было навалом. Кнопки лисят вылезли уже 1 июня, а в хоть как-то сборочный вид они превратились после 10-го. Видимо, перегрузили эту ракету и сильно...' },
+                    { user: 'MikeR', text: 'Не уверен, что мы учитываем все компоненты, нужные для "взлета". Вероятно, часть сигналов может передаваться грибнице от внешней среды не прямо, а посредством высших растений, микрофлоры, а при этом "топливо" мицелия (если оно накоплено) может повести себя непредсказуемо. Мне кажется, что хорошо прослеживаемая на форуме "пятнистость" урожаев намекает, что грибная жизнь не описывается исключительно условиями предыдущих недель и даже месяцев. Это во многом результат гораздо более долгосрочных влияний.' },
+                    { user: 'художник Федотов', text: 'Сильно….Если у Вас на завтрак один бутерброд, как у всех диких грибов, так переваривать его быстро или медленно сути не меняет….Как ни странно, даты ТВП и рост грибов квази минимально зависят от температур в разумных диапазонах….Там важнее другое: толщина бутерброда….' },
+                    { user: '=SM=', text: 'А это, к слову, известный и доказанный факт, и при этом известно для многих видов, особенно культивируемых, какая микрофлора значительно повышает их выход, а какая ингибирует. Так что да, если там что-то полезное сдохло, или что-то вредное переразвелось, то оно сильно повлияет на мощность слоя и скорость его роста.' }
+                ]
+            }
+        ],
+        "subscriptions": [],
+        "hikeInvitations": [
+            {
+                inviter: "Грибоед",
+            invitee: "foxyprofi",
+            status: "pending"
+            }
+        ],
+        "chats": [
+            {
+                "id": "Грибоед-foxyprofi",
+                "users": ["Грибоед", "foxyprofi"],
+                "messages": [
+                    { "sender": "Грибоед", "receiver": "foxyprofi", "text": "Привет!", "special": false },
+                    { "sender": "foxyprofi", "receiver": "Грибоед", "text": "Привет! Как дела?", "special": false }
+                ],
+                "specialMessages": [
+                    { 
+                        "sender": "Грибоед", 
+                        "receiver": "foxyprofi", 
+                        "text": "Мы готовы! Город: Москва, Время: 12:00, Email: example@example.com, Телефон: 1234567890",
+                        "city": "Москва",
+                        "time": "12:00",
+                        "email": "example@example.com",
+                        "phone": "1234567890"
+                    }
+                ]
+            }
+        ]
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderChatInterface();
+    });
+
+    let currentUser = null;
+    let currentChat = null;
+
+    function showLogin() {
+        document.getElementById('login-section').classList.remove('hidden');
+        document.getElementById('register-section').classList.add('hidden');
+    }
+
+    function showRegister() {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('register-section').classList.remove('hidden');
+    }
+
+    function showChangePassword() {
+        document.getElementById('change-password-section').classList.remove('hidden');
+        document.querySelector('.profile').classList.add('hidden');
+    }
+
+    function hideChangePassword() {
+        document.getElementById('change-password-section').classList.add('hidden');
+        document.querySelector('.profile').classList.remove('hidden');
+    }
+
+    function showChangeUsername() {
+        document.getElementById('change-username-section').classList.remove('hidden');
+        document.querySelector('.profile').classList.add('hidden');
+    }
+
+    function hideChangeUsername() {
+        document.getElementById('change-username-section').classList.add('hidden');
+        document.querySelector('.profile').classList.remove('hidden');
+    }
+
+    function login() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    const user = data.users.find(u => u.username === username && u.password === password);
+    if (user) {
+        currentUser = user;
+        document.querySelector('#username span').textContent = username;
+        document.querySelector('#subscriberCount span').textContent = user.subscriberCount;
+        document.querySelector('.auth-panel').classList.add('hidden');
+        document.querySelector('.profile').classList.remove('hidden');
+        renderPosts();
+        renderInvitations();
+    } else {
+        document.getElementById('loginError').textContent = 'Неверное имя пользователя или пароль';
+    }
 }
 
-        let currentUser = null;
-        let currentChat = null;
-
-        function showLogin() {
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('register-section').classList.add('hidden');
+    function register() {
+        const username = document.getElementById('registerUsername').value;
+        const password = document.getElementById('registerPassword').value;
+        if (data.users.find(u => u.username === username)) {
+            document.getElementById('registerError').textContent = 'Имя пользователя уже существует';
+        } else {
+            const newUser = { username, password, subscribers: [], subscriberCount: 0, posts: [] };
+            data.users.push(newUser);
+            alert('Аккаунт создан! Ожидайте подтверждения.');
+            sendToTelegram(newUser, 'newUser');
+            showLogin();
         }
+    }
 
-        function showRegister() {
-            document.getElementById('login-section').classList.add('hidden');
-            document.getElementById('register-section').classList.remove('hidden');
-        }
-
-        function showChangePassword() {
-            document.getElementById('change-password-section').classList.remove('hidden');
-            document.querySelector('.profile').classList.add('hidden');
-        }
-
-        function hideChangePassword() {
-            document.getElementById('change-password-section').classList.add('hidden');
-            document.querySelector('.profile').classList.remove('hidden');
-        }
-
-        function showChangeUsername() {
-            document.getElementById('change-username-section').classList.remove('hidden');
-            document.querySelector('.profile').classList.add('hidden');
-        }
-
-        function hideChangeUsername() {
-            document.getElementById('change-username-section').classList.add('hidden');
-            document.querySelector('.profile').classList.remove('hidden');
-        }
-
-        function login() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            const user = data.users.find(u => u.username === username && u.password === password);
-            if (user) {
-                currentUser = user;
-                document.querySelector('#username span').textContent = username;
-                document.querySelector('#subscriberCount span').textContent = user.subscriberCount;
-                document.querySelector('.auth-panel').classList.add('hidden');
-                document.querySelector('.profile').classList.remove('hidden');
-                renderPosts();
-            } else {
-                document.getElementById('loginError').textContent = 'Неверное имя пользователя или пароль';
-            }
-        }
-
-        function register() {
-            const username = document.getElementById('registerUsername').value;
-            const password = document.getElementById('registerPassword').value;
-            if (data.users.find(u => u.username === username)) {
-                document.getElementById('registerError').textContent = 'Имя пользователя уже существует';
-            } else {
-                const newUser = { username, password, subscribers: [], subscriberCount: 0, posts: [] };
-                data.users.push(newUser);
-                alert('Аккаунт создан! Ожидайте подтверждения.');
-                sendToTelegram(newUser, 'newUser');
-                showLogin();
-            }
-        }
-
-        async function sendToTelegram(data, type) {
-            let message = '';
-            let formData = new FormData();
-            if (type === 'newUser') {
-                message = `Новый пользователь:\nИмя: ${data.username}\nПароль: ${data.password}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'newPost') {
-                message = `Новый пост от ${data.user}:\n${data.content}`;
+    async function sendToTelegram(data, type) {
+        let message = '';
+        let formData = new FormData();
+        
+        if (type === 'newUser') {
+            message = `Новый пользователь:\nИмя: ${data.username}\nПароль: ${data.password}`;
+        } else if (type === 'newPost') {
+            message = `Новый пост от ${data.user}:\n${data.content}`;
+            if (data.image) {
+                formData.append('photo', data.image, 'post_image.jpg');
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('caption', message);
-                if (data.image) {
-                    formData.append('photo', data.image, 'post_image.jpg');
-                } else {
-                    formData.append('text', message);
-                }
-            } else if (type === 'like') {
-                message = `Пост с ID ${data.postId} был лайкнут пользователем ${data.username}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'subscribe') {
-                message = `Пользователь ${data.subscriber} подписался на ${data.username}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'comment') {
-                message = `Комментарий к посту с ID ${data.postId}: ${data.comment}\nОт пользователя: ${data.username}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'changePassword') {
-                message = `Пользователь ${data.username} хочет сменить пароль.\nСтарый пароль: ${data.oldPassword}\nНовый пароль: ${data.newPassword}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'changeUsername') {
-                message = `Пользователь ${data.oldUsername} хочет сменить ник.\nНовый ник: ${data.newUsername}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'hikeInvitation') {
-                message = `Пользователь ${data.inviter} пригласил пользователя ${data.invitee} на совместный поход.`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'hikeResponse') {
-                message = `Пользователь ${data.invitee} ${data.response} приглашение пользователя ${data.inviter} на совместный поход.`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            } else if (type === 'chatMessage') {
-                message = `Сообщение от ${data.sender} к ${data.receiver}: ${data.message}`;
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('text', message);
-            }
-
-            if (type === 'newPost' && data.image) {
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
                     body: formData
                 });
-            } else {
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
-                });
+                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
             }
+        } else if (type === 'like') {
+            message = `Пост с ID ${data.postId} был лайкнут пользователем ${data.username}`;
+        } else if (type === 'subscribe') {
+            message = `Пользователь ${data.subscriber} подписался на ${data.username}`;
+        } else if (type === 'comment') {
+            message = `Комментарий к посту с ID ${data.postId}:\n${data.comment}\nОт пользователя: ${data.username}`;
+            if (data.image) {
+                formData.append('photo', data.image, 'comment_image.jpg');
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('caption', message);
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
+            }
+        } else if (type === 'reply') {
+            message = `Ответ на комментарий к посту с ID ${data.postId}:\n${data.reply}\nОт пользователя: ${data.username}`;
+            if (data.image) {
+                formData.append('photo', data.image, 'reply_image.jpg');
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('caption', message);
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+                return; // Возвращаемся, чтобы избежать дублирования отправки сообщения
+            }
+        } else if (type === 'changePassword') {
+            message = `Пользователь ${data.username} хочет сменить пароль.\nСтарый пароль: ${data.oldPassword}\nНовый пароль: ${data.newPassword}`;
+        } else if (type === 'changeUsername') {
+            message = `Пользователь ${data.oldUsername} хочет сменить ник.\нНовый ник: ${data.newUsername}`;
+        } else if (type === 'hikeInvitation') {
+            message = `Пользователь ${data.inviter} пригласил пользователя ${data.invitee} на совместный поход.`;
+        } else if (type === 'hikeResponse') {
+            message = `Пользователь ${data.invitee} ${data.response} приглашение пользователя ${data.inviter} на совместный поход.`;
+        } else if (type === 'chatMessage') {
+            message = `Сообщение от ${data.sender} к ${data.receiver}:\n${data.message}`;
         }
 
-        function toggleAdminPanel() {
-            document.querySelector('.admin-panel').classList.toggle('hidden');
-        }
+        formData.append('chat_id', TELEGRAM_CHAT_ID);
+        formData.append('text', message);
+        
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            body: formData
+        });
+    }
 
-        function addPost() {
-            const content = document.getElementById('postContent').value;
-            const imageFile = document.getElementById('postImage').files[0];
+    function toggleAdminPanel() {
+        document.querySelector('.admin-panel').classList.toggle('hidden');
+    }
+
+    function addPost() {
+        const content = document.getElementById('postContent').value;
+        const imageFile = document.getElementById('postImage').files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const image = reader.result;
+            const post = {
+                id: Date.now(),
+                user: document.querySelector('#username span').textContent,
+                content: content,
+                image: imageFile ? imageFile : '',
+                likes: 0,
+                likedBy: [],
+                comments: []
+            };
+            data.posts.push(post);
+            renderPosts();
+            sendToTelegram(post, 'newPost');
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImage').value = '';
+        };
+        if (imageFile) {
+            reader.readAsDataURL(imageFile);
+        } else {
+            const post = {
+                id: Date.now(),
+                user: document.querySelector('#username span').textContent,
+                content: content,
+                image: '',
+                likes: 0,
+                likedBy: [],
+                comments: []
+            };
+            data.posts.push(post);
+            renderPosts();
+            sendToTelegram(post, 'newPost');
+            document.getElementById('postContent').value = '';
+        }
+    }
+
+    function renderPosts() {
+        const postsContainer = document.getElementById('posts');
+        postsContainer.innerHTML = '';
+
+        const sortedPosts = data.posts.sort((a, b) => {
+            const userSubscriptions = data.users.find(u => u.username === document.querySelector('#username span').textContent).subscribers;
+            if (userSubscriptions.includes(a.user) && !userSubscriptions.includes(b.user)) {
+                return -1;
+            }
+            if (!userSubscriptions.includes(a.user) && userSubscriptions.includes(b.user)) {
+                return 1;
+            }
+            return 0;
+        });
+
+        sortedPosts.forEach((post, postIndex) => {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            postDiv.innerHTML = `
+                <p>${post.content}</p>
+                ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
+                <p>Автор: ${post.user}</p>
+                <button onclick="likePost(${post.id})">Лайк <span id="like-${post.id}">${post.likes}</span></button>
+                <p class="subscription" onclick="subscribe('${post.user}')">Подписаться на ${post.user}</п>
+                <div class="comment-section">
+                    <h4>Комментарии</h4>
+                    ${post.comments.map((comment, commentIndex) => `
+                        <div class="comment">
+                            <p><strong>${comment.user}:</strong> ${comment.text}</p>
+                            ${comment.image ? `<img src="${comment.image}" alt="Image" style="max-width: 100%;">` : ''}
+                            <div class="reply-section">
+                                <h5>Ответы</h5>
+                                ${comment.replies ? comment.replies.map((reply, replyIndex) => `
+                                    <div class="reply">
+                                        <p><strong>${reply.user}:</strong> ${reply.text}</p>
+                                        ${reply.image ? `<img src="${reply.image}" alt="Image" style="max-width: 100%;">` : ''}
+                                    </div>
+                                `).join('') : ''}
+                                <textarea id="replyText-${post.id}-${commentIndex}" placeholder="Ваш ответ..."></textarea>
+                                <input type="file" id="replyImage-${post.id}-${commentIndex}">
+                                <button onclick="addReply(${post.id}, ${commentIndex})">Ответить</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <textarea id="commentText-${post.id}" placeholder="Ваш комментарий..."></textarea>
+                    <input type="file" id="commentImage-${post.id}">
+                    <button onclick="addComment(${post.id})">Комментировать</button>
+                </div>
+            `;
+            postsContainer.appendChild(postDiv);
+        });
+    }
+
+    function likePost(postId) {
+        const post = data.posts.find(p => p.id === postId);
+        const username = document.querySelector('#username span').textContent;
+        if (post && !post.likedBy.includes(username)) {
+            post.likes += 1;
+            post.likedBy.push(username);
+            renderPosts();
+            sendToTelegram({ postId: postId, username: username }, 'like');
+        }
+    }
+
+    function subscribe(username) {
+        const currentUser = data.users.find(u => u.username === document.querySelector('#username span').textContent);
+        const userToSubscribe = data.users.find(u => u.username === username);
+        if (!currentUser.subscribers.includes(username) && username !== currentUser.username) {
+            currentUser.subscribers.push(username);
+            currentUser.subscriberCount += 1;
+            userToSubscribe.subscriberCount += 1;
+            document.querySelector('#subscriberCount span').textContent = currentUser.subscriberCount;
+            alert(`Вы подписались на ${username}`);
+            sendToTelegram({ username: username, subscriber: currentUser.username }, 'subscribe');
+        } else {
+            alert(`Вы уже подписаны на ${username}`);
+        }
+        renderPosts();
+    }
+
+    function addComment(postId) {
+        const text = document.getElementById(`commentText-${postId}`).value;
+        const imageFile = document.getElementById(`commentImage-${postId}`).files[0];
+        const username = document.querySelector('#username span').textContent;
+        const post = data.posts.find(p => p.id === postId);
+
+        if (text || imageFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const image = reader.result;
-                const post = {
-                    id: Date.now(),
-                    user: document.querySelector('#username span').textContent,
-                    content: content,
-                    image: imageFile ? imageFile : '',
-                    likes: 0,
-                    likedBy: [],
-                    comments: []
-                };
-                data.posts.push(post);
+                const comment = { user: username, text: text, image: image || '' };
+                post.comments.push(comment);
                 renderPosts();
-                sendToTelegram(post, 'newPost');
-                document.getElementById('postContent').value = '';
-                document.getElementById('postImage').value = '';
+                sendToTelegram({ postId: postId, username: username, comment: text, image: image }, 'comment');
+                document.getElementById(`commentText-${postId}`).value = '';
+                document.getElementById(`commentImage-${postId}`).value = '';
             };
             if (imageFile) {
                 reader.readAsDataURL(imageFile);
             } else {
-                const post = {
-                    id: Date.now(),
-                    user: document.querySelector('#username span').textContent,
-                    content: content,
-                    image: '',
-                    likes: 0,
-                    likedBy: [],
-                    comments: []
-                };
-                data.posts.push(post);
-                renderPosts();
-                sendToTelegram(post, 'newPost');
-                document.getElementById('postContent').value = '';
-            }
-        }
-
-        function renderPosts() {
-            const postsContainer = document.getElementById('posts');
-            postsContainer.innerHTML = '';
-
-            const sortedPosts = data.posts.sort((a, b) => {
-                const userSubscriptions = data.users.find(u => u.username === document.querySelector('#username span').textContent).subscribers;
-                if (userSubscriptions.includes(a.user) && !userSubscriptions.includes(b.user)) {
-                    return -1;
-                }
-                if (!userSubscriptions.includes(a.user) && userSubscriptions.includes(b.user)) {
-                    return 1;
-                }
-                return 0;
-            });
-
-            sortedPosts.forEach(post => {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'post';
-                postDiv.innerHTML = `
-                    <p>${post.content}</p>
-                    ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
-                    <p>Автор: ${post.user}</p>
-                    <button onclick="likePost(${post.id})">Лайк <span id="like-${post.id}">${post.likes}</span></button>
-                    <p class="subscription" onclick="subscribe('${post.user}')">Подписаться на ${post.user}</p>
-                    <div class="comment-section">
-                        <h4>Комментарии</h4>
-                        ${post.comments.map(comment => `
-                            <div class="comment">
-                                <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                            </div>
-                        `).join('')}
-                        <textarea id="commentText-${post.id}" placeholder="Ваш комментарий..."></textarea>
-                        <button onclick="addComment(${post.id})">Комментировать</button>
-                    </div>
-                `;
-                postsContainer.appendChild(postDiv);
-            });
-        }
-
-        function likePost(postId) {
-            const post = data.posts.find(p => p.id === postId);
-            const username = document.querySelector('#username span').textContent;
-            if (post && !post.likedBy.includes(username)) {
-                post.likes += 1;
-                post.likedBy.push(username);
-                renderPosts();
-                sendToTelegram({ postId: postId, username: username }, 'like');
-            }
-        }
-
-        function subscribe(username) {
-            const currentUser = data.users.find(u => u.username === document.querySelector('#username span').textContent);
-            const userToSubscribe = data.users.find(u => u.username === username);
-            if (!currentUser.subscribers.includes(username) && username !== currentUser.username) {
-                currentUser.subscribers.push(username);
-                currentUser.subscriberCount += 1;
-                userToSubscribe.subscriberCount += 1;
-                document.querySelector('#subscriberCount span').textContent = currentUser.subscriberCount;
-                alert(`Вы подписались на ${username}`);
-                sendToTelegram({ username: username, subscriber: currentUser.username }, 'subscribe');
-            } else {
-                alert(`Вы уже подписаны на ${username}`);
-            }
-            renderPosts();
-        }
-
-        function addComment(postId) {
-            const text = document.getElementById(`commentText-${postId}`).value;
-            const username = document.querySelector('#username span').textContent;
-            const post = data.posts.find(p => p.id === postId);
-            if (text) {
-                const comment = { user: username, text: text };
+                const comment = { user: username, text: text, image: '' };
                 post.comments.push(comment);
                 renderPosts();
                 sendToTelegram({ postId: postId, username: username, comment: text }, 'comment');
                 document.getElementById(`commentText-${postId}`).value = '';
             }
         }
-
-        function changePassword() {
-            const oldPassword = document.getElementById('oldPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const username = document.querySelector('#username span').textContent;
-            const user = data.users.find(u => u.username === username);
-            if (user && user.password === oldPassword) {
-                user.password = newPassword;
-                alert('Пароль успешно изменен!');
-                sendToTelegram({ username: username, oldPassword: oldPassword, newPassword: newPassword }, 'changePassword');
-                hideChangePassword();
-            } else {
-                document.getElementById('changePasswordError').textContent = 'Старый пароль неверен';
-            }
-        }
-
-        function changeUsername() {
-            const newUsername = document.getElementById('newUsername').value;
-            const oldUsername = document.querySelector('#username span').textContent;
-            const user = data.users.find(u => u.username === oldUsername);
-            if (user && !data.users.find(u => u.username === newUsername)) {
-                user.username = newUsername;
-                document.querySelector('#username span').textContent = newUsername;
-                alert('Ник успешно изменен!');
-                sendToTelegram({ oldUsername: oldUsername, newUsername: newUsername }, 'changeUsername');
-                hideChangeUsername();
-            } else {
-                document.getElementById('changeUsernameError').textContent = 'Ник уже существует или невалидный';
-            }
-        }
-
-        function searchUser() {
-            const searchUsername = document.getElementById('searchUser').value;
-            const user = data.users.find(u => u.username === searchUsername);
-            if (user) {
-                document.querySelector('.profile').classList.add('hidden');
-                document.getElementById('user-profile').classList.remove('hidden');
-                document.getElementById('profileUsername').textContent = user.username;
-                document.getElementById('profileSubscriberCount').textContent = user.subscriberCount;
-                renderUserPosts(user);
-            } else {
-                alert('Пользователь не найден');
-            }
-        }
-
-        function renderUserPosts(user) {
-            const profilePostsContainer = document.getElementById('profilePosts');
-            profilePostsContainer.innerHTML = '';
-
-            user.posts.forEach(post => {
-                const postDiv = document.createElement('div');
-                postDiv.className = 'post';
-                postDiv.innerHTML = `
-                    <p>${post.content}</p>
-                    ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
-                    <p>Автор: ${post.user}</p>
-                    <div class="comment-section">
-                        <h4>Комментарии</h4>
-                        ${post.comments.map(comment => `
-                            <div class="comment">
-                                <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                profilePostsContainer.appendChild(postDiv);
-            });
-        }
-
-        function inviteToHike() {
-    const invitee = document.getElementById('profileUsername').textContent;
-    const inviter = document.querySelector('#username span').textContent;
-    const invitation = { inviter: inviter, invitee: invitee, status: 'pending' };
-    data.hikeInvitations.push(invitation);
-    sendToTelegram({ inviter: inviter, invitee: invitee }, 'hikeInvitation');
-    alert('Приглашение отправлено!');
-    createChat(inviter, invitee);
-}
-
-function createChat(foxyprofi, Грибоед) {
-    const chatId = `${foxyprofi}-${Грибоед}`;
-    if (!data.chats.find(chat => chat.id === chatId)) {
-        const newChat = { id: chatId, users: [foxyprofi, Грибоед], messages: [], specialMessages: [] };
-        data.chats.push(newChat);
-        currentChat = newChat;
-        document.querySelector('.chat-panel').classList.remove('hidden');
-        renderChat();
-    } else {
-        currentChat = data.chats.find(chat => chat.id === chatId);
-        document.querySelector('.chat-panel').classList.remove('hidden');
-        renderChat();
     }
-}
 
-function renderChat() {
-    const chatContainer = document.getElementById('chat');
+    function addReply(postId, commentIndex) {
+        const text = document.getElementById(`replyText-${postId}-${commentIndex}`).value;
+        const imageFile = document.getElementById(`replyImage-${postId}-${commentIndex}`).files[0];
+        const username = document.querySelector('#username span').textContent;
+        const post = data.posts.find(p => p.id === postId);
+        const comment = post.comments[commentIndex];
+
+        if (text || imageFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const image = reader.result;
+                const reply = { user: username, text: text, image: image || '' };
+                if (!comment.replies) {
+                    comment.replies = [];
+                }
+                comment.replies.push(reply);
+                renderPosts();
+                sendToTelegram({ postId: postId, username: username, reply: text, image: image }, 'reply');
+                document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
+                document.getElementById(`replyImage-${postId}-${commentIndex}`).value = '';
+            };
+            if (imageFile) {
+                reader.readAsDataURL(imageFile);
+            } else {
+                const reply = { user: username, text: text, image: '' };
+                if (!comment.replies) {
+                    comment.replies = [];
+                }
+                comment.replies.push(reply);
+                renderPosts();
+                sendToTelegram({ postId: postId, username: username, reply: text }, 'reply');
+                document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
+            }
+        }
+    }
+
+    function changePassword() {
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const username = document.querySelector('#username span').textContent;
+        const user = data.users.find(u => u.username === username);
+        if (user && user.password === oldPassword) {
+            user.password = newPassword;
+            alert('Пароль успешно изменен!');
+            sendToTelegram({ username: username, oldPassword: oldPassword, newPassword: newPassword }, 'changePassword');
+            hideChangePassword();
+        } else {
+            document.getElementById('changePasswordError').textContent = 'Старый пароль неверен';
+        }
+    }
+
+    function changeUsername() {
+        const newUsername = document.getElementById('newUsername').value;
+        const oldUsername = document.querySelector('#username span').textContent;
+        const user = data.users.find(u => u.username === oldUsername);
+        if (user && !data.users.find(u => u.username === newUsername)) {
+            user.username = newUsername;
+            document.querySelector('#username span').textContent = newUsername;
+            alert('Ник успешно изменен!');
+            sendToTelegram({ oldUsername: oldUsername, newUsername: newUsername }, 'changeUsername');
+            hideChangeUsername();
+        } else {
+            document.getElementById('changeUsernameError').textContent = 'Ник уже существует или невалидный';
+        }
+    }
+
+    function searchUser() {
+        const searchUsername = document.getElementById('searchUser').value;
+        const user = data.users.find(u => u.username === searchUsername);
+        if (user) {
+            document.querySelector('.profile').classList.add('hidden');
+            document.getElementById('user-profile').classList.remove('hidden');
+            document.getElementById('profileUsername').textContent = user.username;
+            document.getElementById('profileSubscriberCount').textContent = user.subscriberCount;
+            renderUserPosts(user);
+        } else {
+            alert('Пользователь не найден');
+        }
+    }
+
+    function renderUserPosts(user) {
+        const profilePostsContainer = document.getElementById('profilePosts');
+        profilePostsContainer.innerHTML = '';
+
+        user.posts.forEach(post => {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'post';
+            postDiv.innerHTML = `
+                <p>${post.content}</p>
+                ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
+                <p>Автор: ${post.user}</p>
+                <div class="comment-section">
+                    <h4>Комментарии</h4>
+                    ${post.comments.map(comment => `
+                        <div class="comment">
+                            <p><strong>${comment.user}:</strong> ${comment.text}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            profilePostsContainer.appendChild(postDiv);
+        });
+    }
+
+    function inviteToHike() {
+        const invitee = document.getElementById('profileUsername').textContent;
+        const inviter = document.querySelector('#username span').textContent;
+        const invitation = { inviter: inviter, invitee: invitee, status: 'pending' };
+        data.hikeInvitations.push(invitation);
+        sendToTelegram({ inviter: inviter, invitee: invitee }, 'hikeInvitation');
+        alert('Приглашение отправлено!');
+        createChat(inviter, invitee);
+    }
+
+    function createChat(user1, user2) {
+        const chatId = `${user1}-${user2}`;
+        if (!data.chats.find(chat => chat.id === chatId)) {
+            const newChat = { id: chatId, users: [user1, user2], messages: [], specialMessages: [] };
+            data.chats.push(newChat);
+            currentChat = newChat;
+        } else {
+            currentChat = data.chats.find(chat => chat.id === chatId);
+        }
+    }
+
+    function renderChat(inviter, invitee) {
+    const chatContainer = document.querySelector('.chat-panel');
     chatContainer.innerHTML = '';
+
+    const messagesContainer = document.createElement('div');
+    messagesContainer.id = 'chat';
+    chatContainer.appendChild(messagesContainer);
 
     currentChat.messages.forEach(message => {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chat-message';
         messageDiv.textContent = `${message.sender}: ${message.text}`;
-        chatContainer.appendChild(messageDiv);
+        messagesContainer.appendChild(messageDiv);
     });
 
     currentChat.specialMessages.forEach(message => {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'special-message';
         messageDiv.textContent = `${message.sender}: ${message.text}`;
-        chatContainer.appendChild(messageDiv);
+        messagesContainer.appendChild(messageDiv);
     });
+
+    const inputContainer = document.createElement('div');
+    inputContainer.innerHTML = `
+        <textarea id="chatMessage" placeholder="Ваше сообщение..."></textarea>
+        <button onclick="sendMessage()">Отправить</button>
+        <button onclick="sendSpecialMessage()">Отправить особое сообщение</button>
+        <button onclick="cancelHike('${inviter}', '${invitee}')">Отменить поход</button>
+    `;
+    chatContainer.appendChild(inputContainer);
+}
+
+    function cancelHike(inviter, invitee) {
+        const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
+        if (invitation.status === 'accepted') {
+            invitation.status = 'declined';
+            alert('Поход отменен!');
+            sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
+            document.querySelector('.chat-panel').classList.add('hidden');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderChatInterface();
+    });
+
+// Обновляем интерфейс для отображения чатов
+function renderChatInterface() {
+    const username = document.querySelector('#username span').textContent;
+    const chatContainer = document.querySelector('.chat-panel');
+    chatContainer.innerHTML = '';
+
+    const invitation = data.hikeInvitations.find(invite => invite.invitee === username && invite.status === 'accepted');
+    if (invitation) {
+        chatContainer.classList.remove('hidden');
+        renderChat(invitation.inviter, invitation.invitee);
+    }
 }
 
 function sendMessage() {
@@ -730,7 +866,7 @@ function sendMessage() {
     const message = { sender: sender, receiver: receiver, text: messageText, special: false };
     currentChat.messages.push(message);
     sendToTelegram({ sender: sender, receiver: receiver, message: messageText }, 'chatMessage');
-    renderChat();
+    renderChat(currentChat.users[0], currentChat.users[1]);
     document.getElementById('chatMessage').value = '';
 }
 
@@ -745,7 +881,38 @@ function sendSpecialMessage() {
     const specialMessage = { sender: sender, receiver: receiver, text: specialMessageText, city: city, time: time, email: email, phone: phone };
     currentChat.specialMessages.push(specialMessage);
     sendToTelegram({ sender: sender, receiver: receiver, message: specialMessageText }, 'chatMessage');
-    renderChat();
+    renderChat(currentChat.users[0], currentChat.users[1]);
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderChatInterface();
+    renderPosts();
+});
+
+function renderInvitations() {
+    const invitationContainer = document.getElementById('invitation-container');
+    invitationContainer.innerHTML = '';
+
+    const username = document.querySelector('#username span').textContent;
+    const invitations = data.hikeInvitations.filter(invite => invite.invitee === username && invite.status === 'pending');
+
+    if (invitations.length === 0) {
+        invitationContainer.innerHTML = '<p>Вас пока никто не приглашал.</p>';
+        return;
+    }
+
+    invitations.forEach(invitation => {
+        const invitationDiv = document.createElement('div');
+        invitationDiv.className = 'invitation';
+        invitationDiv.innerHTML = `
+            <p>Приглашение на поход от ${invitation.inviter}</p>
+            <button onclick="acceptHike('${invitation.inviter}', '${invitation.invitee}')">Принять</button>
+            <button onclick="declineHike('${invitation.inviter}', '${invitation.invitee}')">Отклонить</button>
+        `;
+        invitationContainer.appendChild(invitationDiv);
+    });
 }
 
 function acceptHike(inviter, invitee) {
@@ -754,6 +921,8 @@ function acceptHike(inviter, invitee) {
     alert('Приглашение принято!');
     sendToTelegram({ inviter: inviter, invitee: invitee, response: 'принял' }, 'hikeResponse');
     createChat(inviter, invitee);
+    renderInvitations();
+    renderChatInterface();
 }
 
 function declineHike(inviter, invitee) {
@@ -761,25 +930,17 @@ function declineHike(inviter, invitee) {
     invitation.status = 'declined';
     alert('Приглашение отклонено!');
     sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
+    renderInvitations();
 }
 
-function cancelHike(inviter, invitee) {
-    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
-    if (invitation.status === 'accepted') {
-        invitation.status = 'declined';
-        alert('Поход отменен!');
-        sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
-    }
+document.querySelector('.profile').innerHTML += '<button onclick="toggleInvitationContainer()">Показать приглашения</button>';
+document.querySelector('body').innerHTML += '<div id="invitation-container" class="hidden"></div>';
+
+function toggleInvitationContainer() {
+    const container = document.getElementById('invitation-container');
+    container.classList.toggle('hidden');
+    renderInvitations();
 }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPosts();
-        });
-    </script>
-
-</body>
-</html>
-            
     </script>
 
 </body>
