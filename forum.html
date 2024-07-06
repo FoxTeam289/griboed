@@ -62,57 +62,86 @@ header {
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
-.logo {
-    font-size: 1.5em;
-    font-weight: bold;
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
 }
 
-.nav-links {
+.menu-btn {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-btn span {
+    background: white;
+    height: 3px;
+    margin: 5px 0;
+    width: 25px;
+}
+
+.nav-menu {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-.nav-links li {
+.nav-menu li {
     margin-left: 20px;
 }
 
-.nav-links a {
+.nav-menu a {
     color: white;
     text-decoration: none;
-    font-size: 1em;
-    position: relative;
-    transition: color 0.3s;
+    font-size: 16px;
 }
 
-.nav-links a.active,
-.nav-links a:hover {
-    color: #FFD700;
+.nav-menu a:hover {
+    text-decoration: underline;
 }
 
-.nav-links a::before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: #FFD700;
-    transition: width 0.3s;
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-}
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: flex;
+    }
 
-.nav-links a:hover::before {
-    width: 100%;
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #4CAF50;
+        position: absolute;
+        top: 60px;
+        left: 0;
+    }
+
+    .nav-menu li {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .nav-menu.show {
+        display: flex;
+    }
+}
+.container2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .content {
@@ -280,44 +309,30 @@ input[type="file"] + label::before {
     align-items: flex-start;
 }
 
-/* Мобильная адаптация */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .nav-links li {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
-
-    .auth-panel {
-        flex-direction: column;
-    }
-}
 
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Mushfind</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="bestforest.html">Лучшие леса</a></li>
-                <li><a href="otziv.html">Написать отзыв</a></li>
-                <li><a href="go.html">Лесной навигатор</a></li>
-                <li><a href="documentation.html">Документация</a></li>
-                <li><a class="active" href="forum.html">Форум</a></li>
+    <nav class="navbar">
+        <div class="container2">
+            <div class="logo">
+                <a href="/">Mushfind</a>
+            </div>
+            <div class="menu-btn" id="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/bestforest.html">Лучшие леса</a></li>
+                <li><a href="/otziv.html">Написать отзыв</a></li>
+                <li><a href="/go.html">Главные функции</a></li>
+                <li><a href="/documentation.html">Документация</a></li>
+                <li><a href="/forum.html">Соц. сеть</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
     <div class="content">
         <h1>Сообщество</h1>
         <div class="auth-panel">
@@ -410,33 +425,16 @@ input[type="file"] + label::before {
     </div>
     </div>    
 <script>
-       document.addEventListener('DOMContentLoaded', () => {
-				  const nav = document.querySelector('.nav-links');
-				  const navLinks = document.querySelectorAll('.nav-links li');
-			  
-				  // Toggle nav for mobile view
-				  document.querySelector('.logo').addEventListener('click', () => {
-					  nav.classList.toggle('nav-active');
-			  
-					  // Animate links
-					  navLinks.forEach((link, index) => {
-						  if (link.style.animation) {
-							  link.style.animation = '';
-						  } else {
-							  link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-						  }
-					  });
-				  });
-			  
-				  // Active link highlighting
-				  const links = document.querySelectorAll('.nav-links a');
-				  links.forEach(link => {
-					  link.addEventListener('click', function() {
-						  links.forEach(navLink => navLink.classList.remove('active'));
-						  this.classList.add('active');
-					  });
-				  });
-			  });
+         document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuBtn.addEventListener('click', function() {
+        navMenu.classList.toggle('show');
+    });
+});
+
+      
               const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
         const TELEGRAM_CHAT_ID = '7208967084';
 

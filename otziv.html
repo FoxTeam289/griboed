@@ -147,93 +147,111 @@
             }
         }
 
-        .navbar {
+        .container2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #228B22;
-    z-index: 1000; /* Ensure the navbar is on top */
-    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.navbar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
-.logo {
-    color: #fff;
+.logo a {
+    color: white;
+    text-decoration: none;
     font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
+}
+
+.menu-btn {
+    display: none;
+    flex-direction: column;
     cursor: pointer;
 }
 
-.nav-links {
+.menu-btn span {
+    background: white;
+    height: 3px;
+    margin: 5px 0;
+    width: 25px;
+}
+
+.nav-menu {
     list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-.nav-links li {
-    margin: 0 15px;
+.nav-menu li {
+    margin-left: 20px;
 }
 
-.nav-links a {
-    color: #fff;
+.nav-menu a {
+    color: white;
     text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease;
+    font-size: 16px;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: #FFD700;
+.nav-menu a:hover {
+    text-decoration: underline;
 }
 
-@media screen and (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        background-color: #228B22;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-links.nav-active {
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu-btn {
         display: flex;
     }
 
-    .nav-links li {
-        margin: 20px 0;
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #4CAF50;
+        position: absolute;
+        top: 60px;
+        left: 0;
     }
-}
 
-/* Animation for nav links */
-@keyframes navLinkFade {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
+    .nav-menu li {
+        text-align: center;
+        margin: 10px 0;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+
+    .nav-menu.show {
+        display: flex;
     }
 }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Mushfind</div>
-            <ul class="nav-links">
-                <li><a class="active" href="index.html">Главная</a></li>
-                <li><a href="bestforest.html">Лучшие леса</a></li>
-                <li><a href="otziv.html">Написать отзыв</a></li>
-                <li><a href="go.html">Лесной навигатор</a></li>
-                <li><a href="documentation.html">Документация</a></li>
-                <li><a href="forum.html">Форум</a></li>
+    <nav class="navbar">
+        <div class="container2">
+            <div class="logo">
+                <a href="/">Mushfind</a>
+            </div>
+            <div class="menu-btn" id="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/bestforest.html">Лучшие леса</a></li>
+                <li><a href="/otziv.html">Написать отзыв</a></li>
+                <li><a href="/go.html">Главные функции</a></li>
+                <li><a href="/documentation.html">Документация</a></li>
+                <li><a href="/forum.html">Соц. сеть</a></li>
             </ul>
-        </nav>
-    </header>
+        </div>
+    </nav>
     <div class="progress-container">
         <div class="progress-bar" id="myBar"></div>
     </div>
@@ -337,33 +355,16 @@
     </div>
 
     <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.querySelector('.nav-links');
-    const navLinks = document.querySelectorAll('.nav-links li');
+      document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
 
-    // Toggle nav for mobile view
-    document.querySelector('.logo').addEventListener('click', () => {
-        nav.classList.toggle('nav-active');
-
-        // Animate links
-        navLinks.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-            }
-        });
-    });
-
-    // Active link highlighting
-    const links = document.querySelectorAll('.nav-links a');
-    links.forEach(link => {
-        link.addEventListener('click', function() {
-            links.forEach(navLink => navLink.classList.remove('active'));
-            this.classList.add('active');
-        });
+    menuBtn.addEventListener('click', function() {
+        navMenu.classList.toggle('show');
     });
 });
+
+      
 
         window.onscroll = function() {updateProgressBar()};
 

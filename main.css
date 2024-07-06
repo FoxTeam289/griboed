@@ -126,75 +126,86 @@ body {
 	font-size: calc(var(--index) * .75);
 	letter-spacing: calc(var(--index) / 37.5);
 }
-.navbar {
+.container2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #228B22;
-    z-index: 1000; /* Ensure the navbar is on top */
-    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.navbar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
-.logo {
-    color: #fff;
+.logo a {
+    color: white;
+    text-decoration: none;
     font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
+}
+
+.menu-btn {
+    display: none;
+    flex-direction: column;
     cursor: pointer;
 }
 
-.nav-links {
+.menu-btn span {
+    background: white;
+    height: 3px;
+    margin: 5px 0;
+    width: 25px;
+}
+
+.nav-menu {
     list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-.nav-links li {
-    margin: 0 15px;
+.nav-menu li {
+    margin-left: 20px;
 }
 
-.nav-links a {
-    color: #fff;
+.nav-menu a {
+    color: white;
     text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease;
+    font-size: 16px;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    color: #FFD700;
+.nav-menu a:hover {
+    text-decoration: underline;
 }
 
-@media screen and (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 80px;
-        right: 0;
-        background-color: #228B22;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-links.nav-active {
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu-btn {
         display: flex;
     }
 
-    .nav-links li {
-        margin: 20px 0;
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #4CAF50;
+        position: absolute;
+        top: 60px;
+        left: 0;
     }
-}
 
-/* Animation for nav links */
-@keyframes navLinkFade {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
+    .nav-menu li {
+        text-align: center;
+        margin: 10px 0;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
+
+    .nav-menu.show {
+        display: flex;
     }
 }
 

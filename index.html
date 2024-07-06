@@ -46,38 +46,27 @@
 
 	<div class="wrapper">
 		<div class="content">
-				<nav class="navbar">
-					<div class="logo">Mushfind</div>
-					<ul class="nav-links">
-						<li><a class="active" href="index.html">Главная</a></li>
-						<li><a href="bestforest.html">Лучшие леса</a></li>
-						<li><a href="otziv.html">Написать отзыв</a></li>
-						<li><a href="go.html">Лесной навигатор</a></li>
-						<li><a href="documentation.html">Документация</a></li>
-						<li><a href="forum.html">Форум</a></li>
-					</ul>
-				</nav>
-				<div class="popup-container hidden" id="popup">
-					<div class="popup-content">
-						<h2>Как вам наш сайт?</h2>
-						<div class="stars" id="stars">
-							<span class="star" data-value="1">&#9733;</span>
-							<span class="star" data-value="2">&#9733;</span>
-							<span class="star" data-value="3">&#9733;</span>
-							<span class="star" data-value="4">&#9733;</span>
-							<span class="star" data-value="5">&#9733;</span>
-							<span class="star" data-value="6">&#9733;</span>
-							<span class="star" data-value="7">&#9733;</span>
-							<span class="star" data-value="8">&#9733;</span>
-							<span class="star" data-value="9">&#9733;</span>
-							<span class="star" data-value="10">&#9733;</span>
-						</div>
-						<p id="thank-you" class="hidden">Мы очень ценим вашу обратную связь! И были бы очень рады получить эту оценку в Яндекс картах</p>
-						<button id="leave-review" class="hidden">Оставить отзыв в Яндекс картах</button>
-						<button id="close-popup">Закрыть</button>
+			<nav class="navbar">
+				<div class="container2">
+					<div class="logo">
+						<a href="/">Mushfind</a>
 					</div>
+					<div class="menu-btn" id="menu-btn">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<ul class="nav-menu" id="nav-menu">
+						<li><a href="/">Главная</a></li>
+						<li><a href="/bestforest.html">Лучшие леса</a></li>
+						<li><a href="/otziv.html">Написать отзыв</a></li>
+						<li><a href="/go.html">Главные функции</a></li>
+						<li><a href="/documentation.html">Документация</a></li>
+						<li><a href="/forum.html">Соц. сеть</a></li>
+					</ul>
 				</div>
-		<!--	<div class="table-container">
+			</nav>
+		<div class="table-container">
 				<div class="main-text">
 					Грибоед <span class="mushroom-icon">🍄</span>
 					<span class="arrow"></span>
@@ -85,7 +74,6 @@
 				</div>
 				<div class="small-text">Грибоед теперь Mushfind</div>
 			</div>
-			-->
 			<header class="main-header">
 				<div class="layers">
 					<div class="layer__header">
@@ -108,33 +96,16 @@
 				<div class="copy2">*Могут, но это не точно.</div>
 			</article>
 			<script>
-				document.addEventListener('DOMContentLoaded', () => {
-				  const nav = document.querySelector('.nav-links');
-				  const navLinks = document.querySelectorAll('.nav-links li');
-			  
-				  // Toggle nav for mobile view
-				  document.querySelector('.logo').addEventListener('click', () => {
-					  nav.classList.toggle('nav-active');
-			  
-					  // Animate links
-					  navLinks.forEach((link, index) => {
-						  if (link.style.animation) {
-							  link.style.animation = '';
-						  } else {
-							  link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-						  }
-					  });
-				  });
-			  
-				  // Active link highlighting
-				  const links = document.querySelectorAll('.nav-links a');
-				  links.forEach(link => {
-					  link.addEventListener('click', function() {
-						  links.forEach(navLink => navLink.classList.remove('active'));
-						  this.classList.add('active');
-					  });
-				  });
-			  });
+				     document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.getElementById('menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuBtn.addEventListener('click', function() {
+        navMenu.classList.toggle('show');
+    });
+});
+
+      
 			  
 			  document.addEventListener('DOMContentLoaded', () => {
     const stars = document.querySelectorAll('.star');
