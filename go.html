@@ -416,12 +416,12 @@ iframe {
     <main>
         <div id="map"></div>
         <div id="control" class="controls">
-            <button onclick="setUserLocation()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
+            <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
             <button id="openModalBtn" onclick="setMushroomZone()"><i class="fas fa-map-pin"></i> Поставить грибную зону</button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
             <button onclick="searchNearbyPanoramas()"><i class="fas fa-street-view"></i> Найти ближайшие панорамы</button>
-            <button id="routeBtn" onclick="navigateToCurrentLocation()"><i class="fas fa-route"></i> Построить маршрут к текущему местоположению</button>
+            <button onclick="returnToMarkedPoint()"><i class="fas fa-route"></i>Вернуться к точке</button>
             <button id="choose_one" style="display: none;" onclick="voteMushroomZone(true)"><i class="fas fa-thumbs-up"></i> Есть грибы</button>
             <button id="choose_two" style="display: none;" onclick="voteMushroomZone(false)"><i class="fas fa-thumbs-down"></i> Нет грибов</button>
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
@@ -1564,8 +1564,57 @@ const zones = await response.json();
 document.addEventListener('DOMContentLoaded', function() {
     loadMushroomZones();
 });
+function returnToMarkedPoint() {
+    if (userPlacemark) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var currentCoords = [position.coords.latitude, position.coords.longitude];
 
+                if (multiRoute) {
+                    map.geoObjects.remove(multiRoute);
+                }
 
+                multiRoute = new ymaps.multiRouter.MultiRoute({
+                    referencePoints: [
+                        currentCoords,
+                        userPlacemark.geometry.getCoordinates()
+                    ],
+                    params: {
+                        routingMode: 'auto'
+                    }
+                }, {
+                    boundsAutoApply: true
+                });
+
+                map.geoObjects.add(multiRoute);
+            }, function (error) {
+                alert('Ошибка при определении текущего местоположения: ' + error.message);
+            });
+        } else {
+            alert('Геолокация не поддерживается вашим браузером');
+        }
+    } else {
+        alert('Поставленная точка не установлена. Пожалуйста, установите своё местоположение с помощью функции setCoordinates.');
+    }
+}
+
+function setCoordinates() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var coords = [position.coords.latitude, position.coords.longitude];
+            if (userPlacemark) {
+                userPlacemark.geometry.setCoordinates(coords);
+            } else {
+                userPlacemark = new ymaps.Placemark(coords, { balloonContent: 'Вы здесь!' }, { preset: 'islands#redIcon' });
+                map.geoObjects.add(userPlacemark);
+            }
+            map.setCenter(coords, 15);
+            userPlacemark.balloon.open();
+        });
+    } else {
+        alert('Геолокация не поддерживается вашим браузером');
+    }
+}
 </script>
 <script>
     function savePage() {
