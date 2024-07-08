@@ -33,125 +33,31 @@
 
 
     <style>
-/* Общие стили */
+/* Общие стили для страницы */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f9fc;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-    overflow-x: hidden;
-    animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
-    animation: slideDown 0.5s ease-in-out;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
-}
-
-.navbar {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
-
-.logo a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-}
-
-.menu-btn {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.menu-btn span {
-    background: white;
-    height: 3px;
-    margin: 5px 0;
-    width: 25px;
-}
-
-.nav-menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-menu li {
-    margin-left: 20px;
-}
-
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.nav-menu a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .menu-btn {
-        display: flex;
-    }
-
-    .nav-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: #4CAF50;
-        position: absolute;
-        top: 60px;
-        left: 0;
-    }
-
-    .nav-menu li {
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .nav-menu.show {
-        display: flex;
-    }
-}
-.container2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
 .content {
-    max-width: 1200px;
+    width: 80%;
     margin: 20px auto;
-    padding: 0 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.content:hover {
+    transform: translateY(-5px);
 }
 
 h1, h2, h3 {
     color: #333;
+    font-weight: 500;
 }
 
 .auth-panel {
@@ -162,153 +68,173 @@ h1, h2, h3 {
 
 .auth-panel > div {
     flex: 1;
-    background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: fadeInUp 0.5s ease-in-out;
+    background-color: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
-@keyframes fadeInUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+.auth-panel > div:hover {
+    transform: translateY(-5px);
+}
+
+.auth-panel input[type="text"],
+.auth-panel input[type="password"],
+.auth-panel textarea,
+.auth-panel input[type="file"],
+.auth-panel button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+
+.auth-panel input[type="text"]:focus,
+.auth-panel input[type="password"]:focus,
+.auth-panel textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Стили для кнопок */
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0;
+}
+
+button:hover::before {
+    width: 0;
+    height: 0;
+    opacity: 1;
 }
 
 .hidden {
     display: none;
 }
 
-input[type="text"],
-input[type="password"],
+.profile, .admin-panel, #change-password-section, #change-username-section, .chat-panel {
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile:hover, .admin-panel:hover, #change-password-section:hover, #change-username-section:hover, .chat-panel:hover {
+    transform: translateY(-5px);
+}
+
+.profile p, .profile button {
+    margin: 10px 0;
+}
+
 textarea {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus,
-textarea:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-button:active {
-    transform: scale(1);
-}
-
-/* Профиль */
-.profile,
-.admin-panel,
-.chat-panel,
-#user-profile {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    animation: fadeInUp 0.5s ease-in-out;
-}
-
-textarea {
     height: 100px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-#posts {
-    background: white;
+textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+#posts, #user-profile {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: fadeInUp 0.5s ease-in-out;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#posts:hover, #user-profile:hover {
+    transform: translateY(-5px);
 }
 
 #invitation-container {
-    background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    animation: fadeInUp 0.5s ease-in-out;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#invitation-container:hover {
+    transform: translateY(-5px);
 }
 
 .chat {
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 4px;
-    max-height: 300px;
+    width: 100%;
+    height: 300px;
     overflow-y: auto;
-    margin-bottom: 10px;
-}
-
-.chat .message {
-    background: #e4e4e4;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
     padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+
+.chat::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat::-webkit-scrollbar-thumb {
+    background-color: #007BFF;
     border-radius: 4px;
-    margin-bottom: 10px;
-    animation: fadeIn 0.5s ease-in-out;
 }
 
-.chat .message.me {
-    background: #cfe9cf;
+#chatMessage {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.chat .message.special {
-    background: #ffeb3b;
+#chatMessage:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
 }
-
-/* input file */
-input[type="file"] {
-    display: none;
-}
-
-input[type="file"] + label {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 4px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-input[type="file"] + label:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-input[type="file"] + label:active {
-    transform: scale(1);
-}
-
-input[type="file"] + label::before {
-    content: '\f093';
-    font-family: FontAwesome;
-    padding-right: 5px;
-}
-
-.file-input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
 
     </style>
 </head>
