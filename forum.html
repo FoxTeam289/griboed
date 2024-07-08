@@ -370,7 +370,6 @@ textarea:focus {
             <button onclick="showChangeUsername()">Сменить ник</button>
             <input type="text" id="searchUser" placeholder="Поиск пользователя">
             <button onclick="searchUser()">Поиск</button>
-            <button id="subscribeButton" onclick="subscribeToUser()">Подписаться</button>
         </div>
     
         <div class="admin-panel hidden">
@@ -442,6 +441,20 @@ textarea:focus {
     });
 });
 
+function renderPosts() {
+    loadPosts();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem("currentUser")) {
+        document.getElementById("auth-section").classList.add("hidden");
+        document.getElementById("main-section").classList.remove("hidden");
+        loadProfile();
+        renderPosts();
+        loadHikes();
+    }
+});
+
       
               const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
         const TELEGRAM_CHAT_ID = '7208967084';
@@ -504,6 +517,67 @@ textarea:focus {
         document.getElementById('login-section').classList.remove('hidden');
         document.getElementById('register-section').classList.add('hidden');
     }
+
+    function loadPosts() {
+    const posts = getPosts();
+    const postsContainer = document.getElementById("posts");
+    postsContainer.innerHTML = "";
+
+    posts.forEach(post => {
+        const postElement = document.createElement("div");
+        postElement.classList.add("post");
+
+        const postUser = document.createElement("p");
+        postUser.textContent = `Автор: ${post.user}`;
+
+        const postContent = document.createElement("p");
+        postContent.textContent = post.content;
+
+        if (post.image) {
+            const postImage = document.createElement("img");
+            postImage.src = post.image;
+            postImage.alt = "Изображение поста";
+            postImage.style.maxWidth = "100%";
+            postElement.appendChild(postImage);
+        }
+
+        const likeButton = document.createElement("button");
+        likeButton.textContent = `Лайкнуть (${post.likes})`;
+        likeButton.onclick = () => likePost(post.id);
+
+        const commentButton = document.createElement("button");
+        commentButton.textContent = "Комментировать";
+        commentButton.onclick = () => showCommentSection(post.id);
+
+        const subscribeButton = document.createElement("button");
+        subscribeButton.textContent = `Подписаться на ${post.user}`;
+        subscribeButton.onclick = () => subscribe(post.user);
+
+        postElement.appendChild(postUser);
+        postElement.appendChild(postContent);
+        postElement.appendChild(likeButton);
+        postElement.appendChild(commentButton);
+        postElement.appendChild(subscribeButton);
+
+        post.comments.forEach(comment => {
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+
+            const commentUser = document.createElement("p");
+            commentUser.textContent = `Комментарий от ${comment.user}`;
+
+            const commentText = document.createElement("p");
+            commentText.textContent = comment.text;
+
+            commentElement.appendChild(commentUser);
+            commentElement.appendChild(commentText);
+            postElement.appendChild(commentElement);
+        });
+
+        postsContainer.appendChild(postElement);
+    });
+}
+
 
     function showRegister() {
         document.getElementById('login-section').classList.add('hidden');
@@ -737,20 +811,27 @@ textarea:focus {
     }
 
     function subscribe(username) {
-        const currentUser = data.users.find(u => u.username === document.querySelector('#username span').textContent);
-        const userToSubscribe = data.users.find(u => u.username === username);
-        if (!currentUser.subscribers.includes(username) && username !== currentUser.username) {
-            currentUser.subscribers.push(username);
-            currentUser.subscriberCount += 1;
-            userToSubscribe.subscriberCount += 1;
-            document.querySelector('#subscriberCount span').textContent = currentUser.subscriberCount;
-            alert(`Вы подписались на ${username}`);
-            sendToTelegram({ username: username, subscriber: currentUser.username }, 'subscribe');
-        } else {
-            alert(`Вы уже подписаны на ${username}`);
-        }
-        renderPosts();
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const users = getUsers();
+
+    const userToSubscribe = users.find(u => u.username === username);
+    if (userToSubscribe && !currentUser.subscribers.includes(username) && username !== currentUser.username) {
+        currentUser.subscribers.push(username);
+
+        // Обновление данных пользователя, на которого подписались
+        userToSubscribe.subscriberCount = (userToSubscribe.subscriberCount || 0) + 1;
+
+        document.querySelector('#subscriberCount span').textContent = currentUser.subscribers.length;
+        saveUsers(users);
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+        alert(`Вы подписались на ${username}`);
+        sendToTelegram({ username: username, subscriber: currentUser.username }, 'subscribe');
+    } else {
+        alert(`Вы уже подписаны на ${username}`);
     }
+    renderPosts();
+}
 
     function addComment(postId) {
     const text = document.getElementById(`commentText-${postId}`).value;
