@@ -549,15 +549,16 @@ document.addEventListener("DOMContentLoaded", function() {
         commentButton.textContent = "Комментировать";
         commentButton.onclick = () => showCommentSection(post.id);
 
-        const subscribeButton = document.createElement("button");
-        subscribeButton.textContent = `Подписаться на ${post.user}`;
-        subscribeButton.onclick = () => subscribe(post.user);
+        const subscribeText = document.createElement("p");
+        subscribeText.textContent = `Подписаться на ${post.user}`;
+        subscribeText.style.cursor = "pointer";
+        subscribeText.onclick = () => subscribe(post.user);
 
         postElement.appendChild(postUser);
         postElement.appendChild(postContent);
         postElement.appendChild(likeButton);
         postElement.appendChild(commentButton);
-        postElement.appendChild(subscribeButton);
+        postElement.appendChild(subscribeText);
 
         post.comments.forEach(comment => {
             const commentElement = document.createElement("div");
@@ -593,6 +594,14 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('change-password-section').classList.add('hidden');
         document.querySelector('.profile').classList.remove('hidden');
     }
+
+    function getUsers() {
+    return JSON.parse(localStorage.getItem("users") || "[]");
+}
+
+function saveUsers(users) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
 
     function showChangeUsername() {
         document.getElementById('change-username-section').classList.remove('hidden');
@@ -826,13 +835,12 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
         alert(`Вы подписались на ${username}`);
-        sendToTelegram({ username: username, subscriber: currentUser.username }, 'subscribe');
+        sendToTelegram(currentUser.username, username);
     } else {
         alert(`Вы уже подписаны на ${username}`);
     }
     renderPosts();
 }
-
     function addComment(postId) {
     const text = document.getElementById(`commentText-${postId}`).value;
     const imageFile = document.getElementById(`commentImage-${postId}`).files[0];
