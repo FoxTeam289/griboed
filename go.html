@@ -419,6 +419,7 @@ iframe {
             <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
             <button id="openModalBtn" onclick="setMushroomZone()"><i class="fas fa-map-pin"></i> Поставить грибную зону</button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
+            <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
             <button onclick="searchNearbyPanoramas()"><i class="fas fa-street-view"></i> Найти ближайшие панорамы</button>
             <button onclick="returnToMarkedPoint()"><i class="fas fa-route"></i>Вернуться к точке</button>
@@ -459,6 +460,7 @@ iframe {
             <li>Скопируйте координаты грибной зоны, или приблизительное место грибной зоны.</li>
             <li>Кликните на карту, куда хотите добраться.</li>
         </ol>
+        <p><strong>При использовании оффлайн версии, убедитесь, что вы дали разрешение на GEO-позицию приложению, в котором вы смотрите архив "Mushfind". Например, если вы открыли "Mushfind" через RAR-приложение, то дайте этому приложению разрешение на GEO-позицию.</strong></p>
         <button id="close-btn">Закрыть</button>
     </div>
 </div>
@@ -1691,6 +1693,45 @@ function setAllForestsData() {
 document.addEventListener('DOMContentLoaded', function() {
     setAllForestsData();
 });
+function setUserLocation2() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                var coords = [position.coords.latitude, position.coords.longitude];
+                setPlacemark(coords);
+            },
+            function(error) {
+                handleManualCoordinates();
+            }
+        );
+    } else {
+        handleManualCoordinates();
+    }
+}
+
+function setPlacemark(coords) {
+    if (userPlacemark) {
+        userPlacemark.geometry.setCoordinates(coords);
+    } else {
+        userPlacemark = new ymaps.Placemark(coords, { balloonContent: 'Вы здесь!' }, { preset: 'islands#redIcon' });
+        map.geoObjects.add(userPlacemark);
+    }
+    map.setCenter(coords, 15);
+    userPlacemark.balloon.open();
+}
+
+function handleManualCoordinates() {
+    alert('Нам не удалось определить ваше местоположение. Пожалуйста, введите ваши координаты вручную.');
+    var latitude = parseFloat(prompt('Введите широту:', ''));
+    var longitude = parseFloat(prompt('Введите долготу:', ''));
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+        var coords = [latitude, longitude];
+        setPlacemark(coords);
+    } else {
+        alert('Введены некорректные координаты.');
+    }
+}
+
 </script>
 <script>
 function showChoose() {
