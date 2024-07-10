@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let data = {
             "users": [
-                { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['foxyprofi'], "subscriberCount": 1 },
+                { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['Фокс'], "subscriberCount": 28900 },
                 { "username": "Елизавета", "password": "12345y789", "subscribers": [], "subscriberCount": 0 },
                 { "username": "tema12", "password": "ktUc1s_r5B", "subscribers": [], "subscriberCount": 0 },
                 { "username": "=SM=", "password": "Nk1PbJi_13", "subscribers": [], "subscriberCount": 0 },
@@ -470,11 +470,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 { "username": "NatalyaBur", "password": "oT1kiJ6_Os", "subscribers": [], "subscriberCount": 0 },
                 { "username": "художник Федотов", "password": "P51MWZsr_X", "subscribers": [], "subscriberCount": 0 },
                 { "username": "tak1973", "password": "ku69HK_7l3", "subscribers": [], "subscriberCount": 0 },
-                { "username": "foxyprofi", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 0 }
+                { "username": "Лесник Алексей", "password": "0000", "subscribers": [], "subscriberCount": 10500 },
+                { "username": "Охотник за грибами", "password": "0000", "subscribers": [], "subscriberCount": 8900 },
+                { "username": "Грибной Мастер", "password": "0000", "subscribers": [], "subscriberCount": 25300 },
+                { "username": "Лесная Ведьма", "password": "0000", "subscribers": [], "subscriberCount": 15200 },
+                { "username": "Маша Грибница", "password": "0000", "subscribers": [], "subscriberCount": 6700 },
+                { "username": "Фунголог", "password": "0000", "subscribers": [], "subscriberCount": 12800 },
+                { "username": "Лесная Фея", "password": "0000", "subscribers": [], "subscriberCount": 18400 },
+                { "username": "Грибной Гуру", "password": "0000", "subscribers": [], "subscriberCount": 23500 },
+                { "username": "Фокс", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 35000 }
             ],
             "posts": [
-                { "id": 1, "user": "Елизавета", "content": "Всем Доброго времени суток!", "image": "https://iimg.su/s/08/H0UJRNHKknR0Y0EjNRFbZXDSDDvHZIxAr2LmPJ5K.jpg", "likes": 1, "likedBy": ['foxyprofi'], "comments": [] },
-        ],
+                { "id": 1, "user": "Елизавета", "content": "Всем Доброго времени суток!", "image": "https://iimg.su/s/08/H0UJRNHKknR0Y0EjNRFbZXDSDDvHZIxAr2LmPJ5K.jpg", "likes": 1, "likedBy": ['Фокс'], "comments": [] },
+                { "id": 2, "user": "Лесник Алексей", "content": "Сегодня наткнулся на чудесную полянку белых грибов. Удачный день! (2 июня 2024)", "image": "", "likes": 120, "likedBy": [], "comments": [] },
+                { "id": 3, "user": "Охотник за грибами", "content": "Сегодня нашёл гриб, о котором раньше только читал. Вот так выглядит трутовик лакированный! (12 июня 2024)", "image": "", "likes": 180, "likedBy": [], "comments": [] },
+                { "id": 4, "user": "Грибной Мастер", "content": "Делюсь своими секретами, как найти самые вкусные лисички в лесу. (5 июня 2024)", "image": "", "likes": 250, "likedBy": [], "comments": [] },
+                { "id": 5, "user": "Лесная Ведьма", "content": "Вчерашняя прогулка принесла 5 кг опят! Делюсь лайфхаками. (18 июня 2024)", "image": "", "likes": 300, "likedBy": [], "comments": [] },
+                { "id": 6, "user": "Маша Грибница", "content": "Нашла своё новое любимое место для сбора подберёзовиков. Рекомендую! (23 июня 2024)", "image": "", "likes": 150, "likedBy": [], "comments": [] },
+                { "id": 7, "user": "Фунголог", "content": "Первые белые грибы сезона! Вот они, красавцы. (29 июня 2024)", "image": "", "likes": 200, "likedBy": [], "comments": [] },
+                { "id": 8, "user": "Лесная Фея", "content": "Подробное руководство по отличию съедобных грибов от ядовитых. (3 июля 2024)", "image": "", "likes": 320, "likedBy": [], "comments": [] },
+                { "id": 9, "user": "Грибной Гуру", "content": "Лето в самом разгаре, и лес полон грибов. Какой сегодня улов!! (7 июля 2024)", "image": "", "likes": 280, "likedBy": [], "comments": [] },
+                    ],
         "subscriptions": [],
         "hikeInvitations": [
             {
@@ -756,57 +772,62 @@ function saveUsers(users) {
     }
 
     function renderPosts() {
-        const postsContainer = document.getElementById('posts');
-        postsContainer.innerHTML = '';
+    const postsContainer = document.getElementById('posts');
+    postsContainer.innerHTML = '';
 
-        const sortedPosts = data.posts.sort((a, b) => {
-            const userSubscriptions = data.users.find(u => u.username === document.querySelector('#username span').textContent).subscribers;
-            if (userSubscriptions.includes(a.user) && !userSubscriptions.includes(b.user)) {
-                return -1;
-            }
-            if (!userSubscriptions.includes(a.user) && userSubscriptions.includes(b.user)) {
-                return 1;
-            }
-            return 0;
-        });
-
-        sortedPosts.forEach((post, postIndex) => {
-            const postDiv = document.createElement('div');
-            postDiv.className = 'post';
-            postDiv.innerHTML = `
-                <p>${post.content}</p>
-                ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
-                <p>Автор: ${post.user}</p>
-                <button onclick="likePost(${post.id})">Лайк <span id="like-${post.id}">${post.likes}</span></button>
-                <p class="subscription" onclick="subscribe('${post.user}')">Подписаться на ${post.user}</п>
-                <div class="comment-section">
-                    <h4>Комментарии</h4>
-                    ${post.comments.map((comment, commentIndex) => `
-                        <div class="comment">
-                            <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                            ${comment.image ? `<img src="${comment.image}" alt="Image" style="max-width: 100%;">` : ''}
-                            <div class="reply-section">
-                                <h5>Ответы</h5>
-                                ${comment.replies ? comment.replies.map((reply, replyIndex) => `
-                                    <div class="reply">
-                                        <p><strong>${reply.user}:</strong> ${reply.text}</p>
-                                        ${reply.image ? `<img src="${reply.image}" alt="Image" style="max-width: 100%;">` : ''}
-                                    </div>
-                                `).join('') : ''}
-                                <textarea id="replyText-${post.id}-${commentIndex}" placeholder="Ваш ответ..."></textarea>
-                                <input type="file" id="replyImage-${post.id}-${commentIndex}">
-                                <button onclick="addReply(${post.id}, ${commentIndex})">Ответить</button>
-                            </div>
-                        </div>
-                    `).join('')}
-                    <textarea id="commentText-${post.id}" placeholder="Ваш комментарий..."></textarea>
-                    <input type="file" id="commentImage-${post.id}">
-                    <button onclick="addComment(${post.id})">Комментировать</button>
-                </div>
-            `;
-            postsContainer.appendChild(postDiv);
-        });
+    const currentUser = data.users.find(u => u.username === document.querySelector('#username span').textContent);
+    if (!currentUser) {
+        console.error('Текущий пользователь не найден');
+        return;
     }
+
+    const sortedPosts = data.posts.sort((a, b) => {
+        const isSubscribedToA = currentUser.subscribers.includes(a.user);
+        const isSubscribedToB = currentUser.subscribers.includes(b.user);
+
+        if (isSubscribedToA && !isSubscribedToB) return -1;
+        if (!isSubscribedToA && isSubscribedToB) return 1;
+        return 0;
+    });
+
+    sortedPosts.forEach((post, postIndex) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post';
+        postDiv.innerHTML = `
+            <p>${post.content}</p>
+            ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
+            <p>Автор: ${post.user}</p>
+            <button onclick="likePost(${post.id})">Лайк <span id="like-${post.id}">${post.likes}</span></button>
+            <p class="subscription" onclick="subscribe('${post.user}')">Подписаться на ${post.user}</p>
+            <div class="comment-section">
+                <h4>Комментарии</h4>
+                ${post.comments.map((comment, commentIndex) => `
+                    <div class="comment">
+                        <p><strong>${comment.user}:</strong> ${comment.text}</p>
+                        ${comment.image ? `<img src="${comment.image}" alt="Image" style="max-width: 100%;">` : ''}
+                        <div class="reply-section">
+                            <h5>Ответы</h5>
+                            ${comment.replies ? comment.replies.map((reply, replyIndex) => `
+                                <div class="reply">
+                                    <p><strong>${reply.user}:</strong> ${reply.text}</p>
+                                    ${reply.image ? `<img src="${reply.image}" alt="Image" style="max-width: 100%;">` : ''}
+                                </div>
+                            `).join('') : ''}
+                            <textarea id="replyText-${post.id}-${commentIndex}" placeholder="Ваш ответ..."></textarea>
+                            <input type="file" id="replyImage-${post.id}-${commentIndex}">
+                            <button onclick="addReply(${post.id}, ${commentIndex})">Ответить</button>
+                        </div>
+                    </div>
+                `).join('')}
+                <textarea id="commentText-${post.id}" placeholder="Ваш комментарий..."></textarea>
+                <input type="file" id="commentImage-${post.id}">
+                <button onclick="addComment(${post.id})">Комментировать</button>
+            </div>
+        `;
+        postsContainer.appendChild(postDiv);
+    });
+}
+
 
     function likePost(postId) {
         const post = data.posts.find(p => p.id === postId);
