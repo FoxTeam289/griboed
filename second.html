@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Sharing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+        button, input {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Device Location Sharing</h1>
+    <p>Ваш ID: <span id="deviceId"></span></p>
+    <button id="allowBtn">Разрешить запросы</button>
+    <input type="text" id="inputId" placeholder="Введите ID устройства">
+    <button id="requestBtn">Запросить местоположение</button>
+    <div id="map"></div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script>
+        let deviceId = localStorage.getItem('deviceId') || 'device-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('deviceId', deviceId);
+        document.getElementById('deviceId').innerText = deviceId;
+
+        let map, deviceMarker, allowLocationSharing = false;
+
+        ymaps.ready(initMap);
+
+        function initMap() {
+            map = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 10
+            });
+
+            const lat = localStorage.getItem('lat');
+            const lon = localStorage.getItem('lon');
+            if (lat && lon) {
+                updateDeviceLocation(parseFloat(lat), parseFloat(lon));
+            }
+        }
+
+        function updateDeviceLocation(lat, lon) {
+            if (!deviceMarker) {
+                deviceMarker = new ymaps.Placemark([lat, lon], {}, {
+                    preset: 'islands#icon',
+                    iconColor: '#0095b6'
+                });
+                map.geoObjects.add(deviceMarker);
+            } else {
+                deviceMarker.geometry.setCoordinates([lat, lon]);
+            }
+            map.setCenter([lat, lon]);
+        }
+
+        document.getElementById('allowBtn').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                allowLocationSharing = true;
+                navigator.geolocation.watchPosition(position => {
+                    if (allowLocationSharing) {
+                        const { latitude, longitude } = position.coords;
+                        localStorage.setItem('lat', latitude);
+                        localStorage.setItem('lon', longitude);
+                        updateDeviceLocation(latitude, longitude);
+                    }
+                });
+                alert('Запросы разрешены.');
+            }
+        });
+
+        document.getElementById('requestBtn').addEventListener('click', () => {
+            const requestedId = document.getElementById('inputId').value;
+            if (requestedId) {
+                const lat = localStorage.getItem(`lat-${requestedId}`);
+                const lon = localStorage.getItem(`lon-${requestedId}`);
+                if (lat && lon) {
+                    updateRequestedDeviceLocation(parseFloat(lat), parseFloat(lon));
+                } else {
+                    alert('Местоположение не доступно или запросы не разрешены.');
+                }
+            }
+        });
+
+        function updateRequestedDeviceLocation(lat, lon) {
+            const requestedMarker = new ymaps.Placemark([lat, lon], {}, {
+                preset: 'islands#redIcon',
+                iconColor: '#ff0000'
+            });
+            map.geoObjects.add(requestedMarker);
+            map.setCenter([lat, lon]);
+        }
+
+        // Восстановление состояния после перезагрузки
+        window.addEventListener('load', () => {
+            if (navigator.geolocation && allowLocationSharing) {
+                navigator.geolocation.watchPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    localStorage.setItem('lat', latitude);
+                    localStorage.setItem('lon', longitude);
+                    updateDeviceLocation(latitude, longitude);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
