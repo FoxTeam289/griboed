@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-    <button id="connectBtn">Подключиться к устройству</button>
+    <button id="connectBtn">Отправить приглашение устройству</button>
     <button id="invitationsBtn">Мои приглашения</button>
     
     <div id="invitations">
@@ -86,20 +86,14 @@
             map.setCenter([lat, lon]);
         }
 
-        connectBtn.addEventListener('click', async () => {
-            try {
-                const device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true
-                });
-
+        connectBtn.addEventListener('click', () => {
+            const toDeviceId = prompt("Введите ID устройства, к которому вы хотите отправить приглашение:");
+            if (toDeviceId) {
                 ws.send(JSON.stringify({
                     type: 'sendInvitation',
                     from: deviceId,
-                    to: device.id
+                    to: toDeviceId
                 }));
-
-            } catch (error) {
-                console.error('Ошибка подключения к устройству:', error);
             }
         });
 
@@ -118,6 +112,25 @@
                 case 'updateLocation':
                     if (data.device === deviceId) {
                         updateDeviceLocation(deviceId, data.lat, data.lon);
+                    }
+                    break;
+                case 'invitationAccepted':
+                    if (data.to === deviceId) {
+                        alert(`Ваше приглашение принято устройством: ${data.from}`);
+                        navigator.geolocation.watchPosition(position => {
+                            const { latitude, longitude } = position.coords;
+                            ws.send(JSON.stringify({
+                                type: 'updateLocation',
+                                device: data.from,
+                                lat: latitude,
+                                lon: longitude
+                            }));
+                        });
+                    }
+                    break;
+                case 'invitationDeclined':
+                    if (data.to === deviceId) {
+                        alert(`Ваше приглашение отклонено устройством: ${data.from}`);
                     }
                     break;
             }

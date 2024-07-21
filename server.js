@@ -24,14 +24,14 @@ wss.on('connection', (ws) => {
                 const index = invitations.findIndex(inv => inv.from === data.from && inv.to === data.to);
                 if (index !== -1) {
                     invitations.splice(index, 1);
-                    ws.send(JSON.stringify({ type: 'invitationAccepted', from: data.from, to: data.to }));
+                    broadcast({ type: 'invitationAccepted', from: data.from, to: data.to });
                 }
                 break;
             case 'declineInvitation':
                 const declineIndex = invitations.findIndex(inv => inv.from === data.from && inv.to === data.to);
                 if (declineIndex !== -1) {
                     invitations.splice(declineIndex, 1);
-                    ws.send(JSON.stringify({ type: 'invitationDeclined', from: data.from, to: data.to }));
+                    broadcast({ type: 'invitationDeclined', from: data.from, to: data.to });
                 }
                 break;
             case 'updateLocation':
