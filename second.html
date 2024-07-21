@@ -3,34 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пойти в лес вместе!</title>
-    <meta name="description" content="Совместный поход в лес, это в два раза больше грибов! Подключитесь к устройству, чтобы не потеряться.">
-    <meta name="keywords" content="грибные зоны, навигатор лес, не заблудиться в лесу, поход в лес, совместный поход">
-    <link rel="canonical" href="https://mushfind.ru/second.html">
-    <meta property="og:title" content="Совместный поход в лес, это в два раза больше грибов! Подключитесь к устройству, чтобы не потеряться.">
-    <meta property="og:description" content="Просмотрите все грибные зоны и используйте наш навигатор, чтобы не заблудиться в лесу. Планируйте свои походы эффективно.">
-    <meta property="og:url" content="https://mushfind.ru/second.html">
-    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
-    <link rel="icon" href="icon.png" type="image/png">
-
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
-    ym(97708246, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true,
-         ecommerce:"dataLayer"
-    });
- </script>
- <noscript><div><img src="https://mc.yandex.ru/watch/97708246" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
- <!-- /Yandex.Metrika counter -->
+    <title>Device Connection</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,7 +42,6 @@
     </style>
 </head>
 <body>
-    <h1>Внимание! Эта страница находится в стадии разработки, и пока не поддерживает реальные запросы. Вы можете использовать её только для ознакомительных целей.</h1>
     <button id="connectBtn">Подключиться к устройству</button>
     <button id="invitationsBtn">Мои приглашения</button>
     
@@ -81,13 +53,15 @@
 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script>
+        const ws = new WebSocket('ws://localhost:8080');
         const connectBtn = document.getElementById('connectBtn');
         const invitationsBtn = document.getElementById('invitationsBtn');
         const invitationsDiv = document.getElementById('invitations');
         const invitationsList = document.getElementById('invitationsList');
         let map, deviceMarker;
-        let invitations = JSON.parse(localStorage.getItem('invitations')) || [];
-        let connectedDevices = JSON.parse(localStorage.getItem('connectedDevices')) || [];
+        let deviceId = localStorage.getItem('deviceId') || 'device-' + Math.random().toString(36).substr(2, 9);
+
+        localStorage.setItem('deviceId', deviceId);
 
         ymaps.ready(initMap);
 
@@ -100,19 +74,16 @@
         }
 
         function updateDeviceLocation(deviceId, lat, lon) {
-            let device = connectedDevices.find(d => d.id === deviceId);
-            if (!device) {
-                device = { id: deviceId, marker: new ymaps.Placemark([lat, lon], {}, {
+            if (!deviceMarker) {
+                deviceMarker = new ymaps.Placemark([lat, lon], {}, {
                     preset: 'islands#icon',
                     iconColor: '#0095b6'
-                })};
-                connectedDevices.push(device);
-                map.geoObjects.add(device.marker);
+                });
+                map.geoObjects.add(deviceMarker);
             } else {
-                device.marker.geometry.setCoordinates([lat, lon]);
+                deviceMarker.geometry.setCoordinates([lat, lon]);
             }
             map.setCenter([lat, lon]);
-            localStorage.setItem('connectedDevices', JSON.stringify(connectedDevices));
         }
 
         connectBtn.addEventListener('click', async () => {
@@ -121,15 +92,11 @@
                     acceptAllDevices: true
                 });
 
-                // Сохранение устройства в LocalStorage
-                const deviceId = device.id;
-                sendInvitation(deviceId);
-
-                // Имитация получения местоположения устройства
-                navigator.geolocation.watchPosition(position => {
-                    const { latitude, longitude } = position.coords;
-                    updateDeviceLocation(deviceId, latitude, longitude);
-                });
+                ws.send(JSON.stringify({
+                    type: 'sendInvitation',
+                    from: deviceId,
+                    to: device.id
+                }));
 
             } catch (error) {
                 console.error('Ошибка подключения к устройству:', error);
@@ -138,75 +105,83 @@
 
         invitationsBtn.addEventListener('click', () => {
             invitationsDiv.style.display = invitationsDiv.style.display === 'none' ? 'flex' : 'none';
-            updateInvitationsList();
         });
 
-        function sendInvitation(deviceId) {
-            const invitation = {
-                device: deviceId,
-                date: new Date().toLocaleString()
-            };
-            invitations.push(invitation);
-            localStorage.setItem('invitations', JSON.stringify(invitations));
-            updateInvitationsList();
+        ws.addEventListener('message', (event) => {
+            const data = JSON.parse(event.data);
+            switch (data.type) {
+                case 'newInvitation':
+                    if (data.to === deviceId) {
+                        addInvitation(data.from);
+                    }
+                    break;
+                case 'updateLocation':
+                    if (data.device === deviceId) {
+                        updateDeviceLocation(deviceId, data.lat, data.lon);
+                    }
+                    break;
+            }
+        });
+
+        function addInvitation(from) {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                Устройство: ${from}
+                <button onclick="acceptInvitation('${from}')">Принять</button>
+                <button onclick="declineInvitation('${from}')">Отклонить</button>
+            `;
+            invitationsList.appendChild(listItem);
         }
 
-        function updateInvitationsList() {
-            invitationsList.innerHTML = '';
-            invitations.forEach((invitation, index) => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    Устройство: ${invitation.device}, Дата: ${invitation.date}
-                    <button onclick="acceptInvitation(${index})">Принять</button>
-                    <button onclick="declineInvitation(${index})">Отклонить</button>
-                `;
-                invitationsList.appendChild(listItem);
-            });
-        }
+        function acceptInvitation(from) {
+            ws.send(JSON.stringify({
+                type: 'acceptInvitation',
+                from,
+                to: deviceId
+            }));
 
-        function acceptInvitation(index) {
-            const invitation = invitations[index];
-            const deviceId = invitation.device;
-
-            // Сохранение устройства в подключенных
-            connectedDevices.push({ id: deviceId, marker: null });
-            localStorage.setItem('connectedDevices', JSON.stringify(connectedDevices));
-
-            // Удаление приглашения
-            invitations.splice(index, 1);
-            localStorage.setItem('invitations', JSON.stringify(invitations));
-            updateInvitationsList();
-
-            // Имитация получения местоположения устройства
             navigator.geolocation.watchPosition(position => {
                 const { latitude, longitude } = position.coords;
-                updateDeviceLocation(deviceId, latitude, longitude);
+                ws.send(JSON.stringify({
+                    type: 'updateLocation',
+                    device: from,
+                    lat: latitude,
+                    lon: longitude
+                }));
             });
         }
 
-        function declineInvitation(index) {
-            invitations.splice(index, 1);
-            localStorage.setItem('invitations', JSON.stringify(invitations));
-            updateInvitationsList();
+        function declineInvitation(from) {
+            ws.send(JSON.stringify({
+                type: 'declineInvitation',
+                from,
+                to: deviceId
+            }));
         }
 
         function restoreMarkers() {
-            connectedDevices.forEach(device => {
-                if (device.marker) {
-                    map.geoObjects.add(device.marker);
-                }
-            });
+            const lat = localStorage.getItem('lat');
+            const lon = localStorage.getItem('lon');
+            if (lat && lon) {
+                updateDeviceLocation(deviceId, parseFloat(lat), parseFloat(lon));
+            }
         }
 
         // Восстановление состояния после перезагрузки
         window.addEventListener('load', () => {
-            updateInvitationsList();
-            connectedDevices.forEach(device => {
+            if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(position => {
                     const { latitude, longitude } = position.coords;
-                    updateDeviceLocation(device.id, latitude, longitude);
+                    localStorage.setItem('lat', latitude);
+                    localStorage.setItem('lon', longitude);
+                    ws.send(JSON.stringify({
+                        type: 'updateLocation',
+                        device: deviceId,
+                        lat: latitude,
+                        lon: longitude
+                    }));
                 });
-            });
+            }
         });
     </script>
 </body>
