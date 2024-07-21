@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #invitations {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #invitations ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #invitations li {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <button id="connectBtn">Подключиться к устройству</button>
+    <button id="invitationsBtn">Мои приглашения</button>
+    
+    <div id="invitations">
+        <h3>Приглашения</h3>
+        <ul id="invitationsList"></ul>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script>
+        const connectBtn = document.getElementById('connectBtn');
+        const invitationsBtn = document.getElementById('invitationsBtn');
+        const invitationsDiv = document.getElementById('invitations');
+        const invitationsList = document.getElementById('invitationsList');
+        let map, deviceMarker;
+        let invitations = JSON.parse(localStorage.getItem('invitations')) || [];
+        let connectedDevices = JSON.parse(localStorage.getItem('connectedDevices')) || [];
+
+        ymaps.ready(initMap);
+
+        function initMap() {
+            map = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 10
+            });
+            restoreMarkers();
+        }
+
+        function updateDeviceLocation(deviceId, lat, lon) {
+            let device = connectedDevices.find(d => d.id === deviceId);
+            if (!device) {
+                device = { id: deviceId, marker: new ymaps.Placemark([lat, lon], {}, {
+                    preset: 'islands#icon',
+                    iconColor: '#0095b6'
+                })};
+                connectedDevices.push(device);
+                map.geoObjects.add(device.marker);
+            } else {
+                device.marker.geometry.setCoordinates([lat, lon]);
+            }
+            map.setCenter([lat, lon]);
+            localStorage.setItem('connectedDevices', JSON.stringify(connectedDevices));
+        }
+
+        connectBtn.addEventListener('click', async () => {
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true
+                });
+
+                // Сохранение устройства в LocalStorage
+                const deviceId = device.id;
+                sendInvitation(deviceId);
+
+                // Имитация получения местоположения устройства
+                navigator.geolocation.watchPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    updateDeviceLocation(deviceId, latitude, longitude);
+                });
+
+            } catch (error) {
+                console.error('Ошибка подключения к устройству:', error);
+            }
+        });
+
+        invitationsBtn.addEventListener('click', () => {
+            invitationsDiv.style.display = invitationsDiv.style.display === 'none' ? 'flex' : 'none';
+            updateInvitationsList();
+        });
+
+        function sendInvitation(deviceId) {
+            const invitation = {
+                device: deviceId,
+                date: new Date().toLocaleString()
+            };
+            invitations.push(invitation);
+            localStorage.setItem('invitations', JSON.stringify(invitations));
+            updateInvitationsList();
+        }
+
+        function updateInvitationsList() {
+            invitationsList.innerHTML = '';
+            invitations.forEach((invitation, index) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    Устройство: ${invitation.device}, Дата: ${invitation.date}
+                    <button onclick="acceptInvitation(${index})">Принять</button>
+                    <button onclick="declineInvitation(${index})">Отклонить</button>
+                `;
+                invitationsList.appendChild(listItem);
+            });
+        }
+
+        function acceptInvitation(index) {
+            const invitation = invitations[index];
+            const deviceId = invitation.device;
+
+            // Сохранение устройства в подключенных
+            connectedDevices.push({ id: deviceId, marker: null });
+            localStorage.setItem('connectedDevices', JSON.stringify(connectedDevices));
+
+            // Удаление приглашения
+            invitations.splice(index, 1);
+            localStorage.setItem('invitations', JSON.stringify(invitations));
+            updateInvitationsList();
+
+            // Имитация получения местоположения устройства
+            navigator.geolocation.watchPosition(position => {
+                const { latitude, longitude } = position.coords;
+                updateDeviceLocation(deviceId, latitude, longitude);
+            });
+        }
+
+        function declineInvitation(index) {
+            invitations.splice(index, 1);
+            localStorage.setItem('invitations', JSON.stringify(invitations));
+            updateInvitationsList();
+        }
+
+        function restoreMarkers() {
+            connectedDevices.forEach(device => {
+                if (device.marker) {
+                    map.geoObjects.add(device.marker);
+                }
+            });
+        }
+
+        // Восстановление состояния после перезагрузки
+        window.addEventListener('load', () => {
+            updateInvitationsList();
+            connectedDevices.forEach(device => {
+                navigator.geolocation.watchPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    updateDeviceLocation(device.id, latitude, longitude);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
