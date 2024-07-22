@@ -42,6 +42,7 @@
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
+    padding-bottom: 65px;
 }
 header {
     background-color: #4CAF50;
@@ -101,88 +102,156 @@ main {
     outline: none;
     border: 2px solid #4CAF50;
 }
-.container2 {
+
+.t975 {
+    border-top-width: 1px;
+    border-top-style: solid;
+    position: fixed; /* Изменено на relative */
+    bottom: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    display: -webkit-flex;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    z-index: 990;
+    transition: background-color 300ms linear;
+    height: 65px; /* Убедитесь, что это соответствует высоте меню */
 }
-.navbar {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 0;
-    position: fixed;
+
+.t975__beforeready {
+    visibility: hidden
+}
+
+.t975__wrapper {
+    max-width: 640px;
     width: 100%;
-    z-index: 1000;
-}
-
-.logo a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-}
-
-.menu-btn {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.menu-btn span {
-    background: white;
-    height: 3px;
-    margin: 5px 0;
-    width: 25px;
-}
-
-.nav-menu {
-    list-style: none;
+    margin: 0 auto;
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    min-height: 65px
+}
+
+.t975__wrapper::before,.t975__wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 15px;
+    pointer-events: none
+}
+
+.t975__wrapper::before {
+    left: -1px
+}
+
+.t975__wrapper::after {
+    right: -1px
+}
+
+.t975__inner-wrapper {
+    display: -webkit-flex;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 0!important
 }
 
-.nav-menu li {
-    margin-left: 20px;
+#allrecords ul.t975__inner-wrapper {
+    margin-bottom: 0
 }
 
-.nav-menu a {
-    color: white;
+.t975__list-item {
+    padding: 8px 10px 10px;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    -webkit-flex-basis: auto;
+    flex-basis: auto;
+    box-sizing: border-box;
+    min-width: calc(100vw / 6);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center
+}
+
+.t975__menu-link {
     text-decoration: none;
-    font-size: 16px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
 }
 
-.nav-menu a:hover {
-    text-decoration: underline;
+.t975__menu-item {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .menu-btn {
-        display: flex;
+.t975__icon-wrapper {
+    opacity: .7;
+    position: relative;
+    transition: all 300ms linear;
+    width: 26px;
+    height: 21px;
+    text-align: center
+}
+
+.t975__menu-icon {
+    max-width: 100%;
+    max-height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain
+}
+
+.t975__menu-text {
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+    font-family: 'Roboto',Arial,sans-serif;
+    font-weight: 400;
+    color: #000;
+    transition: all 300ms linear
+}
+
+@media screen and (min-width: 481px) {
+    .t975__inner-wrapper {
+        width:auto
     }
 
-    .nav-menu {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        background-color: #4CAF50;
-        position: absolute;
-        top: 60px;
-        left: 0;
-    }
-
-    .nav-menu li {
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .nav-menu.show {
-        display: flex;
+    .t975__list-item {
+        min-width: 85px
     }
 }
+
+@media screen and (min-width: 640px) {
+    .t975__wrapper {
+        min-height:73px;
+        max-width: none
+    }
+
+    .t975__list-item {
+        padding: 17px 15px 15px
+    }
+
+    .t975__list-item {
+        min-width: 115px
+    }
+}
+
     .controls {
         flex-direction: column; /* Переключаем на колонну */
         gap: 5px; /* Уменьшаем gap для мобильных устройств */
@@ -393,31 +462,11 @@ iframe {
 <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container2">
-            <div class="logo">
-                <a href="/">Mushfind</a>
-            </div>
-            <div class="menu-btn" id="menu-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="/">Главная</a></li>
-                <li><a href="/bestforest.html">Лучшие леса</a></li>
-                <li><a href="/otziv.html">Написать отзыв</a></li>
-                <li><a href="/go.html">Главные функции</a></li>
-                <li><a href="/documentation.html">Документация</a></li>
-                <li><a href="/forum.html">Соц. сеть</a></li>
-            </ul>
-        </div>
-    </nav>
     <main>
         <div id="map"></div>
         <div id="control" class="controls">
             <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
-            <button onclick="window.location.href='https://ajointhike.zya.me/second.html'"><i class="fas fa-map-pin"></i> Совместный поход </button> -->
+            <button onclick="window.location.href='https://ajointhike.zya.me/second.html'"><i class="fas fa-map-pin"></i> Совместный поход </button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
             <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
@@ -428,7 +477,7 @@ iframe {
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
             <button onclick="window.location.href='foxyprofi.itch.io/griboed'"><i class="fas fa-download"></i> Сохранить изменения</button>
             <button onclick="OpenMapI('https://гдегрибы.рф')"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
-            <button id="toggleButton"><i class="fa-solid fa-eye-slash"></i>Скрыть элементы</button>
+           <!-- <button id="toggleButton"><i class="fa-solid fa-eye-slash"></i>Скрыть элементы</button> -->
     </div>
 </main>
 
@@ -464,7 +513,6 @@ iframe {
         <button id="close-btn">Закрыть</button>
     </div>
 </div>
-
 <script>
     function OpenMapI(url) {
             var iframeOverlay = document.getElementById('iframeOverlay');
@@ -1743,6 +1791,73 @@ function showChoose() {
 
 
 </script>
+                <!-- T975 -->
+                <div class="t975 " style="background-color: #fff; " data-bgcolor-hex="" data-bgcolor-rgba="" data-navmarker="nav776782174marker" data-bgopacity="1" data-menu="yes">
+                    <nav class="t975__wrapper">
+                        <ul role="list" class="t975__inner-wrapper t-menu__list">
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/house_3d.png" imgfield="li_img__0722833889710" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889710">Главная</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/bestforest.html">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/evergreen_tree_3d.png" imgfield="li_img__0722833889711" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889711">Лучшие леса</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/otziv.html">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/sparkles_3d.png" imgfield="li_img__0722833889712" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889712">Написать отзыв</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/go.html">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/eye_in_speech_bubble_3d.png" imgfield="li_img__0722833889713" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889713">Главные функции</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/documentation.html">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/page_with_curl_3d.png" imgfield="li_img__1721649456084" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__1721649456084">Документация</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="t975__list-item">
+                                <a class="t975__menu-link" href="/forum.html">
+                                    <div class="t975__menu-item">
+                                        <div class="t975__icon-wrapper">
+                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/globe_with_meridians_3d.png" imgfield="li_img__1721651051254" alt="">
+                                        </div>
+                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__1721651051254">Социальная сеть</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 <script src="https://w.tb.ru/open-messenger/widget?wId=W-A4C534CFD5CB45B5800E64336DF4EA04"></script>
 </body>
 </html>
