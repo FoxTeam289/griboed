@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Sharing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.info {
+    margin: 20px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+    margin: 20px 0;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+#langToggle {
+    background-color: #28a745;
+}
+
+#langToggle:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Device Location Sharing</h1><svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg">
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color: rgb(76, 161, 175);"></stop>
+                <stop offset="100%" style="stop-color: rgb(196, 224, 229);"></stop>
+              </linearGradient>
+            </defs>
+            <path id="blob" d="M433.5,287Q442,324,417.5,352Q393,380,363.5,399Q334,418,302,439.5Q270,461,237,437Q204,413,169,408Q134,403,94.5,387Q55,371,98.5,320.5Q142,270,113,244.5Q84,219,73.5,177Q63,135,83,95.5Q103,56,152.5,68.5Q202,81,236,55.5Q270,30,291,77.5Q312,125,344.5,130Q377,135,371.5,170Q366,205,395.5,227.5Q425,250,433.5,287Z" fill="url(#gradient)"></path>
+          </svg>
+        <p id="deviceIdText">ID: <span id="deviceId"></span></p>
+        <div class="info">
+            <p id="viewingDevicesText">Number of devices seeing my location: <span id="viewingDevices">0</span></p>
+        </div>
+        <button id="allowBtn"><i class="fa-regular fa-check"></i>Allow Requests</button>
+        <button id="realTimeBtn"><i class="fa-solid fa-share-from-square"></i>Share my location in real-time</button>
+        <input type="text" id="inputId" placeholder="Enter device ID">
+        <button id="requestBtn"><i class="fa-regular fa-id-badge"></i>Connect</button>
+        <button id="updateBtn"><i class="fa-solid fa-clock"></i>Update Connected Device Location</button>
+        <button id="resetBtn"><i class="fa-solid fa-bomb"></i>Reset All Devices</button>
+        <button id="deleteBtn"><i class="fa-solid fa-trash"></i>Deny Permissions and Delete All My Data</button>
+        <div id="map"></div>
+        <div class="footer">
+            <p id="footerText">*We do not collect or distribute user data. All data is deleted when you click 'Deny Permissions and Delete All My Data'. We recommend clicking this button after each use.</p>
+            <button id="langToggle">Switch to RU</button>
+        </div>
+    </div>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
+    <script>
+let deviceId = localStorage.getItem('deviceId') || 'device-' + Math.random().toString(36).substr(2, 9);
+localStorage.setItem('deviceId', deviceId);
+document.getElementById('deviceId').innerText = deviceId;
+
+let map, deviceMarker, allowLocationSharing = false;
+let realTimeInterval;
+
+ymaps.ready(initMap);
+
+function initMap() {
+    map = new ymaps.Map("map", {
+        center: [55.76, 37.64],
+        zoom: 10
+    });
+
+    const lat = localStorage.getItem(`lat-${deviceId}`);
+    const lon = localStorage.getItem(`lon-${deviceId}`);
+    if (lat && lon) {
+        updateDeviceLocation(parseFloat(lat), parseFloat(lon));
+    }
+    updateViewingDevicesCount();
+}
+
+function updateDeviceLocation(lat, lon) {
+    if (!deviceMarker) {
+        deviceMarker = new ymaps.Placemark([lat, lon], {}, {
+            preset: 'islands#icon',
+            iconColor: '#0095b6'
+        });
+        map.geoObjects.add(deviceMarker);
+    } else {
+        deviceMarker.geometry.setCoordinates([lat, lon]);
+    }
+    map.setCenter([lat, lon]);
+}
+
+function updateViewingDevicesCount() {
+    fetch('get_viewing_devices_count.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `deviceId=${deviceId}`
+    }).then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              document.getElementById('viewingDevices').innerText = data.count;
+          } else {
+              console.error('Failed to fetch viewing devices count.');
+          }
+      });
+}
+
+
+document.getElementById('allowBtn').addEventListener('click', () => {
+    if (navigator.geolocation) {
+        allowLocationSharing = true;
+        navigator.geolocation.watchPosition(position => {
+            if (allowLocationSharing) {
+                const { latitude, longitude } = position.coords;
+                localStorage.setItem(`lat-${deviceId}`, latitude);
+                localStorage.setItem(`lon-${deviceId}`, longitude);
+                updateDeviceLocation(latitude, longitude);
+                sendLocationToServer(deviceId, latitude, longitude);
+            }
+        });
+        alert(getLocalizedText('requestsAllowed'));
+    }
+});
+
+document.getElementById('realTimeBtn').addEventListener('click', () => {
+    if (navigator.geolocation) {
+        allowLocationSharing = true;
+        realTimeInterval = setInterval(() => {
+            if (allowLocationSharing) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const { latitude, longitude } = position.coords;
+                        localStorage.setItem(`lat-${deviceId}`, latitude);
+                        localStorage.setItem(`lon-${deviceId}`, longitude);
+                        updateDeviceLocation(latitude, longitude);
+                        sendLocationToServer(deviceId, latitude, longitude);
+                        console.log('Геолокация в реальном времени обновлена');  // Logging location update
+                    },
+                    error => {
+                        console.log('Ошибка при обновлении геолокации:', error.message);
+                    }
+                );
+            }
+        }, 5000);
+    }
+});
+
+
+document.getElementById('requestBtn').addEventListener('click', () => {
+    const requestedId = document.getElementById('inputId').value;
+    if (requestedId) {
+        fetchLocationFromServer(requestedId)
+            .then(data => {
+                if (data.status === 'success') {
+                    const { latitude, longitude } = data.data;
+                    updateRequestedDeviceLocation(parseFloat(latitude), parseFloat(longitude));
+                } else {
+                    alert(data.message);
+                }
+            });
+    }
+});
+
+document.getElementById('updateBtn').addEventListener('click', () => {
+    const requestedId = document.getElementById('inputId').value;
+    if (requestedId) {
+        fetchLocationFromServer(requestedId)
+            .then(data => {
+                if (data.status === 'success') {
+                    const { latitude, longitude } = data.data;
+                    updateRequestedDeviceLocation(parseFloat(latitude), parseFloat(longitude));
+                } else {
+                    alert(data.message);
+                }
+            });
+    }
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+    resetConnections();
+});
+
+document.getElementById('deleteBtn').addEventListener('click', () => {
+    deleteDeviceData(deviceId);
+});
+
+document.getElementById('langToggle').addEventListener('click', () => {
+    toggleLanguage();
+});
+
+function updateRequestedDeviceLocation(lat, lon) {
+    const requestedMarker = new ymaps.Placemark([lat, lon], {}, {
+        preset: 'islands#redIcon',
+        iconColor: '#ff0000'
+    });
+    map.geoObjects.add(requestedMarker);
+    map.setCenter([lat, lon]);
+}
+
+function sendLocationToServer(deviceId, latitude, longitude) {
+    fetch('update_location.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `deviceId=${deviceId}&latitude=${latitude}&longitude=${longitude}`
+    }).then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              updateViewingDevicesCount();
+          } else {
+              alert(getLocalizedText('updateError'));
+          }
+      });
+}
+
+function fetchLocationFromServer(deviceId) {
+    return fetch(`get_location.php?deviceId=${deviceId}`)
+        .then(response => response.json());
+}
+
+function resetConnections() {
+    fetch('reset_connections.php', {
+        method: 'POST'
+    }).then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              alert(getLocalizedText('connectionsReset'));
+              localStorage.clear();
+              location.reload();
+          } else {
+              alert(getLocalizedText('resetError'));
+          }
+      });
+}
+
+function deleteDeviceData(deviceId) {
+    fetch('delete_device.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `deviceId=${deviceId}`
+    }).then(response => response.json())
+      .then(data => {
+          if (data.status === 'success') {
+              alert(getLocalizedText('dataDeleted'));
+              localStorage.clear();
+              location.reload();
+          } else {
+              alert(getLocalizedText('deleteError'));
+          }
+      });
+}
+
+function toggleLanguage() {
+    const currentLang = localStorage.getItem('lang') || 'en';
+    const newLang = currentLang === 'en' ? 'ru' : 'en';
+    localStorage.setItem('lang', newLang);
+    applyTranslations(newLang);
+}
+
+function applyTranslations(lang) {
+    document.getElementById('title').innerText = lang === 'en' ? 'Device Location Sharing' : 'Обмен местоположением устройства';
+   // document.getElementById('deviceIdText').innerText = lang === 'en' ? 'Your ID: ' : 'Ваш ID: ';
+    //document.getElementById('viewingDevicesText').innerText = lang === 'en' ? 'Number of devices seeing my location: ' : 'Сколько устройств видят моё местоположение: ';
+    document.getElementById('allowBtn').innerText = lang === 'en' ? 'Allow Requests ✅' : 'Разрешить запросы ✅';
+    document.getElementById('realTimeBtn').innerText = lang === 'en' ? 'Share my location in real-time 🕐' : 'Передавать моё местоположение в реальном времени 🕐';
+    document.getElementById('requestBtn').innerText = lang === 'en' ? 'Connect 🆔' : 'Подключиться 🆔';
+    document.getElementById('updateBtn').innerText = lang === 'en' ? 'Update Connected Device Location ⌛' : 'Обновить местоположение подключённого устройства ⌛';
+    document.getElementById('resetBtn').innerText = lang === 'en' ? 'Reset All Devices 💣' : 'Сбросить все устройства 💣';
+    document.getElementById('deleteBtn').innerText = lang === 'en' ? 'Deny Permissions and Delete All My Data 🗑' : 'Запретить разрешения и удалить все данные обо мне 🗑';
+    document.getElementById('footerText').innerText = lang === 'en' ? '*We do not collect or distribute user data. All data is deleted when you click \'Deny Permissions and Delete All My Data\'. We recommend clicking this button after each use.' : '*Мы не собираем данные о пользователе и не распространяем их. Все данные удаляются, при нажатии на кнопку \'Запретить разрешения и удалить все данные обо мне\', советуем нажимать на неё после каждого похода';
+    document.getElementById('langToggle').innerText = lang === 'en' ? 'Switch to RU' : 'Переключить на EN';
+}
+
+function getLocalizedText(key) {
+    const lang = localStorage.getItem('lang') || 'en';
+    const texts = {
+        en: {
+            requestsAllowed: 'Requests allowed.',
+            updateError: 'Failed to update location on server.',
+            connectionsReset: 'All devices reset.',
+            resetError: 'Failed to reset devices.',
+            dataDeleted: 'Your data has been deleted.',
+            deleteError: 'Failed to delete data.'
+        },
+        ru: {
+            requestsAllowed: 'Запросы разрешены.',
+            updateError: 'Не удалось обновить местоположение на сервере.',
+            connectionsReset: 'Все устройства сброшены.',
+            resetError: 'Не удалось сбросить устройства.',
+            dataDeleted: 'Ваши данные удалены.',
+            deleteError: 'Не удалось удалить данные.'
+        }
+    };
+    return texts[lang][key] || texts['en'][key];
+}
+
+window.addEventListener('load', () => {
+    const lang = localStorage.getItem('lang') || 'en';
+    applyTranslations(lang);
+
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(position => {
+            const { latitude, longitude } = position.coords;
+            localStorage.setItem(`lat-${deviceId}`, latitude);
+            localStorage.setItem(`lon-${deviceId}`, longitude);
+            updateDeviceLocation(latitude, longitude);
+            sendLocationToServer(deviceId, latitude, longitude);
+        });
+    }
+});
+
+    </script>
+
+</body>
+</html>
