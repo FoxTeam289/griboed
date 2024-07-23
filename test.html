@@ -216,8 +216,8 @@ function getLocalizedText(key) {
 function updateLanguage() {
     const lang = localStorage.getItem('lang') || 'en';
     document.getElementById('title').innerText = lang === 'en' ? 'Device Location Sharing' : 'Общий доступ к местоположению устройства';
-    document.getElementById('deviceIdText').innerText = lang === 'en' ? 'Your ID: ' : 'Ваш ID: ';
-    document.getElementById('viewingDevicesText').innerText = lang === 'en' ? 'Number of devices seeing my location: ' : 'Количество устройств, которые видят мое местоположение: ';
+ //   document.getElementById('deviceIdText').innerText = lang === 'en' ? 'Your ID: ' : 'Ваш ID: ';
+ //   document.getElementById('viewingDevicesText').innerText = lang === 'en' ? 'Number of devices seeing my location: ' : 'Количество устройств, которые видят мое местоположение: ';
     document.getElementById('allowBtn').innerText = lang === 'en' ? 'Allow Requests' : 'Разрешить запросы';
     document.getElementById('realTimeBtn').innerText = lang === 'en' ? 'Share my location in real-time' : 'Передавать моё местоположение в реальном времени';
     document.getElementById('requestBtn').innerText = lang === 'en' ? 'Request Location' : 'Запросить местоположение';
