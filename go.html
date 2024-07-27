@@ -91,8 +91,16 @@ main {
     background-color: #4CAF50;
     color: white;
 }
+
+@media (hover:hover) {
 .controls button:hover {
     background-color: #45a049;
+}
+}
+@media (hover:none) {
+.controls button:active {
+    background-color: #45a049;
+}
 }
 .controls select {
     background-color: white;
@@ -426,7 +434,7 @@ iframe {
         <div id="map"></div>
         <div id="control" class="controls">
             <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
-            <button onclick="window.location.href='https://mushfind.infinityfreeapp.com/'"><i class="fas fa-map-pin"></i> Совместный поход </button>
+            <button onclick="window.location.href='https://ajointhike.zya.me/second.html'"><i class="fas fa-map-pin"></i> Совместный поход </button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
             <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
@@ -1806,7 +1814,7 @@ function showChoose() {
                                 </a>
                             </li>
                             <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/forum.html">
+                                <a class="t975__menu-link" href="https://socialmush.infinityfreeapp.com/">
                                     <div class="t975__menu-item">
                                         <div class="t975__icon-wrapper">
                                             <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/globe_with_meridians_3d.png" imgfield="li_img__1721651051254" alt="">

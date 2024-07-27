@@ -14,6 +14,9 @@
   <link rel="shortcut icon" href="icon.png" type="image/x-icon">
   <link rel="icon" href="icon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; img-src https://*; child-src 'none';" />
 
 
   <!-- Yandex.Metrika counter -->
@@ -68,10 +71,26 @@ body {
   justify-content: space-between;
 }
 
-.card:hover {
+@media (hover: hover){
+  .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
+.card:hover img {
+  transform: scale(1.05);
+}
+}
+@media (hover: none){
+  .card:active {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+.card:active img {
+  transform: scale(1.05);
+}
+}
+
+
 
 .card img {
   width: 100%;
@@ -79,10 +98,6 @@ body {
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   transition: transform 0.3s ease;
-}
-
-.card:hover img {
-  transform: scale(1.05);
 }
 
 .card-content {
@@ -440,7 +455,7 @@ body {
                                 </a>
                             </li>
                             <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/forum.html">
+                                <a class="t975__menu-link" href="https://socialmush.infinityfreeapp.com/">
                                     <div class="t975__menu-item">
                                         <div class="t975__icon-wrapper">
                                             <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/globe_with_meridians_3d.png" imgfield="li_img__1721651051254" alt="">
