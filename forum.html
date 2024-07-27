@@ -34,208 +34,107 @@
 
 
     <style>
-/* Общие стили для страницы */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f7f9fc;
+        body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-}
-
-.content {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.content:hover {
-    transform: translateY(-5px);
-}
-
-h1, h2, h3 {
+    background: #f5f5f5;
     color: #333;
-    font-weight: 500;
 }
 
-.auth-panel {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.auth-panel > div {
-    flex: 1;
-    padding: 20px;
-    background-color: #fafafa;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.auth-panel > div:hover {
-    transform: translateY(-5px);
-}
-
-.auth-panel input[type="text"],
-.auth-panel input[type="password"],
-.auth-panel textarea,
-.auth-panel input[type="file"],
-.auth-panel button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
-}
-
-.auth-panel input[type="text"]:focus,
-.auth-panel input[type="password"]:focus,
-.auth-panel textarea:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-    outline: none;
-}
-
-/* Стили для кнопок */
-button {
-    background-color: #007BFF;
+header {
+    background: #4CAF50;
     color: white;
-    border: none;
-    cursor: pointer;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 6px;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    text-align: center;
+    padding: 2rem 0;
     position: relative;
-    overflow: hidden;
 }
 
-button:hover {
-    background-color: #0056b3;
-    transform: translateY(-3px);
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
 }
 
-button::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s;
-    transform: translate(-50%, -50%) rotate(45deg);
-    opacity: 0;
+header p {
+    margin: 0;
+    font-size: 1.2rem;
 }
 
-button:hover::before {
-    width: 0;
-    height: 0;
-    opacity: 1;
+section {
+    padding: 2rem;
 }
 
-.hidden {
-    display: none;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-.profile, .admin-panel, #change-password-section, #change-username-section, .chat-panel {
-    padding: 20px;
-    background-color: #fafafa;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    transition: transform 0.3s ease-in-out;
+.description {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 2rem;
 }
 
-.profile:hover, .admin-panel:hover, #change-password-section:hover, #change-username-section:hover, .chat-panel:hover {
-    transform: translateY(-5px);
+.description img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 1rem;
 }
 
-.profile p, .profile button {
-    margin: 10px 0;
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+.feature {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    flex: 1 1 30%;
+    margin: 1rem;
+    text-align: center;
 }
 
-textarea:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-    outline: none;
+.feature h3 {
+    margin-top: 0;
 }
 
-#posts, #user-profile {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    transition: transform 0.3s ease-in-out;
+.interactive {
+    background: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#posts:hover, #user-profile:hover {
-    transform: translateY(-5px);
+.interactive button {
+    background: white;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-#invitation-container {
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-    transition: transform 0.3s ease-in-out;
+.interactive button:hover {
+    background: #f1f1f1;
 }
 
-#invitation-container:hover {
-    transform: translateY(-5px);
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
 }
 
-.chat {
-    width: 100%;
-    height: 300px;
-    overflow-y: auto;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-}
-
-.chat::-webkit-scrollbar {
-    width: 8px;
-}
-
-.chat::-webkit-scrollbar-thumb {
-    background-color: #007BFF;
-    border-radius: 4px;
-}
-
-#chatMessage {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-#chatMessage:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-    outline: none;
-}
 .t975 {
     border-top-width: 1px;
     border-top-style: solid;
@@ -387,28 +286,47 @@ textarea:focus {
     </style>
 </head>
 <body>
- <body class="sb-body sb-body_with-footer  font-ubuntu-opensans sb-content-size_m sb-buttons-border_round">
-<div class="site-wrapper" tabindex="0">
-               <section data-type="main" id="main" class="s-main-type-3 sb-block sb-block_fullscreen s-main-type-3_with-scroll-icon sb-text-white"><link id="main-type-3" rel="stylesheet" href="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.667/style/blocks/main-type-3.css"> <div class="sb-background-image sb-background sb-background" style="background-image: url(https://259506.selcdn.ru/defaults/patterns/c7bdf5e3-7e1b-4963-88d4-147954ec8056/c7bdf5e3-7e1b-4963-88d4-147954ec8056-320479.jpg);"><div class="sb-background-overlay" style="opacity: 0.3"></div></div> <div class="sb-container s-main-type-3__container sb-m-clear-top"><div class="sb-row s-main-type-3__top-content "><div class="sb-col_lg-8 sb-col_md-12 sb-col_sm-12 sb-col_xs-12 sb-m-clear-top">  <div class="sb-m-clear-bottom"><h1 class="sb-font-title sb-font-h1 sb-m-9-bottom">&#1057;&#1087;&#1072;&#1089;&#1080;&#1073;&#1086; &#1079;&#1072; &#1090;&#1077;&#1089;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1085;&#1080;&#1077; &#1076;&#1077;&#1084;&#1086;-&#1074;&#1077;&#1088;&#1089;&#1080;&#1080;!<div></div></h1> <div class="sb-font-p2 sb-text-opacity">&#1052;&#1099; &#1091;&#1078;&#1077; &#1087;&#1086;&#1095;&#1090;&#1080; &#1079;&#1072;&#1082;&#1086;&#1085;&#1095;&#1080;&#1083;&#1080; &#1088;&#1072;&#1079;&#1088;&#1072;&#1073;&#1086;&#1090;&#1082;&#1091; &#1085;&#1086;&#1074;&#1086;&#1081; &#1089;&#1086;&#1094;&#1080;&#1072;&#1083;&#1100;&#1085;&#1086;&#1081; &#1089;&#1077;&#1090;&#1080;, &#1082;&#1086;&#1090;&#1086;&#1088;&#1072;&#1103; &#1073;&#1091;&#1076;&#1077;&#1090; &#1077;&#1097;&#1105; &#1083;&#1091;&#1095;&#1096;&#1077;!</div></div>    <div class="s-main-type-3__buttons sb-m-6-top">   <a href="https://tbank.ru" class="s-main-type-3__button sb-button-primary sb-button-scheme-dark" style="background-color: rgb(255,255,255)">   &#1061;&#1086;&#1088;&#1086;&#1096;&#1086;   </a>    </div>   </div></div>  </div>  <div data-step-scroll class="step-scroll "><div class="step-scroll-round"><div class="step-scroll-arrow"></div></div></div>  </section>             </div>
+    <header>
+        <h1>Mushfind</h1>
+        <p>Ваше приключение начинается здесь</p>
+    </header>
+    
+    <section class="description">
+        <div class="container">
+            <h2>Открывайте и соединяйтесь</h2>
+            <p>Mushfind - уникальная социальная сеть, где люди могут находить друзей для совместного сбора грибов. Найдите друзей, присоединяйтесь к походам за грибами и оставайтесь в безопасности с помощью нашего встроенного чата.</p>
+            <img src="back.jpg" alt="Сбор грибов">
+        </div>
+    </section>
 
-<template id="popups-stash">
-</template>
+    <section class="features">
+        <div class="container">
+            <div class="feature">
+                <h3>Связь с другими</h3>
+                <p>Просматривайте ленту и выбирайте людей, которых хотите пригласить в поход за грибами.</p>
+            </div>
+            <div class="feature">
+                <h3>Присоединяйтесь к походам</h3>
+                <p>Планируйте и присоединяйтесь к захватывающим походам с другими любителями грибов.</p>
+            </div>
+            <div class="feature">
+                <h3>Будьте в безопасности с нашим чатом</h3>
+                <p>Общайтесь безопасно в приложении, чтобы организовывать ваши приключения.</p>
+            </div>
+        </div>
+    </section>
 
-<template id="popups-images-stash">
-</template>
+    <section class="interactive">
+        <div class="container">
+            <h2>Вам пришло приглашение!</h2>
+            <p>Кто-то пригласил вас присоединиться к походу за грибами. Готовы начать веселье?</p>
+            <button onclick="window.location.href='https://socialmush.infinityfreeapp.com/'">Присоединиться сейчас</button>
+        </div>
+    </section>
 
-<script>
-    window.tbConfig={"inFrame":false,"enableLazyLoading":false,"enableJsLazyLoading":false,"enableDynamicGoods":true,"isPreviewMode":false,"hasPromocodes":false,"posScriptUrl":"https://forma.tinkoff.ru/static/onlineScript.js","enableMessengerLazyLoading":true,"enableCssScrollSnapSlider":true,"yandexMapsApiKey":"a9eba83c-b342-4dfe-ab11-2c7cbd6839cb","messengerLink":"https://w.tb.ru/open-messenger/widget?wId=W-A4C534CFD5CB45B5800E64336DF4EA04","cartHash":"U2FsdGVkX19iTE9fFm8hGFcexLArfz+1YiU+pkxNX4VS6DSJAq1rqAo2BazW4bUxPlBiS+qlaZHh394yhkskvs0zl4s5fv9Vcw1MQzaXPCI26PujYqbpzhlSMbk3fDDi","enableSitesCheckoutIntegration":false,"staticPath":"https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.667"};
-    window.tbConfig.isExported=false;window.tbConfig.exportedApiUrl=null;
-    window.tbConfig.apiUrl=!window.tbConfig.isExported ? '' : window.tbConfig.exportedApiUrl;
-    window.tbConfig.isModern='noModule'in HTMLScriptElement.prototype;
-    (function (){var n,o="chrome"in window,e="InstallTrigger"in window;function t(n){var o=document.createElement("script");return o.src="".concat(window.tbConfig.staticPath,"/js/").concat(n),window.tbConfig.isModern&&(o.type="module",o.src=o.src.replace(".js",".modern.js")),o.defer=!0,o}function d(n){var o=t(n);document.head.appendChild(o)}window.tbConfig.enableLazyLoading&&d("lazy-load.js"),"attachShadow"in Element.prototype||d("lit-polyfill-support.js"),d("webcomponents-loader.js"),o||e||d("smoothscroll.js"),n=t("front.js"),document.addEventListener("DOMContentLoaded",(function(){document.head.appendChild(n)}));})()
-</script>
-
-    <link rel="stylesheet" href="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.667/style/size-m.css">
-    <link rel="stylesheet" href="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.667/style/popups.css">
-    <link rel="stylesheet" href="https://e26f86a1-a349-40e0-9864-90f0278f7cc5.selcdn.net/tb/0.1.667/style/styles-helpers.css">
-
+    <footer>
+        <p>&copy; 2024 Mushfind. Все права защищены.</p>
+    </footer>
                     <!-- T975 -->
                     <div class="t975 " style="background-color: #fff; " data-bgcolor-hex="" data-bgcolor-rgba="" data-navmarker="nav776782174marker" data-bgopacity="1" data-menu="yes">
                         <nav class="t975__wrapper">
@@ -475,735 +393,7 @@ textarea:focus {
                                 </li>
                             </ul>
                         </nav>
-                    </div>  
-<script>
-         document.addEventListener('DOMContentLoaded', function() {
-    const menuBtn = document.getElementById('menu-btn');
-    const navMenu = document.getElementById('nav-menu');
-
-    menuBtn.addEventListener('click', function() {
-        navMenu.classList.toggle('show');
-    });
-});
-
-function renderPosts() {
-    loadPosts();
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    if (localStorage.getItem("currentUser")) {
-        document.getElementById("auth-section").classList.add("hidden");
-        document.getElementById("main-section").classList.remove("hidden");
-        loadProfile();
-        renderPosts();
-        loadHikes();
-    }
-});
-
-      
-              const TELEGRAM_BOT_TOKEN = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
-        const TELEGRAM_CHAT_ID = '7208967084';
-
-        let data = {
-            "users": [
-                { "username": "Грибоед", "password": "TheGriboed", "subscribers": ['Фокс'], "subscriberCount": 28900 },
-                { "username": "Елизавета", "password": "12345y789", "subscribers": [], "subscriberCount": 0 },
-                { "username": "tema12", "password": "ktUc1s_r5B", "subscribers": [], "subscriberCount": 0 },
-                { "username": "=SM=", "password": "Nk1PbJi_13", "subscribers": [], "subscriberCount": 0 },
-                { "username": "MikeR", "password": "m-09tBaKVc", "subscribers": [], "subscriberCount": 0 },
-                { "username": "Tol_Tolich", "password": "ocY9_0BXlM", "subscribers": [], "subscriberCount": 0 },
-                { "username": "NatalyaBur", "password": "oT1kiJ6_Os", "subscribers": [], "subscriberCount": 0 },
-                { "username": "художник Федотов", "password": "P51MWZsr_X", "subscribers": [], "subscriberCount": 0 },
-                { "username": "tak1973", "password": "ku69HK_7l3", "subscribers": [], "subscriberCount": 0 },
-                { "username": "Лесник Алексей", "password": "0000", "subscribers": [], "subscriberCount": 10500 },
-                { "username": "Охотник за грибами", "password": "0000", "subscribers": [], "subscriberCount": 8900 },
-                { "username": "Грибной Мастер", "password": "0000", "subscribers": [], "subscriberCount": 25300 },
-                { "username": "Лесная Ведьма", "password": "0000", "subscribers": [], "subscriberCount": 15200 },
-                { "username": "Маша Грибница", "password": "0000", "subscribers": [], "subscriberCount": 6700 },
-                { "username": "Фунголог", "password": "0000", "subscribers": [], "subscriberCount": 12800 },
-                { "username": "Лесная Фея", "password": "0000", "subscribers": [], "subscriberCount": 18400 },
-                { "username": "Грибной Гуру", "password": "0000", "subscribers": [], "subscriberCount": 23500 },
-                { "username": "Екатерина", "password": "25071954Gfgf", "subscribers": [], "subscriberCount": 0 },
-                { "username": "Фокс", "password": "2085", "subscribers": ['Грибоед'], "subscriberCount": 35000 }
-            ],
-            "posts": [
-                { "id": 1, "user": "Елизавета", "content": "Всем Доброго времени суток!", "image": "https://iimg.su/s/08/H0UJRNHKknR0Y0EjNRFbZXDSDDvHZIxAr2LmPJ5K.jpg", "likes": 1, "likedBy": ['Фокс'], "comments": [] },
-                { "id": 2, "user": "Лесник Алексей", "content": "Сегодня наткнулся на чудесную полянку белых грибов. Удачный день! (2 июня 2024)", "image": "", "likes": 120, "likedBy": [], "comments": [] },
-                { "id": 3, "user": "Охотник за грибами", "content": "Сегодня нашёл гриб, о котором раньше только читал. Вот так выглядит трутовик лакированный! (12 июня 2024)", "image": "", "likes": 180, "likedBy": [], "comments": [] },
-                { "id": 4, "user": "Грибной Мастер", "content": "Делюсь своими секретами, как найти самые вкусные лисички в лесу. (5 июня 2024)", "image": "", "likes": 250, "likedBy": [], "comments": [] },
-                { "id": 5, "user": "Лесная Ведьма", "content": "Вчерашняя прогулка принесла 5 кг опят! Делюсь лайфхаками. (18 июня 2024)", "image": "", "likes": 300, "likedBy": [], "comments": [] },
-                { "id": 6, "user": "Маша Грибница", "content": "Нашла своё новое любимое место для сбора подберёзовиков. Рекомендую! (23 июня 2024)", "image": "", "likes": 150, "likedBy": [], "comments": [] },
-                { "id": 7, "user": "Фунголог", "content": "Первые белые грибы сезона! Вот они, красавцы. (29 июня 2024)", "image": "", "likes": 200, "likedBy": [], "comments": [] },
-                { "id": 8, "user": "Лесная Фея", "content": "Подробное руководство по отличию съедобных грибов от ядовитых. (3 июля 2024)", "image": "", "likes": 320, "likedBy": [], "comments": [] },
-                { "id": 9, "user": "Грибной Гуру", "content": "Лето в самом разгаре, и лес полон грибов. Какой сегодня улов!! (7 июля 2024)", "image": "", "likes": 280, "likedBy": [], "comments": [] },
-                    ],
-        "subscriptions": [],
-        "hikeInvitations": [
-            {
-                inviter: "Грибоед",
-            invitee: "foxyprofi",
-            status: "pending"
-            }
-        ],
-        "chats": [
-            {
-                "id": "Грибоед-foxyprofi",
-                "users": ["Грибоед", "foxyprofi"],
-                "messages": [
-                    { "sender": "Грибоед", "receiver": "foxyprofi", "text": "Привет!", "special": false },
-                    { "sender": "foxyprofi", "receiver": "Грибоед", "text": "Привет! Как дела?", "special": false }
-                ],
-                "specialMessages": [
-                    { 
-                        "sender": "Грибоед", 
-                        "receiver": "foxyprofi", 
-                        "text": "Мы готовы! Город: Москва, Время: 12:00, Email: example@example.com, Телефон: 1234567890",
-                        "city": "Москва",
-                        "time": "12:00",
-                        "email": "example@example.com",
-                        "phone": "1234567890"
-                    }
-                ]
-            }
-        ]
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderChatInterface();
-    });
-
-    let currentUser = null;
-    let currentChat = null;
-
-    function showLogin() {
-        document.getElementById('login-section').classList.remove('hidden');
-        document.getElementById('register-section').classList.add('hidden');
-    }
-
-    function loadPosts() {
-    const posts = getPosts();
-    const postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = "";
-
-    posts.forEach(post => {
-        const postElement = document.createElement("div");
-        postElement.classList.add("post");
-
-        const postUser = document.createElement("p");
-        postUser.textContent = `Автор: ${post.user}`;
-
-        const postContent = document.createElement("p");
-        postContent.textContent = post.content;
-
-        if (post.image) {
-            const postImage = document.createElement("img");
-            postImage.src = post.image;
-            postImage.alt = "Изображение поста";
-            postImage.style.maxWidth = "100%";
-            postElement.appendChild(postImage);
-        }
-
-        const likeButton = document.createElement("button");
-        likeButton.textContent = `Лайкнуть (${post.likes})`;
-        likeButton.onclick = () => likePost(post.id);
-
-        const commentButton = document.createElement("button");
-        commentButton.textContent = "Комментировать";
-        commentButton.onclick = () => showCommentSection(post.id);
-
-        const subscribeText = document.createElement("p");
-        subscribeText.textContent = `Подписаться на ${post.user}`;
-        subscribeText.style.cursor = "pointer";
-        subscribeText.onclick = () => subscribe(post.user);
-
-        postElement.appendChild(postUser);
-        postElement.appendChild(postContent);
-        postElement.appendChild(likeButton);
-        postElement.appendChild(commentButton);
-        postElement.appendChild(subscribeText);
-
-        post.comments.forEach(comment => {
-            const commentElement = document.createElement("div");
-            commentElement.classList.add("comment");
-
-            const commentUser = document.createElement("p");
-            commentUser.textContent = `Комментарий от ${comment.user}`;
-
-            const commentText = document.createElement("p");
-            commentText.textContent = comment.text;
-
-            commentElement.appendChild(commentUser);
-            commentElement.appendChild(commentText);
-            postElement.appendChild(commentElement);
-        });
-
-        postsContainer.appendChild(postElement);
-    });
-}
-
-
-    function showRegister() {
-        document.getElementById('login-section').classList.add('hidden');
-        document.getElementById('register-section').classList.remove('hidden');
-    }
-
-    function showChangePassword() {
-        document.getElementById('change-password-section').classList.remove('hidden');
-        document.querySelector('.profile').classList.add('hidden');
-    }
-
-    function hideChangePassword() {
-        document.getElementById('change-password-section').classList.add('hidden');
-        document.querySelector('.profile').classList.remove('hidden');
-    }
-
-    function getUsers() {
-    return JSON.parse(localStorage.getItem("users") || "[]");
-}
-
-function saveUsers(users) {
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
-    function showChangeUsername() {
-        document.getElementById('change-username-section').classList.remove('hidden');
-        document.querySelector('.profile').classList.add('hidden');
-    }
-
-    function hideChangeUsername() {
-        document.getElementById('change-username-section').classList.add('hidden');
-        document.querySelector('.profile').classList.remove('hidden');
-    }
-
-    function login() {
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
-    const user = data.users.find(u => u.username === username && u.password === password);
-    if (user) {
-        currentUser = user;
-        document.querySelector('#username span').textContent = username;
-        document.querySelector('#subscriberCount span').textContent = user.subscriberCount;
-        document.querySelector('.auth-panel').classList.add('hidden');
-        document.querySelector('.profile').classList.remove('hidden');
-        renderPosts();
-        renderInvitations();
-    } else {
-        document.getElementById('loginError').textContent = 'Неверное имя пользователя или пароль';
-    }
-}
-
-    function register() {
-        const username = document.getElementById('registerUsername').value;
-        const password = document.getElementById('registerPassword').value;
-        if (data.users.find(u => u.username === username)) {
-            document.getElementById('registerError').textContent = 'Имя пользователя уже существует';
-        } else {
-            const newUser = { username, password, subscribers: [], subscriberCount: 0, posts: [] };
-            data.users.push(newUser);
-            alert('Аккаунт создан! Ожидайте подтверждения.');
-            sendToTelegram(newUser, 'newUser');
-            showLogin();
-        }
-    }
-
-    async function sendToTelegram(data, type) {
-        let message = '';
-        let formData = new FormData();
-        
-        if (type === 'newUser') {
-            message = `Новый пользователь:\nИмя: ${data.username}\nПароль: ${data.password}`;
-        } else  if (type === 'newPost') {
-        message = `Новый пост от пользователя ${data.user}:\n${data.content}`;
-        if (data.image) {
-            formData.append('photo', data.image, 'post_image.jpg');
-            formData.append('chat_id', TELEGRAM_CHAT_ID);
-            formData.append('caption', message);
-            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-            });
-            return;
-        }
-    } else if (type === 'comment') {
-        message = `Комментарий к посту с ID ${data.postId}:\n${data.comment}\nОт пользователя: ${data.username}`;
-        if (data.image) {
-            formData.append('photo', data.image, 'comment_image.jpg');
-            formData.append('chat_id', TELEGRAM_CHAT_ID);
-            formData.append('caption', message);
-            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-            });
-            return;
-        }
-    } else if (type === 'reply') {
-        message = `Ответ на комментарий к посту с ID ${data.postId} (Комментарий от ${data.commentUser}):\n${data.commentText}\nОтвет:\n${data.reply}\nОт пользователя: ${data.username}`;
-        if (data.image) {
-            formData.append('photo', data.image, 'reply_image.jpg');
-            formData.append('chat_id', TELEGRAM_CHAT_ID);
-            formData.append('caption', message);
-            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-            });
-            return;
-        }
-    }  else if (type === 'like') {
-            message = `Пост с ID ${data.postId} был лайкнут пользователем ${data.username}`;
-        } else if (type === 'subscribe') {
-            message = `Пользователь ${data.subscriber} подписался на ${data.username}`;
-        } else if (type === 'changePassword') {
-            message = `Пользователь ${data.username} хочет сменить пароль.\nСтарый пароль: ${data.oldPassword}\nНовый пароль: ${data.newPassword}`;
-        } else if (type === 'changeUsername') {
-            message = `Пользователь ${data.oldUsername} хочет сменить ник.\нНовый ник: ${data.newUsername}`;
-        } else if (type === 'hikeInvitation') {
-            message = `Пользователь ${data.inviter} пригласил пользователя ${data.invitee} на совместный поход.`;
-        } else if (type === 'hikeResponse') {
-            message = `Пользователь ${data.invitee} ${data.response} приглашение пользователя ${data.inviter} на совместный поход.`;
-        } else if (type === 'chatMessage') {
-            message = `Сообщение от ${data.sender} к ${data.receiver}:\n${data.message}`;
-        }
-
-        formData.append('chat_id', TELEGRAM_CHAT_ID);
-    formData.append('text', message);
-
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        body: formData
-        });
-    }
-
-    function toggleAdminPanel() {
-        document.querySelector('.admin-panel').classList.toggle('hidden');
-    }
-
-    function addPost() {
-        const content = document.getElementById('postContent').value;
-        const imageFile = document.getElementById('postImage').files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const image = reader.result;
-            const post = {
-                id: Date.now(),
-                user: document.querySelector('#username span').textContent,
-                content: content,
-                image: imageFile ? imageFile : '',
-                likes: 0,
-                likedBy: [],
-                comments: []
-            };
-            data.posts.push(post);
-            renderPosts();
-            sendToTelegram(post, 'newPost');
-            document.getElementById('postContent').value = '';
-            document.getElementById('postImage').value = '';
-        };
-        if (imageFile) {
-            reader.readAsDataURL(imageFile);
-        } else {
-            const post = {
-                id: Date.now(),
-                user: document.querySelector('#username span').textContent,
-                content: content,
-                image: '',
-                likes: 0,
-                likedBy: [],
-                comments: []
-            };
-            data.posts.push(post);
-            renderPosts();
-            sendToTelegram(post, 'newPost');
-            document.getElementById('postContent').value = '';
-        }
-    }
-
-    function renderPosts() {
-    const postsContainer = document.getElementById('posts');
-    postsContainer.innerHTML = '';
-
-    const currentUser = data.users.find(u => u.username === document.querySelector('#username span').textContent);
-    if (!currentUser) {
-        console.error('Текущий пользователь не найден');
-        return;
-    }
-
-    const sortedPosts = data.posts.sort((a, b) => {
-        const isSubscribedToA = currentUser.subscribers.includes(a.user);
-        const isSubscribedToB = currentUser.subscribers.includes(b.user);
-
-        if (isSubscribedToA && !isSubscribedToB) return -1;
-        if (!isSubscribedToA && isSubscribedToB) return 1;
-        return 0;
-    });
-
-    sortedPosts.forEach((post, postIndex) => {
-        const postDiv = document.createElement('div');
-        postDiv.className = 'post';
-        postDiv.innerHTML = `
-            <p>${post.content}</p>
-            ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
-            <p>Автор: ${post.user}</p>
-            <button onclick="likePost(${post.id})">Лайк <span id="like-${post.id}">${post.likes}</span></button>
-            <p class="subscription" onclick="subscribe('${post.user}')">Подписаться на ${post.user}</p>
-            <div class="comment-section">
-                <h4>Комментарии</h4>
-                ${post.comments.map((comment, commentIndex) => `
-                    <div class="comment">
-                        <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                        ${comment.image ? `<img src="${comment.image}" alt="Image" style="max-width: 100%;">` : ''}
-                        <div class="reply-section">
-                            <h5>Ответы</h5>
-                            ${comment.replies ? comment.replies.map((reply, replyIndex) => `
-                                <div class="reply">
-                                    <p><strong>${reply.user}:</strong> ${reply.text}</p>
-                                    ${reply.image ? `<img src="${reply.image}" alt="Image" style="max-width: 100%;">` : ''}
-                                </div>
-                            `).join('') : ''}
-                            <textarea id="replyText-${post.id}-${commentIndex}" placeholder="Ваш ответ..."></textarea>
-                            <input type="file" id="replyImage-${post.id}-${commentIndex}">
-                            <button onclick="addReply(${post.id}, ${commentIndex})">Ответить</button>
-                        </div>
-                    </div>
-                `).join('')}
-                <textarea id="commentText-${post.id}" placeholder="Ваш комментарий..."></textarea>
-                <input type="file" id="commentImage-${post.id}">
-                <button onclick="addComment(${post.id})">Комментировать</button>
-            </div>
-        `;
-        postsContainer.appendChild(postDiv);
-    });
-}
-
-
-    function likePost(postId) {
-        const post = data.posts.find(p => p.id === postId);
-        const username = document.querySelector('#username span').textContent;
-        if (post && !post.likedBy.includes(username)) {
-            post.likes += 1;
-            post.likedBy.push(username);
-            renderPosts();
-            sendToTelegram({ postId: postId, username: username }, 'like');
-        }
-    }
-
-    function subscribe(username) {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    const users = getUsers();
-
-    const userToSubscribe = users.find(u => u.username === username);
-    if (userToSubscribe && !currentUser.subscribers.includes(username) && username !== currentUser.username) {
-        currentUser.subscribers.push(username);
-
-        // Обновление данных пользователя, на которого подписались
-        userToSubscribe.subscriberCount = (userToSubscribe.subscriberCount || 0) + 1;
-
-        document.querySelector('#subscriberCount span').textContent = currentUser.subscribers.length;
-        saveUsers(users);
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
-        alert(`Вы подписались на ${username}`);
-        sendToTelegram(currentUser.username, username);
-    } else {
-        alert(`Вы уже подписаны на ${username}`);
-    }
-    renderPosts();
-}
-    function addComment(postId) {
-    const text = document.getElementById(`commentText-${postId}`).value;
-    const imageFile = document.getElementById(`commentImage-${postId}`).files[0];
-    const username = document.querySelector('#username span').textContent;
-    const post = data.posts.find(p => p.id === postId);
-
-    if (text || imageFile) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const image = reader.result;
-            const comment = { user: username, text: text, image: imageFile ? imageFile : '' };
-            post.comments.push(comment);
-            renderPosts();
-            sendToTelegram({ postId: postId, username: username, comment: text, image: imageFile ? imageFile : '' }, 'comment');
-            document.getElementById(`commentText-${postId}`).value = '';
-            document.getElementById(`commentImage-${postId}`).value = '';
-        };
-        if (imageFile) {
-            reader.readAsDataURL(imageFile);
-        } else {
-            const comment = { user: username, text: text, image: '' };
-            post.comments.push(comment);
-            renderPosts();
-            sendToTelegram({ postId: postId, username: username, comment: text }, 'comment');
-            document.getElementById(`commentText-${postId}`).value = '';
-        }
-    }
-}
-
-function addReply(postId, commentIndex) {
-    const text = document.getElementById(`replyText-${postId}-${commentIndex}`).value;
-    const imageFile = document.getElementById(`replyImage-${postId}-${commentIndex}`).files[0];
-    const username = document.querySelector('#username span').textContent;
-    const post = data.posts.find(p => p.id === postId);
-    const comment = post.comments[commentIndex];
-
-    if (text || imageFile) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const image = reader.result;
-            const reply = { user: username, text: text, image: imageFile ? imageFile : '' };
-            if (!comment.replies) {
-                comment.replies = [];
-            }
-            comment.replies.push(reply);
-            renderPosts();
-            sendToTelegram({ postId: postId, username: username, reply: text, image: imageFile ? imageFile : '', commentUser: comment.user, commentText: comment.text }, 'reply');
-            document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
-            document.getElementById(`replyImage-${postId}-${commentIndex}`).value = '';
-        };
-        if (imageFile) {
-            reader.readAsDataURL(imageFile);
-        } else {
-            const reply = { user: username, text: text, image: '' };
-            if (!comment.replies) {
-                comment.replies = [];
-            }
-            comment.replies.push(reply);
-            renderPosts();
-            sendToTelegram({ postId: postId, username: username, reply: text, commentUser: comment.user, commentText: comment.text }, 'reply');
-            document.getElementById(`replyText-${postId}-${commentIndex}`).value = '';
-        }
-    }
-}
-    function changePassword() {
-        const oldPassword = document.getElementById('oldPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const username = document.querySelector('#username span').textContent;
-        const user = data.users.find(u => u.username === username);
-        if (user && user.password === oldPassword) {
-            user.password = newPassword;
-            alert('Пароль успешно изменен!');
-            sendToTelegram({ username: username, oldPassword: oldPassword, newPassword: newPassword }, 'changePassword');
-            hideChangePassword();
-        } else {
-            document.getElementById('changePasswordError').textContent = 'Старый пароль неверен';
-        }
-    }
-
-    function changeUsername() {
-        const newUsername = document.getElementById('newUsername').value;
-        const oldUsername = document.querySelector('#username span').textContent;
-        const user = data.users.find(u => u.username === oldUsername);
-        if (user && !data.users.find(u => u.username === newUsername)) {
-            user.username = newUsername;
-            document.querySelector('#username span').textContent = newUsername;
-            alert('Ник успешно изменен!');
-            sendToTelegram({ oldUsername: oldUsername, newUsername: newUsername }, 'changeUsername');
-            hideChangeUsername();
-        } else {
-            document.getElementById('changeUsernameError').textContent = 'Ник уже существует или невалидный';
-        }
-    }
-
-    function searchUser() {
-        const searchUsername = document.getElementById('searchUser').value;
-        const user = data.users.find(u => u.username === searchUsername);
-        if (user) {
-            document.querySelector('.profile').classList.add('hidden');
-            document.getElementById('user-profile').classList.remove('hidden');
-            document.getElementById('profileUsername').textContent = user.username;
-            document.getElementById('profileSubscriberCount').textContent = user.subscriberCount;
-            renderUserPosts(user);
-        } else {
-            alert('Пользователь не найден');
-        }
-    }
-
-    function renderUserPosts(user) {
-        const profilePostsContainer = document.getElementById('profilePosts');
-        profilePostsContainer.innerHTML = '';
-
-        user.posts.forEach(post => {
-            const postDiv = document.createElement('div');
-            postDiv.className = 'post';
-            postDiv.innerHTML = `
-                <p>${post.content}</p>
-                ${post.image ? `<img src="${post.image}" alt="Image" style="max-width: 100%;">` : ''}
-                <p>Автор: ${post.user}</p>
-                <div class="comment-section">
-                    <h4>Комментарии</h4>
-                    ${post.comments.map(comment => `
-                        <div class="comment">
-                            <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            profilePostsContainer.appendChild(postDiv);
-        });
-    }
-
-    function inviteToHike() {
-        const invitee = document.getElementById('profileUsername').textContent;
-        const inviter = document.querySelector('#username span').textContent;
-        const invitation = { inviter: inviter, invitee: invitee, status: 'pending' };
-        data.hikeInvitations.push(invitation);
-        sendToTelegram({ inviter: inviter, invitee: invitee }, 'hikeInvitation');
-        alert('Приглашение отправлено!');
-        createChat(inviter, invitee);
-    }
-
-    function createChat(user1, user2) {
-        const chatId = `${user1}-${user2}`;
-        if (!data.chats.find(chat => chat.id === chatId)) {
-            const newChat = { id: chatId, users: [user1, user2], messages: [], specialMessages: [] };
-            data.chats.push(newChat);
-            currentChat = newChat;
-        } else {
-            currentChat = data.chats.find(chat => chat.id === chatId);
-        }
-    }
-
-    function renderChat(inviter, invitee) {
-    const chatContainer = document.querySelector('.chat-panel');
-    chatContainer.innerHTML = '';
-
-    const messagesContainer = document.createElement('div');
-    messagesContainer.id = 'chat';
-    chatContainer.appendChild(messagesContainer);
-
-    currentChat.messages.forEach(message => {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-message';
-        messageDiv.textContent = `${message.sender}: ${message.text}`;
-        messagesContainer.appendChild(messageDiv);
-    });
-
-    currentChat.specialMessages.forEach(message => {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'special-message';
-        messageDiv.textContent = `${message.sender}: ${message.text}`;
-        messagesContainer.appendChild(messageDiv);
-    });
-
-    const inputContainer = document.createElement('div');
-    inputContainer.innerHTML = `
-        <textarea id="chatMessage" placeholder="Ваше сообщение..."></textarea>
-        <button onclick="sendMessage()">Отправить</button>
-        <button onclick="sendSpecialMessage()">Отправить особое сообщение</button>
-        <button onclick="cancelHike('${inviter}', '${invitee}')">Отменить поход</button>
-    `;
-    chatContainer.appendChild(inputContainer);
-}
-
-    function cancelHike(inviter, invitee) {
-        const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
-        if (invitation.status === 'accepted') {
-            invitation.status = 'declined';
-            alert('Поход отменен!');
-            sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
-            document.querySelector('.chat-panel').classList.add('hidden');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        renderChatInterface();
-    });
-
-// Обновляем интерфейс для отображения чатов
-function renderChatInterface() {
-    const username = document.querySelector('#username span').textContent;
-    const chatContainer = document.querySelector('.chat-panel');
-    chatContainer.innerHTML = '';
-
-    const invitation = data.hikeInvitations.find(invite => invite.invitee === username && invite.status === 'accepted');
-    if (invitation) {
-        chatContainer.classList.remove('hidden');
-        renderChat(invitation.inviter, invitation.invitee);
-    }
-}
-
-function sendMessage() {
-    const messageText = document.getElementById('chatMessage').value;
-    const sender = document.querySelector('#username span').textContent;
-    const receiver = currentChat.users.find(user => user !== sender);
-    const message = { sender: sender, receiver: receiver, text: messageText, special: false };
-    currentChat.messages.push(message);
-    sendToTelegram({ sender: sender, receiver: receiver, message: messageText }, 'chatMessage');
-    renderChat(currentChat.users[0], currentChat.users[1]);
-    document.getElementById('chatMessage').value = '';
-}
-
-function sendSpecialMessage() {
-    const sender = document.querySelector('#username span').textContent;
-    const receiver = currentChat.users.find(user => user !== sender);
-    const city = prompt('Введите город:');
-    const time = prompt('Введите время:');
-    const email = prompt('Введите email:');
-    const phone = prompt('Введите номер телефона (необязательно):');
-    const specialMessageText = `Мы готовы! Город: ${city}, Время: ${time}, Email: ${email}, Телефон: ${phone}`;
-    const specialMessage = { sender: sender, receiver: receiver, text: specialMessageText, city: city, time: time, email: email, phone: phone };
-    currentChat.specialMessages.push(specialMessage);
-    sendToTelegram({ sender: sender, receiver: receiver, message: specialMessageText }, 'chatMessage');
-    renderChat(currentChat.users[0], currentChat.users[1]);
-}
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderChatInterface();
-    renderPosts();
-});
-
-function renderInvitations() {
-    const invitationContainer = document.getElementById('invitation-container');
-    invitationContainer.innerHTML = '';
-
-    const username = document.querySelector('#username span').textContent;
-    const invitations = data.hikeInvitations.filter(invite => invite.invitee === username && invite.status === 'pending');
-
-    if (invitations.length === 0) {
-        invitationContainer.innerHTML = '<p>Вас пока никто не приглашал.</p>';
-        return;
-    }
-
-    invitations.forEach(invitation => {
-        const invitationDiv = document.createElement('div');
-        invitationDiv.className = 'invitation';
-        invitationDiv.innerHTML = `
-            <p>Приглашение на поход от ${invitation.inviter}</p>
-            <button onclick="acceptHike('${invitation.inviter}', '${invitation.invitee}')">Принять</button>
-            <button onclick="declineHike('${invitation.inviter}', '${invitation.invitee}')">Отклонить</button>
-        `;
-        invitationContainer.appendChild(invitationDiv);
-    });
-}
-
-function acceptHike(inviter, invitee) {
-    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
-    invitation.status = 'accepted';
-    alert('Приглашение принято!');
-    sendToTelegram({ inviter: inviter, invitee: invitee, response: 'принял' }, 'hikeResponse');
-    createChat(inviter, invitee);
-    renderInvitations();
-    renderChatInterface();
-}
-
-function declineHike(inviter, invitee) {
-    const invitation = data.hikeInvitations.find(invite => invite.inviter === inviter && invite.invitee === invitee);
-    invitation.status = 'declined';
-    alert('Приглашение отклонено!');
-    sendToTelegram({ inviter: inviter, invitee: invitee, response: 'отклонил' }, 'hikeResponse');
-    renderInvitations();
-}
-
-document.querySelector('.profile').innerHTML += '<button onclick="toggleInvitationContainer()">Показать приглашения</button>';
-document.querySelector('body').innerHTML += '<div id="invitation-container" class="hidden"></div>';
-
-function toggleInvitationContainer() {
-    const container = document.getElementById('invitation-container');
-    container.classList.toggle('hidden');
-    renderInvitations();
-}
-
-    </script>
+                    </div> 
 <script src="https://w.tb.ru/open-messenger/widget?wId=W-A4C534CFD5CB45B5800E64336DF4EA04"></script>
 </body>
 </html>
