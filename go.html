@@ -43,6 +43,7 @@
     height: 100vh;
     overflow: hidden;
     padding-bottom: 65px;
+    background-color: #f0f0f0;
 }
 header {
     background-color: #4CAF50;
@@ -58,6 +59,7 @@ main {
 #map {
     flex: 1;
     width: 100%;
+    height: 100%;
 }
 .controls {
     display: flex;
@@ -76,8 +78,7 @@ main {
     opacity: 1;
     visibility: visible;
 }
-.controls button,
-.controls select {
+.controls button {
     padding: 10px;
     font-size: 14px;
     border: none;
@@ -101,10 +102,6 @@ main {
 .controls button:active {
     background-color: #45a049;
 }
-}
-.controls select {
-    background-color: white;
-    color: #333;
 }
 .controls select:focus {
     outline: none;
@@ -228,13 +225,9 @@ main {
         left: 5%; /* Центрируем обертку */
         transform: none; /* Убираем трансформацию */
     }
-    .controls button,
-    .controls select {
-        flex: none; /* Убираем flex-grow и flex-shrink */
-        width: 100%; /* Устанавливаем ширину кнопок */
-        padding: 8px; /* Уменьшаем padding для кнопок */
-        margin: 2px; /* Уменьшаем margin для кнопок */
-        font-size: 12px; /* Уменьшаем размер шрифта */
+    .controls button {
+        width: 100%; /* Устанавливаем ширину кнопки */
+        padding: 5px; /* Уменьшаем padding для мобильных устройств */
     }
 .controls.open {
     opacity: 0;
@@ -246,16 +239,23 @@ main {
 }
 /* Стиль кнопки */
 button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 20px;
+    background-color: #dedede;
     border: none;
-    cursor: pointer;
-    border-radius: 5px;
+    padding: 10px 20px;
     font-size: 16px;
+    cursor: pointer;
+    text-shadow: 3px 3px 10px;
+    transition: 0.3s;
+    box-shadow: 3px 3px 3px;
+    margin-top: auto;
 }
+@media (hover:hover) {
 button:hover {
-    background-color: #45a049;
+    background-color: #c9c9c9;
+    box-shadow: 5px 5px 10px;
+    box-shadow: 3px 3px 5px #45a049;
+    text-shadow: 3px 3px 5px #45a049;
+}
 }
 /* Модальное окно */
 .modal {
@@ -425,14 +425,19 @@ iframe {
 #close-btn:hover {
     background-color: #0056b3;
 }
-
+select {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
     </style>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
     <main>
         <div id="map"></div>
-        <div id="control" class="controls">
+        <div id="control" style="display: none;" class="controls">
             <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
             <button onclick="window.location.href='https://ajointhike.zya.me/second.html'"><i class="fas fa-map-pin"></i> Совместный поход </button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
@@ -445,9 +450,26 @@ iframe {
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
             <button onclick="window.location.href='https://foxyprofi.itch.io/offline'"><i class="fas fa-download"></i> Сохранить изменения</button>
             <button onclick="OpenMapI('https://гдегрибы.рф')"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
-           <!-- <button id="toggleButton"><i class="fa-solid fa-eye-slash"></i>Скрыть элементы</button> -->
+            <button id="hideBtn"><i class="fa-solid fa-eye-slash"></i></button>
     </div>
 </main>
+<button id="showBtn">👁</button>
+
+<script>
+    const elements = document.getElementById('control')
+    const showBtn = document.getElementById('showBtn')
+    const hideBtn = document.getElementById('hideBtn')
+
+    showBtn.onclick = function() {
+        elements.style.display = 'block'
+        showBtn.style.display = 'none'
+    }
+
+    hideBtn.onclick = function() {
+        elements.style.display = 'none'
+        showBtn.style.display = 'block'
+    }
+</script>
 
 <div id="iframeOverlay">
     <div id="iframeContainer"></div>
@@ -468,7 +490,7 @@ iframe {
 
       
     </script>
-<div id="popup">
+<!--<div id="popup">
     <div id="popup-content">
         <p>Грибные зоны принадлежат сайту гдегрибы.рф. Сайт "Mushfind" не несёт ответственность за актуальность данных у себя на сайте.</p>
         <p><strong>Как добраться до грибной зоны?</strong></p>
@@ -480,7 +502,7 @@ iframe {
         <p><strong>При использовании оффлайн версии, убедитесь, что вы дали разрешение на GEO-позицию приложению, в котором вы смотрите архив "Mushfind". Например, если вы открыли "Mushfind" через RAR-приложение, то дайте этому приложению разрешение на GEO-позицию.</strong></p>
         <button id="close-btn">Закрыть</button>
     </div>
-</div>
+</div>-->
 <script>
     function OpenMapI(url) {
             var iframeOverlay = document.getElementById('iframeOverlay');
