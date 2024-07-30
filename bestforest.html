@@ -441,6 +441,14 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     }
+    .forest-card.swipe-left {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    .forest-card.swipe-right {
+        transform: translateX(100%);
+        opacity: 0;
+    }
     </style>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
@@ -482,12 +490,12 @@
             <label for="longitude">Долгота:</label>
             <input type="number" id="longitude" step="0.0001" required>
         </form>
-            <button class="gps"  onclick="setManualLocation()">Установить местоположение</button>
+        <!--    <button class="gps"  onclick="setManualLocation()">Установить местоположение</button> -->
         </div>
     </div>
     
 
-   <!-- <button class="gps" onclick="getCurrentLocation()">Определить мое местоположение 🌍</button> -->
+  
 
                    <!-- T975 -->
                    <div class="t975 " style="background-color: #fff; " data-bgcolor-hex="" data-bgcolor-rgba="" data-navmarker="nav776782174marker" data-bgopacity="1" data-menu="yes">
@@ -568,6 +576,8 @@
 
       
         </script>
+
+    
 
     <script>
 let forests = [
@@ -821,20 +831,45 @@ let forests = [
         let currentCoordinates = null;
 
         document.getElementById('approveBtn').addEventListener('click', () => {
-            if (currentIndex < forests.length) {
-                myForests.push(forests[currentIndex]);
-                localStorage.setItem('myForests', JSON.stringify(myForests));
-                currentIndex++;
-                updateForestCard();
-            }
-        });
+    const forestCard = document.querySelector('.forest-card');
 
-        document.getElementById('rejectBtn').addEventListener('click', () => {
-            if (currentIndex < forests.length) {
-                currentIndex++;
-                updateForestCard();
-            }
-        });
+    if (currentIndex < forests.length) {
+        myForests.push(forests[currentIndex]);
+        localStorage.setItem('myForests', JSON.stringify(myForests));
+        currentIndex++;
+        updateForestCard();
+    }
+
+    // Replace class with 'forest-card.swipe-left'
+    forestCard.classList.remove('forest-card');
+    forestCard.classList.add('forest-card', 'swipe-left');
+
+    // After 1 second, replace class back to 'forest-card'
+    setTimeout(() => {
+        forestCard.classList.remove('swipe-left');
+    }, 1000);
+});
+
+
+document.getElementById('rejectBtn').addEventListener('click', () => {
+    const forestCard = document.querySelector('.forest-card');
+
+    if (currentIndex < forests.length) {
+        myForests.push(forests[currentIndex]);
+        localStorage.setItem('myForests', JSON.stringify(myForests));
+        currentIndex++;
+        updateForestCard();
+    }
+
+    // Replace class with 'forest-card.swipe-left'
+    forestCard.classList.remove('forest-card');
+    forestCard.classList.add('forest-card', 'swipe-right');
+
+    // After 1 second, replace class back to 'forest-card'
+    setTimeout(() => {
+        forestCard.classList.remove('swipe-right');
+    }, 1000);
+});
 
         function updateForestCard() {
     let filteredForests = forests.filter(forest => {
