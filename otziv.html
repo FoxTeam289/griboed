@@ -41,6 +41,7 @@
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             color: #333;
+            scroll-behavior: smooth;
         }
 
         .container {
@@ -78,6 +79,7 @@
         .review-form h2, .review-form label {
             margin-bottom: 10px;
             font-weight: normal;
+            text-shadow: 3px 3px 25px;
         }
 
         .review-form label {
@@ -86,6 +88,7 @@
 
         .review-form input[type="radio"] {
             margin-right: 5px;
+            text-shadow: 3px 3px 15px;
         }
 
         .review-form input[type="number"], .review-form input[type="text"], .review-form textarea, .review-form input[type="file"] {
@@ -120,7 +123,14 @@
         }
 
         .review-form .mushroom-buttons button:hover, .review-form .impression-buttons button:hover {
-            background: #45a049;
+            padding: 15px 25px;
+            border: none;
+            background: #4caf50;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            text-shadow: 3px 3px 10px;
+            box-shadow: 3px 3px 10px rgb(27, 235, 24);
         }
 
         .neon-button {
@@ -130,10 +140,33 @@
             color: #fff;
             border-radius: 4px;
             cursor: pointer;
+            text-shadow: 3px 3px 10px;
+            box-shadow: 3px 3px 10px rgb(27, 235, 24);
         }
 
-        .neon-button:hover {
-            background: #45a049;
+        @media (hover:hover) {
+            .neon-button:hover {
+            padding: 15px 25px;
+            border: none;
+            background: #46c64a;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            text-shadow: 3px 3px 10px;
+            box-shadow: 3px 3px 10px rgb(45, 186, 42);
+        }
+        }
+        @media (hover:not) {
+            .neon-button:after {
+            padding: 15px 25px;
+            border: none;
+            background: #46c64a;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            text-shadow: 3px 3px 10px;
+            box-shadow: 3px 3px 10px rgb(45, 186, 42);
+        }
         }
 
         /* Responsive layout adjustments */
@@ -146,6 +179,69 @@
                 flex: 100%;
             }
         }
+
+        @keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fast-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+input[type="radio"].pulse {
+    animation: pulse 2s infinite;
+}
+
+input[type="radio"].fast-pulse {
+    animation: fast-pulse 0.5s infinite;
+}
+
+input[type="radio"].disappear {
+    animation: disappear 0.5s forwards;
+}
+
+input[type="radio"].appear {
+    animation: appear 0.5s forwards;
+}
+
 
         .t975 {
     border-top-width: 1px;
@@ -301,6 +397,31 @@
     <div class="progress-container">
         <div class="progress-bar" id="myBar"></div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('.review-form input[type="radio"]');
+        
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const oldRadio = document.querySelector('.review-form input[type="radio"].pulse');
+                    if (oldRadio) {
+                        oldRadio.classList.remove('pulse');
+                        oldRadio.classList.add('fast-pulse');
+                        setTimeout(() => {
+                            oldRadio.classList.remove('fast-pulse');
+                            oldRadio.classList.add('disappear');
+                        }, 500);
+                    }
+                    this.classList.add('appear');
+                    setTimeout(() => {
+                        this.classList.remove('appear');
+                        this.classList.add('pulse');
+                    }, 500);
+                });
+            });
+        });
+        </script>
+        
     <div class="container">
         <h1>Страница отзывов</h1>
         <form class="review-form" id="reviewForm">
