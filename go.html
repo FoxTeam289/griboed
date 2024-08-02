@@ -432,6 +432,19 @@ select {
     border-radius: 5px;
     font-size: 16px;
 }
+#showBtn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    position: fixed; /* or position: absolute; */
+    top: calc(50px + 10px); /* adjust the value to position the button below the menu */
+    left: 50%; /* optional, to center the button horizontally */
+    transform: translateX(-50%); /* optional, to center the button horizontally */
+}
     </style>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
@@ -440,7 +453,7 @@ select {
         <div id="map"></div>
         <div id="control" style="display: none;" class="controls">
             <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
-            <button onclick="window.location.href='https://ajointhike.zya.me/second.html'"><i class="fas fa-map-pin"></i> Совместный поход </button>
+            <button onclick="window.location.href='#'"><i class="fas fa-map-pin"></i><s> Совместный поход </s> Временно недоступно </button>
             <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
             <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
@@ -451,10 +464,10 @@ select {
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
             <button onclick="window.location.href='https://foxyprofi.itch.io/offline'"><i class="fas fa-download"></i> Сохранить изменения</button>
             <button onclick="OpenMapI('https://гдегрибы.рф')"><i class="fas fa-eye"></i>Посмотреть все грибные зоны</button>
-            <button id="hideBtn"><i class="fa-solid fa-eye-slash"></i></button>
+            <button id="hideBtn"><i class="fa-solid fa-eye-slash"></i>Нажмите сюда, чтобы убрать меню</button>
     </div>
 </main>
-<button id="showBtn">👁</button>
+<button id="showBtn">👁 Нажмите сюда, чтобы показать меню 👁</button>
 
 <script>
     const elements = document.getElementById('control')
