@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <title>Авторское право на Mushfind - Правовая информация</title>
+    <meta name="description" content="Узнайте о правовых аспектах использования материалов и контента на сайте mushfind.">
+    <meta name="keywords" content="авторское право, правовая информация, mushfind">
+    <link rel="canonical" href="https://mushfind.ru/apravo.html">
+    <meta property="og:title" content="Авторское право на Mushfind - Правовая информация">
+    <meta property="og:description" content="Узнайте о правовых аспектах использования материалов и контента на сайте mushfind.">
+    <meta property="og:url" content="https://gr iboed.site/apravo.html">
+    <link rel="icon" href="icon.png" type="image/png">
+
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ 
+    ym(97708246, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true,
+         ecommerce:"dataLayer"
+    });
+ </script>
+ <noscript><div><img src="https://mc.yandex.ru/watch/97708246" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ <!-- /Yandex.Metrika counter -->
+  
+    <style>
+        * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+ul {
+    margin-bottom: 15px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Авторское право и условия использования</h1>
+        <p>© <span id="year"></span> <span id="site-name"></span>. Все права защищены.</p>
+
+        <h2>1. Общие положения</h2>
+        <p>Настоящий документ об авторском праве регламентирует использование всех материалов, опубликованных на веб-сайте <span id="site-name-2"></span> (далее - "Сайт"), и охватывает все текстовые, графические и мультимедийные элементы.</p>
+
+        <h2>2. Охраняемые объекты</h2>
+        <p>Все материалы на Сайте, включая, но не ограничиваясь:</p>
+        <ul>
+            <li>Название сайта</li>
+            <li>Логотипы</li>
+            <li>Изображения</li>
+            <li>Графику</li>
+            <li>Фотографии</li>
+            <li>Иллюстрации</li>
+            <li>Другие визуальные элементы</li>
+        </ul>
+        <p>являются собственностью <span id="site-name-3"></span> и защищены законами об авторском праве, а также другими применимыми законодательными актами.</p>
+
+        <h2>3. Запрещенные действия</h2>
+        <p>Без предварительного письменного разрешения администраторов Сайта строго запрещается:</p>
+        <ul>
+            <li>Воспроизведение</li>
+            <li>Распространение</li>
+            <li>Модификация</li>
+            <li>Публичное отображение</li>
+            <li>Любое другое использование материалов с Сайта в коммерческих или иных целях</li>
+        </ul>
+
+        <h2>4. Процедура получения разрешения</h2>
+        <p>Для получения разрешения на использование материалов, опубликованных на Сайте, необходимо направить письменный запрос на электронную почту <a href="mailto:youremail@example.com" id="contact-email"></a>. Запрос должен содержать следующую информацию:</p>
+        <ul>
+            <li>Полное имя заявителя</li>
+            <li>Контактная информация</li>
+            <li>Цель использования материалов</li>
+            <li>Список конкретных материалов, которые заявитель планирует использовать</li>
+            <li>Способ использования материалов</li>
+        </ul>
+
+        <h2>5. Ответственность за нарушение</h2>
+        <p>Любое несанкционированное использование материалов с Сайта является нарушением авторских прав и может повлечь за собой гражданскую, административную и/или уголовную ответственность в соответствии с законодательством.</p>
+
+        <h2>6. Изменения и дополнения</h2>
+        <p><span id="site-name-4"></span> оставляет за собой право вносить изменения и дополнения в настоящий документ об авторском праве. Изменения вступают в силу с момента их публикации на Сайте.</p>
+
+        <h2>7. Контактная информация</h2>
+        <p>По всем вопросам, касающимся авторского права и использования материалов, вы можете связаться с нами по электронной почте: <a href="mailto:youremail@example.com" id="contact-email-2"></a>.</p>
+    </div>
+
+    <script>
+        // Замените следующие строки своими данными
+        const siteName = "Mushfind";
+        const contactEmail = "foxy09876@yandex.ru";
+        const currentYear = new Date().getFullYear();
+
+        document.getElementById("year").textContent = currentYear;
+        document.querySelectorAll("#site-name, #site-name-2, #site-name-3, #site-name-4").forEach(el => el.textContent = siteName);
+        document.querySelectorAll("#contact-email, #contact-email-2").forEach(el => el.textContent = contactEmail);
+        document.querySelectorAll("#contact-email, #contact-email-2").forEach(el => el.href = `mailto:${contactEmail}`);
+    </script>
+</body>
+</html>
