@@ -1,15 +1,16 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $files = glob('locations/*.json');
+if (isset($_GET['deviceId'])) {
+    $deviceId = $_GET['deviceId'];
 
-    foreach ($files as $file) {
-        if (is_file($file)) {
+    foreach (glob("locations/*.json") as $file) {
+        $locationData = json_decode(file_get_contents($file), true);
+        if (isset($locationData['targetDeviceId']) && $locationData['targetDeviceId'] == $deviceId) {
             unlink($file);
         }
     }
 
-    echo json_encode(['status' => 'success']);
+    echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+    echo json_encode(['success' => false, 'message' => 'Invalid parameters.']);
 }
 ?>

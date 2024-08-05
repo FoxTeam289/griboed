@@ -1,33 +1,27 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $deviceId = $_POST['deviceId'];
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
+if (isset($_GET['deviceId']) && isset($_GET['latitude']) && isset($_GET['longitude'])) {
+    $deviceId = $_GET['deviceId'];
+    $latitude = $_GET['latitude'];
+    $longitude = $_GET['longitude'];
 
-    $data = [
+    $directory = 'locations';
+    if (!is_dir($directory)) {
+        mkdir($directory);
+    }
+
+    $file = $directory . '/' . $deviceId . '.json';
+
+    // Write the new location to the file
+    $locationData = [
         'deviceId' => $deviceId,
         'latitude' => $latitude,
         'longitude' => $longitude,
     ];
 
-    if (!file_exists('locations')) {
-        mkdir('locations', 0777, true);
-    }
+    file_put_contents($file, json_encode($locationData));
 
-    file_put_contents("locations/$deviceId.json", json_encode($data));
-
-    // Count devices seeing this location
-    $files = glob('locations/*.json');
-    $count = 0;
-    foreach ($files as $file) {
-        $content = json_decode(file_get_contents($file), true);
-        if ($content['deviceId'] !== $deviceId) {
-            $count++;
-        }
-    }
-
-    echo json_encode(['status' => 'success', 'viewingDevices' => $count]);
+    echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+    echo json_encode(['success' => false, 'message' => 'Invalid parameters.']);
 }
 ?>

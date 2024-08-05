@@ -1,10 +1,13 @@
 <?php
 if (isset($_GET['deviceId'])) {
     $deviceId = $_GET['deviceId'];
-    $filePath = "locations/{$deviceId}.json";
+    $directory = 'locations';
 
-    if (file_exists($filePath)) {
-        $locationData = json_decode(file_get_contents($filePath), true);
+    // Find the JSON file for the device
+    $file = $directory . '/' . $deviceId . '.json';
+
+    if (file_exists($file)) {
+        $locationData = json_decode(file_get_contents($file), true);
         echo json_encode(['success' => true, 'location' => $locationData]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Device not found.']);
