@@ -92,6 +92,45 @@ a:hover {
     text-decoration: underline;
 }
 
+.language {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+}
+.language button{
+    background-color: #cdcdcd;
+    box-shadow: 3px 3px 15px #686767;
+    border: none;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+@media (hover:hover) {
+    .language button:hover{
+    background-color: #8b8989;
+    box-shadow: 3px 3px 15px;
+    border: none;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+}
+@media (hover:not) {
+    .language button:after{
+    background-color: #8b8989;
+    box-shadow: 3px 3px 15px;
+    border: none;
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+}
     </style>
 </head>
 <body>
@@ -144,7 +183,6 @@ a:hover {
         <h2>7. Контактная информация</h2>
         <p>По всем вопросам, касающимся авторского права и использования материалов, вы можете связаться с нами по электронной почте: <a href="mailto:youremail@example.com" id="contact-email-2"></a>.</p>
     </div>
-
     <script>
         // Замените следующие строки своими данными
         const siteName = "Mushfind";
@@ -156,5 +194,6 @@ a:hover {
         document.querySelectorAll("#contact-email, #contact-email-2").forEach(el => el.textContent = contactEmail);
         document.querySelectorAll("#contact-email, #contact-email-2").forEach(el => el.href = `mailto:${contactEmail}`);
     </script>
+    <script src="//code.jivo.ru/widget/Yim7MAMhj5" async></script>
 </body>
 </html>
