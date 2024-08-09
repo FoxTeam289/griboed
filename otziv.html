@@ -1,676 +1,919 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Написать отзыв о лесах - Mushfind</title>
-    <meta name="description" content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам.">
-    <meta name="keywords" content="написать отзыв, отзывы о лесах, оценка лесов, грибные места">
-    <link rel="canonical" href="https://mushfind.ru/otziv.html">
-    <meta property="og:title" content="Написать отзыв о лесах - Mushfind">
-    <meta property="og:description" content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам.">
-    <meta property="og:url" content="https://mushfind.ru/otziv.html">
-    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
-    <link rel="icon" href="icon.png" type="image/png">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Написать отзыв о лесах - Mushfind</title>
+		<meta
+			name="description"
+			content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам."
+		/>
+		<meta
+			name="keywords"
+			content="написать отзыв, отзывы о лесах, оценка лесов, грибные места"
+		/>
+		<link rel="canonical" href="https://mushfind.ru/otziv.html" />
+		<meta property="og:title" content="Написать отзыв о лесах - Mushfind" />
+		<meta
+			property="og:description"
+			content="Поделитесь своим опытом и напишите отзыв о лесах, в которых вы собирали грибы. Ваша оценка поможет другим грибникам."
+		/>
+		<meta property="og:url" content="https://mushfind.ru/otziv.html" />
+		<link rel="shortcut icon" href="icon.png" type="image/x-icon" />
+		<link rel="icon" href="icon.png" type="image/png" />
+		<!-- Yandex.RTB -->
+		<script>
+			window.yaContextCb = window.yaContextCb || []
+		</script>
+		<script src="https://yandex.ru/ads/system/context.js" async></script>
 
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
-    ym(97708246, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true,
-         ecommerce:"dataLayer"
-    });
- </script>
- <noscript><div><img src="https://mc.yandex.ru/watch/97708246" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
- <!-- /Yandex.Metrika counter -->
+		<!-- Yandex.Metrika counter -->
+		<script type="text/javascript">
+			;(function (m, e, t, r, i, k, a) {
+				m[i] =
+					m[i] ||
+					function () {
+						;(m[i].a = m[i].a || []).push(arguments)
+					}
+				m[i].l = 1 * new Date()
+				for (var j = 0; j < document.scripts.length; j++) {
+					if (document.scripts[j].src === r) {
+						return
+					}
+				}
+				;(k = e.createElement(t)),
+					(a = e.getElementsByTagName(t)[0]),
+					(k.async = 1),
+					(k.src = r),
+					a.parentNode.insertBefore(k, a)
+			})(
+				window,
+				document,
+				'script',
+				'https://mc.yandex.ru/metrika/tag.js',
+				'ym'
+			)
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <style>
-        /* General styles */
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            scroll-behavior: smooth;
-        }
+			ym(97708246, 'init', {
+				clickmap: true,
+				trackLinks: true,
+				accurateTrackBounce: true,
+				webvisor: true,
+				ecommerce: 'dataLayer',
+			})
+		</script>
+		<noscript
+			><div>
+				<img
+					src="https://mc.yandex.ru/watch/97708246"
+					style="position: absolute; left: -9999px"
+					alt=""
+				/></div
+		></noscript>
+		<!-- /Yandex.Metrika counter -->
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+		/>
+		<style>
+			/* General styles */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				font-family: Arial, sans-serif;
+				background-color: #f9f9f9;
+				color: #333;
+				scroll-behavior: smooth;
+			}
 
-        /* Progress bar styles */
-        .progress-container {
-            width: 100%;
-            height: 5px;
-            background: #ccc;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 99;
-        }
+			.container {
+				max-width: 1200px;
+				margin: auto;
+				padding: 20px;
+			}
 
-        .progress-bar {
-            height: 100%;
-            width: 0;
-            background: #4caf50;
-        }
+			/* Progress bar styles */
+			.progress-container {
+				width: 100%;
+				height: 5px;
+				background: #ccc;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 99;
+			}
 
-        /* Review form styles */
-        .review-form {
-            background: #fff;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+			.progress-bar {
+				height: 100%;
+				width: 0;
+				background: #4caf50;
+			}
 
-        .review-form h2, .review-form label {
-            margin-bottom: 10px;
-            font-weight: normal;
-            text-shadow: 3px 3px 25px;
-        }
+			/* Review form styles */
+			.review-form {
+				background: #fff;
+				padding: 20px;
+				margin-top: 20px;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
 
-        .review-form label {
-            display: block;
-        }
+			.review-form h2,
+			.review-form label {
+				margin-bottom: 10px;
+				font-weight: normal;
+				text-shadow: 3px 3px 25px;
+			}
 
-        .review-form input[type="radio"] {
-            margin-right: 5px;
-            text-shadow: 3px 3px 15px;
-        }
+			.review-form label {
+				display: block;
+			}
 
-        .review-form input[type="number"], .review-form input[type="text"], .review-form textarea, .review-form input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+			.review-form input[type='radio'] {
+				margin-right: 5px;
+				text-shadow: 3px 3px 15px;
+			}
 
-        .review-form input[type="text"][readonly] {
-            background-color: #f1f1f1;
-        }
+			.review-form input[type='number'],
+			.review-form input[type='text'],
+			.review-form textarea,
+			.review-form input[type='file'] {
+				width: 100%;
+				padding: 10px;
+				margin-top: 5px;
+				margin-bottom: 15px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-sizing: border-box;
+			}
 
-        .review-form .mushroom-buttons, .review-form .impression-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+			.review-form input[type='text'][readonly] {
+				background-color: #f1f1f1;
+			}
 
-        .review-form .mushroom-buttons button, .review-form .impression-buttons button {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            background: #4caf50;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+			.review-form .mushroom-buttons,
+			.review-form .impression-buttons {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin-bottom: 15px;
+			}
 
-        .review-form .mushroom-buttons button:hover, .review-form .impression-buttons button:hover {
-            padding: 15px 25px;
-            border: none;
-            background: #4caf50;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            text-shadow: 3px 3px 10px;
-            box-shadow: 3px 3px 10px rgb(27, 235, 24);
-        }
+			.review-form .mushroom-buttons button,
+			.review-form .impression-buttons button {
+				flex: 1;
+				padding: 10px;
+				border: none;
+				background: #4caf50;
+				color: #fff;
+				border-radius: 4px;
+				cursor: pointer;
+			}
 
-        .neon-button {
-            padding: 15px 25px;
-            border: none;
-            background: #4caf50;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            text-shadow: 3px 3px 10px;
-            box-shadow: 3px 3px 10px rgb(27, 235, 24);
-        }
+			.review-form .mushroom-buttons button:hover,
+			.review-form .impression-buttons button:hover {
+				padding: 15px 25px;
+				border: none;
+				background: #4caf50;
+				color: #fff;
+				border-radius: 4px;
+				cursor: pointer;
+				text-shadow: 3px 3px 10px;
+				box-shadow: 3px 3px 10px rgb(27, 235, 24);
+			}
 
-        @media (hover:hover) {
-            .neon-button:hover {
-            padding: 15px 25px;
-            border: none;
-            background: #46c64a;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            text-shadow: 3px 3px 10px;
-            box-shadow: 3px 3px 10px rgb(45, 186, 42);
-        }
-        }
-        @media (hover:not) {
-            .neon-button:after {
-            padding: 15px 25px;
-            border: none;
-            background: #46c64a;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            text-shadow: 3px 3px 10px;
-            box-shadow: 3px 3px 10px rgb(45, 186, 42);
-        }
-        }
+			.neon-button {
+				padding: 15px 25px;
+				border: none;
+				background: #4caf50;
+				color: #fff;
+				border-radius: 4px;
+				cursor: pointer;
+				text-shadow: 3px 3px 10px;
+				box-shadow: 3px 3px 10px rgb(27, 235, 24);
+			}
 
-        /* Responsive layout adjustments */
-        @media (max-width: 768px) {
-            .review-form {
-                padding: 10px;
-            }
+			@media (hover: hover) {
+				.neon-button:hover {
+					padding: 15px 25px;
+					border: none;
+					background: #46c64a;
+					color: #fff;
+					border-radius: 4px;
+					cursor: pointer;
+					text-shadow: 3px 3px 10px;
+					box-shadow: 3px 3px 10px rgb(45, 186, 42);
+				}
+			}
+			@media (hover: not) {
+				.neon-button:after {
+					padding: 15px 25px;
+					border: none;
+					background: #46c64a;
+					color: #fff;
+					border-radius: 4px;
+					cursor: pointer;
+					text-shadow: 3px 3px 10px;
+					box-shadow: 3px 3px 10px rgb(45, 186, 42);
+				}
+			}
 
-            .review-form .mushroom-buttons button, .review-form .impression-buttons button {
-                flex: 100%;
-            }
-        }
+			/* Responsive layout adjustments */
+			@media (max-width: 768px) {
+				.review-form {
+					padding: 10px;
+				}
 
-        @keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
+				.review-form .mushroom-buttons button,
+				.review-form .impression-buttons button {
+					flex: 100%;
+				}
+			}
 
-@keyframes fast-pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.1);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
 
-@keyframes disappear {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-}
+			@keyframes fast-pulse {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.2);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
 
-@keyframes appear {
-    0% {
-        opacity: 0;
-        transform: scale(0);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+			@keyframes disappear {
+				0% {
+					opacity: 1;
+					transform: scale(1);
+				}
+				100% {
+					opacity: 0;
+					transform: scale(0);
+				}
+			}
 
-input[type="radio"].pulse {
-    animation: pulse 2s infinite;
-}
+			@keyframes appear {
+				0% {
+					opacity: 0;
+					transform: scale(0);
+				}
+				100% {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
 
-input[type="radio"].fast-pulse {
-    animation: fast-pulse 0.5s infinite;
-}
+			input[type='radio'].pulse {
+				animation: pulse 2s infinite;
+			}
 
-input[type="radio"].disappear {
-    animation: disappear 0.5s forwards;
-}
+			input[type='radio'].fast-pulse {
+				animation: fast-pulse 0.5s infinite;
+			}
 
-input[type="radio"].appear {
-    animation: appear 0.5s forwards;
-}
+			input[type='radio'].disappear {
+				animation: disappear 0.5s forwards;
+			}
 
+			input[type='radio'].appear {
+				animation: appear 0.5s forwards;
+			}
 
-        .t975 {
-    border-top-width: 1px;
-    border-top-style: solid;
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    box-sizing: border-box;
-    display: -webkit-flex;
-    display: flex;
-    z-index: 990;
-    transition: background-color 300ms linear
-}
+			.t975 {
+				border-top-width: 1px;
+				border-top-style: solid;
+				position: fixed;
+				bottom: 0;
+				width: 100vw;
+				box-sizing: border-box;
+				display: -webkit-flex;
+				display: flex;
+				z-index: 990;
+				transition: background-color 300ms linear;
+			}
 
-.t975__beforeready {
-    visibility: hidden
-}
+			.t975__beforeready {
+				visibility: hidden;
+			}
 
-.t975__wrapper {
-    max-width: 640px;
-    width: 100%;
-    margin: 0 auto;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    min-height: 65px
-}
+			.t975__wrapper {
+				max-width: 640px;
+				width: 100%;
+				margin: 0 auto;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-justify-content: center;
+				justify-content: center;
+				min-height: 65px;
+			}
 
-.t975__wrapper::before,.t975__wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    height: 100%;
-    width: 15px;
-    pointer-events: none
-}
+			.t975__wrapper::before,
+			.t975__wrapper::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				height: 100%;
+				width: 15px;
+				pointer-events: none;
+			}
 
-.t975__wrapper::before {
-    left: -1px
-}
+			.t975__wrapper::before {
+				left: -1px;
+			}
 
-.t975__wrapper::after {
-    right: -1px
-}
+			.t975__wrapper::after {
+				right: -1px;
+			}
 
-.t975__inner-wrapper {
-    display: -webkit-flex;
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0!important
-}
+			.t975__inner-wrapper {
+				display: -webkit-flex;
+				display: flex;
+				overflow-x: auto;
+				overflow-y: hidden;
+				width: 100%;
+				list-style-type: none;
+				margin: 0;
+				padding: 0 !important;
+			}
 
-#allrecords ul.t975__inner-wrapper {
-    margin-bottom: 0
-}
+			#allrecords ul.t975__inner-wrapper {
+				margin-bottom: 0;
+			}
 
-.t975__list-item {
-    padding: 8px 10px 10px;
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
-    -webkit-flex-shrink: 0;
-    flex-shrink: 0;
-    -webkit-flex-basis: auto;
-    flex-basis: auto;
-    box-sizing: border-box;
-    min-width: calc(100vw / 6);
-    display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-align-items: center;
-    align-items: center
-}
+			.t975__list-item {
+				padding: 8px 10px 10px;
+				-webkit-flex-grow: 1;
+				flex-grow: 1;
+				-webkit-flex-shrink: 0;
+				flex-shrink: 0;
+				-webkit-flex-basis: auto;
+				flex-basis: auto;
+				box-sizing: border-box;
+				min-width: calc(100vw / 6);
+				display: -webkit-flex;
+				display: flex;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
 
-.t975__menu-link {
-    text-decoration: none;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex
-}
+			.t975__menu-link {
+				text-decoration: none;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+			}
 
-.t975__menu-item {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-justify-content: flex-start;
-    justify-content: flex-start
-}
+			.t975__menu-item {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-flex-direction: column;
+				flex-direction: column;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-justify-content: flex-start;
+				justify-content: flex-start;
+			}
 
-.t975__icon-wrapper {
-    opacity: .7;
-    position: relative;
-    transition: all 300ms linear;
-    width: 26px;
-    height: 21px;
-    text-align: center
-}
+			.t975__icon-wrapper {
+				opacity: 0.7;
+				position: relative;
+				transition: all 300ms linear;
+				width: 26px;
+				height: 21px;
+				text-align: center;
+			}
 
-.t975__menu-icon {
-    max-width: 100%;
-    max-height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain
-}
+			.t975__menu-icon {
+				max-width: 100%;
+				max-height: 100%;
+				background-repeat: no-repeat;
+				background-position: center;
+				background-size: contain;
+			}
 
-.t975__menu-text {
-    font-size: 11px;
-    line-height: 1.2;
-    white-space: nowrap;
-    font-family: 'Roboto',Arial,sans-serif;
-    font-weight: 400;
-    color: #000;
-    transition: all 300ms linear
-}
+			.t975__menu-text {
+				font-size: 11px;
+				line-height: 1.2;
+				white-space: nowrap;
+				font-family: 'Roboto', Arial, sans-serif;
+				font-weight: 400;
+				color: #000;
+				transition: all 300ms linear;
+			}
 
-@media screen and (min-width: 481px) {
-    .t975__inner-wrapper {
-        width:auto
-    }
+			@media screen and (min-width: 481px) {
+				.t975__inner-wrapper {
+					width: auto;
+				}
 
-    .t975__list-item {
-        min-width: 85px
-    }
-}
+				.t975__list-item {
+					min-width: 85px;
+				}
+			}
 
-@media screen and (min-width: 640px) {
-    .t975__wrapper {
-        min-height:73px;
-        max-width: none
-    }
+			@media screen and (min-width: 640px) {
+				.t975__wrapper {
+					min-height: 73px;
+					max-width: none;
+				}
 
-    .t975__list-item {
-        padding: 17px 15px 15px
-    }
+				.t975__list-item {
+					padding: 17px 15px 15px;
+				}
 
-    .t975__list-item {
-        min-width: 115px
-    }
-}
+				.t975__list-item {
+					min-width: 115px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="progress-container">
+			<div class="progress-bar" id="myBar"></div>
+		</div>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				const radios = document.querySelectorAll(
+					'.review-form input[type="radio"]'
+				)
 
-    </style>
-</head>
-<body>
-    <div class="progress-container">
-        <div class="progress-bar" id="myBar"></div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const radios = document.querySelectorAll('.review-form input[type="radio"]');
-        
-            radios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const oldRadio = document.querySelector('.review-form input[type="radio"].pulse');
-                    if (oldRadio) {
-                        oldRadio.classList.remove('pulse');
-                        oldRadio.classList.add('fast-pulse');
-                        setTimeout(() => {
-                            oldRadio.classList.remove('fast-pulse');
-                            oldRadio.classList.add('disappear');
-                        }, 500);
-                    }
-                    this.classList.add('appear');
-                    setTimeout(() => {
-                        this.classList.remove('appear');
-                        this.classList.add('pulse');
-                    }, 500);
-                });
-            });
-        });
-        </script>
-        
-    <div class="container">
-        <h1>Страница отзывов</h1>
-        <form class="review-form" id="reviewForm">
-            <h2>Выберите лес:</h2>
-            <label>
-                <input type="radio" name="forest" value="Лес ботанического сада" checked> Лес "ботанического сада"
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес улицы Вильгельма Пика"> Лес улицы "Вильгельма Пика"
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Леса Московской Области/Подмосковья"> Леса Московской Области/Подмосковья
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Леса городского округа Клин"> Леса городского округа Клин
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес микрорайона Сноуицы-Серзино"> Лес микрорайона Сноуицы-Серзино
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Грибной лес"> Грибной лес
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес городка имени Баумана"> Лес городка имени Баумана
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес парка лосиного острова"> Лес парка лосиного острова
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес городского округа Королёв"> Лес городского округа Королёв
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес мичуринского сквера"> Лес мичуринского сквера
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Кошкин лес"> Кошкин лес
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Шолоховский лес"> Шолоховский лес
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес сосновая аллея"> Лес "сосновая аллея"
-            </label>
-            <label>
-                <input type="radio" name="forest" value="Лес парка культуры и отдыха"> Лес парка культуры и отдыха
-            </label>
-            <label>
-                <input type="radio" id="customForestRadio" name="forest" value="custom"> Свой лес
-                <input type="text" id="customForestInput" oninput="updateCustomForest()" placeholder="Введите название леса">
-            </label>
-           <!-- <label>
+				radios.forEach(radio => {
+					radio.addEventListener('change', function () {
+						const oldRadio = document.querySelector(
+							'.review-form input[type="radio"].pulse'
+						)
+						if (oldRadio) {
+							oldRadio.classList.remove('pulse')
+							oldRadio.classList.add('fast-pulse')
+							setTimeout(() => {
+								oldRadio.classList.remove('fast-pulse')
+								oldRadio.classList.add('disappear')
+							}, 500)
+						}
+						this.classList.add('appear')
+						setTimeout(() => {
+							this.classList.remove('appear')
+							this.classList.add('pulse')
+						}, 500)
+					})
+				})
+			})
+		</script>
+
+		<div class="container">
+			<h1>Страница отзывов</h1>
+			<form class="review-form" id="reviewForm">
+				<h2>Выберите лес:</h2>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Лес ботанического сада"
+						checked
+					/>
+					Лес "ботанического сада"
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Лес улицы Вильгельма Пика" />
+					Лес улицы "Вильгельма Пика"
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Леса Московской Области/Подмосковья"
+					/>
+					Леса Московской Области/Подмосковья
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Леса городского округа Клин"
+					/>
+					Леса городского округа Клин
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Лес микрорайона Сноуицы-Серзино"
+					/>
+					Лес микрорайона Сноуицы-Серзино
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Грибной лес" /> Грибной лес
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Лес городка имени Баумана" />
+					Лес городка имени Баумана
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Лес парка лосиного острова"
+					/>
+					Лес парка лосиного острова
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Лес городского округа Королёв"
+					/>
+					Лес городского округа Королёв
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Лес мичуринского сквера" />
+					Лес мичуринского сквера
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Кошкин лес" /> Кошкин лес
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Шолоховский лес" />
+					Шолоховский лес
+				</label>
+				<label>
+					<input type="radio" name="forest" value="Лес сосновая аллея" /> Лес
+					"сосновая аллея"
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="forest"
+						value="Лес парка культуры и отдыха"
+					/>
+					Лес парка культуры и отдыха
+				</label>
+				<label>
+					<input
+						type="radio"
+						id="customForestRadio"
+						name="forest"
+						value="custom"
+					/>
+					Свой лес
+					<input
+						type="text"
+						id="customForestInput"
+						oninput="updateCustomForest()"
+						placeholder="Введите название леса"
+					/>
+				</label>
+				<!-- <label>
                 <input type="radio" id="customForestRadio" name="forest" value="custom"> Своя грибная зона
                 <input type="text" id="customForestInput" oninput="updateCustomForest()" placeholder="Введите название грибной зоны">
             </label> -->
 
-            <h2>Выберите грибы:</h2>
-            <div class="mushroom-buttons">
-                <button type="button" onclick="addMushroom('Лисички')">Лисички</button>
-                <button type="button" onclick="addMushroom('Подосиновики')">Подосиновики</button>
-                <button type="button" onclick="addMushroom('Подберезовики')">Подберезовики</button>
-                <button type="button" onclick="addMushroom('Белые грибы')">Белые грибы</button>
-                <button type="button" onclick="addMushroom('Опята')">Опята</button>
-                <button type="button" onclick="addMushroom('Грузди')">Грузди</button>
-                <button type="button" onclick="addMushroom('Сыроежки')">Сыроежки</button>
-                <button type="button" onclick="addMushroom('Маслята')">Маслята</button>
-                <button type="button" onclick="addMushroom('Волнушки')">Волнушки</button>
-                <button type="button" onclick="addMushroom('Сморчки')">Сморчки</button>
-                <button type="button" onclick="addMushroom('Рыжики')">Рыжики</button>
-                <button type="button" onclick="addMushroom('Польские грибы')">Польские грибы</button>
-                <button type="button" onclick="addMushroom('Шампиньоны')">Шампиньоны</button>
-                <button type="button" onclick="addMushroom('Ложные опята')">Ложные опята</button>
-                <button type="button" onclick="addMushroom('Поганки')">Поганки</button>
-            </div>
+				<h2>Выберите грибы:</h2>
+				<div class="mushroom-buttons">
+					<button type="button" onclick="addMushroom('Лисички')">
+						Лисички
+					</button>
+					<button type="button" onclick="addMushroom('Подосиновики')">
+						Подосиновики
+					</button>
+					<button type="button" onclick="addMushroom('Подберезовики')">
+						Подберезовики
+					</button>
+					<button type="button" onclick="addMushroom('Белые грибы')">
+						Белые грибы
+					</button>
+					<button type="button" onclick="addMushroom('Опята')">Опята</button>
+					<button type="button" onclick="addMushroom('Грузди')">Грузди</button>
+					<button type="button" onclick="addMushroom('Сыроежки')">
+						Сыроежки
+					</button>
+					<button type="button" onclick="addMushroom('Маслята')">
+						Маслята
+					</button>
+					<button type="button" onclick="addMushroom('Волнушки')">
+						Волнушки
+					</button>
+					<button type="button" onclick="addMushroom('Сморчки')">
+						Сморчки
+					</button>
+					<button type="button" onclick="addMushroom('Рыжики')">Рыжики</button>
+					<button type="button" onclick="addMushroom('Польские грибы')">
+						Польские грибы
+					</button>
+					<button type="button" onclick="addMushroom('Шампиньоны')">
+						Шампиньоны
+					</button>
+					<button type="button" onclick="addMushroom('Ложные опята')">
+						Ложные опята
+					</button>
+					<button type="button" onclick="addMushroom('Поганки')">
+						Поганки
+					</button>
+				</div>
 
-            <h2>Оценка (0 - плохо, 10 - отлично):</h2>
-            <input type="number" name="rating" min="0" max="10" required>
+				<h2>Оценка (0 - плохо, 10 - отлично):</h2>
+				<input type="number" name="rating" min="0" max="10" required />
 
-            <h2>Впечатления от похода:</h2>
-            <div class="impression-buttons">
-                <button type="button" onclick="addImpression('Хорошо')">Хорошо</button>
-                <button type="button" onclick="addImpression('Отлично')">Отлично</button>
-                <button type="button" onclick="addImpression('Средне')">Средне</button>
-                <button type="button" onclick="addImpression('Плохо')">Плохо</button>
-                <button type="button" onclick="addImpression('Ужасно')">Ужасно</button>
-                <button type="button" onclick="addImpression('Супер')">Супер</button>
-                <button type="button" onclick="addImpression('Весело')">Весело</button>
-                <button type="button" onclick="addImpression('Скучно')">Скучно</button>
-                <button type="button" onclick="addImpression('Опасно')">Опасно</button>
-            </div>
+				<h2>Впечатления от похода:</h2>
+				<div class="impression-buttons">
+					<button type="button" onclick="addImpression('Хорошо')">
+						Хорошо
+					</button>
+					<button type="button" onclick="addImpression('Отлично')">
+						Отлично
+					</button>
+					<button type="button" onclick="addImpression('Средне')">
+						Средне
+					</button>
+					<button type="button" onclick="addImpression('Плохо')">Плохо</button>
+					<button type="button" onclick="addImpression('Ужасно')">
+						Ужасно
+					</button>
+					<button type="button" onclick="addImpression('Супер')">Супер</button>
+					<button type="button" onclick="addImpression('Весело')">
+						Весело
+					</button>
+					<button type="button" onclick="addImpression('Скучно')">
+						Скучно
+					</button>
+					<button type="button" onclick="addImpression('Опасно')">
+						Опасно
+					</button>
+				</div>
 
-            <h2>Дата похода:</h2>
-            <input type="text" name="date" value="" readonly>
+				<h2>Дата похода:</h2>
+				<input type="text" name="date" value="" readonly />
 
-            <h2>Описание:</h2>
-            <textarea name="description" rows="5" required></textarea>
-<button class="neon-button"  type="submit">Отправить</button>
-              </form>
-    </div>
-<h2>HTTPS З А Щ И Т А 🔒</h2>
-                 <!-- T975 -->
-                 <div class="t975 " style="background-color: #fff; " data-bgcolor-hex="" data-bgcolor-rgba="" data-navmarker="nav776782174marker" data-bgopacity="1" data-menu="yes">
-                    <nav class="t975__wrapper">
-                        <ul role="list" class="t975__inner-wrapper t-menu__list">
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/house_3d.png" imgfield="li_img__0722833889710" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889710">Главная</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/bestforest.html">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/evergreen_tree_3d.png" imgfield="li_img__0722833889711" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889711">Лучшие леса</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/otziv.html">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/sparkles_3d.png" imgfield="li_img__0722833889712" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889712">Написать отзыв</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/go.html">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/eye_in_speech_bubble_3d.png" imgfield="li_img__0722833889713" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__0722833889713">Главные функции</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="/documentation.html">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/page_with_curl_3d.png" imgfield="li_img__1721649456084" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__1721649456084">Документация</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="t975__list-item">
-                                <a class="t975__menu-link" href="https://socialmush.infinityfreeapp.com/">
-                                    <div class="t975__menu-item">
-                                        <div class="t975__icon-wrapper">
-                                            <img class="t975__menu-icon" src="https://static.tildacdn.info/lib/emoji/fluent/globe_with_meridians_3d.png" imgfield="li_img__1721651051254" alt="">
-                                        </div>
-                                        <div class="t975__menu-text" style="margin-top: 2px;" field="li_title__1721651051254">Социальная сеть</div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-    const menuBtn = document.getElementById('menu-btn');
-    const navMenu = document.getElementById('nav-menu');
+				<h2>Описание:</h2>
+				<textarea name="description" rows="5" required></textarea>
+				<button class="neon-button" type="submit">Отправить</button>
+			</form>
+		</div>
+		<h2>HTTPS З А Щ И Т А 🔒</h2>
+		<!-- T975 -->
+		<div
+			class="t975"
+			style="background-color: #fff"
+			data-bgcolor-hex=""
+			data-bgcolor-rgba=""
+			data-navmarker="nav776782174marker"
+			data-bgopacity="1"
+			data-menu="yes"
+		>
+			<nav class="t975__wrapper">
+				<ul role="list" class="t975__inner-wrapper t-menu__list">
+					<li class="t975__list-item">
+						<a class="t975__menu-link" href="/">
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/house_3d.png"
+										imgfield="li_img__0722833889710"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__0722833889710"
+								>
+									Главная
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="t975__list-item">
+						<a class="t975__menu-link" href="/bestforest.html">
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/evergreen_tree_3d.png"
+										imgfield="li_img__0722833889711"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__0722833889711"
+								>
+									Лучшие леса
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="t975__list-item">
+						<a class="t975__menu-link" href="/otziv.html">
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/sparkles_3d.png"
+										imgfield="li_img__0722833889712"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__0722833889712"
+								>
+									Написать отзыв
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="t975__list-item">
+						<a class="t975__menu-link" href="/go.html">
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/eye_in_speech_bubble_3d.png"
+										imgfield="li_img__0722833889713"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__0722833889713"
+								>
+									Главные функции
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="t975__list-item">
+						<a class="t975__menu-link" href="/documentation.html">
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/page_with_curl_3d.png"
+										imgfield="li_img__1721649456084"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__1721649456084"
+								>
+									Документация
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="t975__list-item">
+						<a
+							class="t975__menu-link"
+							href="https://socialmush.infinityfreeapp.com/"
+						>
+							<div class="t975__menu-item">
+								<div class="t975__icon-wrapper">
+									<img
+										class="t975__menu-icon"
+										src="https://static.tildacdn.info/lib/emoji/fluent/globe_with_meridians_3d.png"
+										imgfield="li_img__1721651051254"
+										alt=""
+									/>
+								</div>
+								<div
+									class="t975__menu-text"
+									style="margin-top: 2px"
+									field="li_title__1721651051254"
+								>
+									Социальная сеть
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				const menuBtn = document.getElementById('menu-btn')
+				const navMenu = document.getElementById('nav-menu')
 
-    menuBtn.addEventListener('click', function() {
-        navMenu.classList.toggle('show');
-    });
-});
+				menuBtn.addEventListener('click', function () {
+					navMenu.classList.toggle('show')
+				})
+			})
 
-      
+			window.onscroll = function () {
+				updateProgressBar()
+			}
 
-        window.onscroll = function() {updateProgressBar()};
+			function updateProgressBar() {
+				var winScroll =
+					document.body.scrollTop || document.documentElement.scrollTop
+				var height =
+					document.documentElement.scrollHeight -
+					document.documentElement.clientHeight
+				var scrolled = (winScroll / height) * 100
+				document.getElementById('myBar').style.width = scrolled + '%'
+			}
 
-        function updateProgressBar() {
-            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
-            document.getElementById("myBar").style.width = scrolled + "%";
-        }
+			function addMushroom(mushroom) {
+				const description = document.querySelector(
+					'textarea[name="description"]'
+				)
+				description.value += mushroom + ', '
+			}
 
-        function addMushroom(mushroom) {
-            const description = document.querySelector('textarea[name="description"]');
-            description.value += mushroom + ', ';
-        }
+			function addImpression(impression) {
+				const description = document.querySelector(
+					'textarea[name="description"]'
+				)
+				description.value += impression + ', '
+			}
 
-        function addImpression(impression) {
-            const description = document.querySelector('textarea[name="description"]');
-            description.value += impression + ', ';
-        }
+			function updateCustomForest() {
+				const customForestInput = document.getElementById('customForestInput')
+				const customForestRadio = document.getElementById('customForestRadio')
+				if (customForestInput.value.trim()) {
+					customForestRadio.value = customForestInput.value
+				} else {
+					customForestRadio.value = 'custom'
+				}
+			}
 
-        function updateCustomForest() {
-            const customForestInput = document.getElementById('customForestInput');
-            const customForestRadio = document.getElementById('customForestRadio');
-            if (customForestInput.value.trim()) {
-                customForestRadio.value = customForestInput.value;
-            } else {
-                customForestRadio.value = 'custom';
-            }
-        }
+			document.querySelector('input[name="date"]').value =
+				new Date().toLocaleDateString()
 
-        document.querySelector('input[name="date"]').value = new Date().toLocaleDateString();
+			document
+				.getElementById('reviewForm')
+				.addEventListener('submit', function (event) {
+					event.preventDefault()
 
-        document.getElementById('reviewForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+					const token = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w'
+					const chatId = '7208967084'
+					const formData = new FormData(event.target)
 
-            const token = '7307900933:AAFZWNxqLsJvCmCAJxjVehQU9C9jMI1k78w';
-            const chatId = '7208967084';
-            const formData = new FormData(event.target);
-
-            const message = `
+					const message = `
 Лес: ${formData.get('forest')}
 Грибы: ${formData.get('description')}
 Оценка: ${formData.get('rating')}
 Впечатления: ${formData.get('description')}
 Дата похода: ${formData.get('date')}
 Описание: ${formData.get('description')}
-            `;
+            `
 
-            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Отзыв успешно отправлен!');
-                } else {
-                    alert('Ошибка при отправке отзыва.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Ошибка при отправке отзыва.');
-            });
-        });
-    </script>
-    <script src="//code.jivo.ru/widget/Yim7MAMhj5" async></script>
-</body>
+					fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							chat_id: chatId,
+							text: message,
+						}),
+					})
+						.then(response => response.json())
+						.then(data => {
+							if (data.ok) {
+								alert('Отзыв успешно отправлен!')
+							} else {
+								alert('Ошибка при отправке отзыва.')
+							}
+						})
+						.catch(error => {
+							console.error('Error:', error)
+							alert('Ошибка при отправке отзыва.')
+						})
+				})
+		</script>
+		<script src="//code.jivo.ru/widget/Yim7MAMhj5" async></script>
+		<!-- Yandex.RTB R-A-11174458-7 -->
+		<div id="yandex_rtb_R-A-11174458-7"></div>
+		<script>
+			window.yaContextCb.push(() => {
+				Ya.Context.AdvManager.render({
+					blockId: 'R-A-11174458-7',
+					renderTo: 'yandex_rtb_R-A-11174458-7',
+					type: 'feed',
+				})
+			})
+		</script>
+	</body>
 </html>
