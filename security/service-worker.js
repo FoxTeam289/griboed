@@ -1,11 +1,13 @@
 const CACHE_NAME = 'offline-cache-v1'
 const urlsToCache = [
-	'/index.html',
-	'/bestforest.html',
-	'/otziv.html',
-	'/go.html',
-	'/documentation.html',
-]
+  '/index.html',
+  '/bestforest.html',
+  '/otziv.html',
+  '/go.html',
+  '/documentation.html',
+  '/fallback.html' // Убедитесь, что этот файл существует и доступен
+];
+
 
 self.addEventListener('install', event => {
 	event.waitUntil(
