@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Грибные зоны - пойти в лес с Mushfind</title>
+    
     <meta name="description" content="Просмотрите все грибные зоны и используйте наш навигатор, чтобы не заблудиться в лесу. Планируйте свои походы эффективно.">
+    
     <meta name="keywords" content="грибные зоны, навигатор лес, не заблудиться в лесу, поход в лес">
     <link rel="canonical" href="https://mushfind.ru/go.html">
     <meta property="og:title" content="Грибные зоны - Найдите и не заблудитесь в лесу с Mushfind">
     <meta property="og:description" content="Просмотрите все грибные зоны и используйте наш навигатор, чтобы не заблудиться в лесу. Планируйте свои походы эффективно.">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(self)">
     <meta property="og:url" content="https://mushfind.ru/go.html">
     <link rel="shortcut icon" href="icon.png" type="image/x-icon">
     <link rel="icon" href="icon.png" type="image/png">
@@ -471,16 +474,19 @@ if ('serviceWorker' in navigator) {
         <div id="map"></div>
         <div id="control" style="display: none;" class="controls">
           <!--  <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button> -->
-            <button onclick="window.location.href='https://mushfind.tb.ru/page2'"><i class="fas fa-map-pin"></i>Совместный поход</button>
-           <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
-            <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
+            <button onclick="window.location.href='https://mushfind.tb.ru/page2'"><i class="fas fa-map-pin"></i> Совместный поход</button>
+           <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Определить мое местоположение</button>
+           <button onclick="IPLocation()"><i class="fa-solid fa-location-dot"></i> Определить мое местоположение по IP</button>
+           <!-- <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button> -->
+            <button id="showInfo"><i class="fa-solid fa-book"></i> Как пользоваться функциями?</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
             <button onclick="searchNearbyPanoramas()"><i class="fas fa-street-view"></i> Найти ближайшие панорамы</button>
          <!--   <button onclick="returnToMarkedPoint()"><i class="fas fa-route"></i> Вернуться к точке </button> -->
             <button id="choose_one" style="display: none;" onclick="voteMushroomZone(true)"><i class="fas fa-thumbs-up"></i> Есть грибы</button>
             <button id="choose_two" style="display: none;" onclick="voteMushroomZone(false)"><i class="fas fa-thumbs-down"></i> Нет грибов</button>
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
-            <button id="offlineModeBtn"><i fa fa-download>В оффлайн</button></i>
+         <!--   <button id="offlineModeBtn">Сохранить страницу</button> -->
+            <button onclick="window.location.href='https://foxyprofi.itch.io/offline'"><i class="fa-solid fa-xmark"></i> Скачать оффлайн версию</button>
 
 <script>
   document.getElementById('offlineModeBtn').addEventListener('click', () => {
@@ -503,11 +509,36 @@ if ('serviceWorker' in navigator) {
 </main>
 <button id="showBtn">👁 Нажмите сюда, чтобы показать меню 👁</button>
 
+<div id="popup" style="display: none;">
+    <div id="popup-content">
+        <p>Чтобы определить ваше местоположение, нажмите на кнопку "Определить моё местоположение".</p>
+        <p>Чтобы поставить точку, а затем вернуться к ней, установите своё местоположение, а зачем кликните на карту</p>
+        <p>Чтобы пользоваться сайтом без интернета, нажмите на кнопку "Скачать оффлайн версию", затем на кнопку "Download"(Скачать), затем откройте загруженный файл "go.html"</p>
+        <p>Чтобы посмотреть все грибные зоны, нажмите на кнопку "Посмотреть все грибные зоны" (Карта грибных мест принадлежит сайту "Гдегрибы.рф", поэтому за рекламу мы не отвечаем)</p>
+        <p>Чтобы выбрать лес, выберите лес из списка</p>
+        <p>Чтобы посмотреть панораму леса, выберите лес и нажмите на кнопку "Найти ближайшие панорамы"</p>
+        <p>Чтобы открыть маршрут к лесу, выберите лес и нажмите на кнопку "Маршрут к выбранному лесу"</p>
+        <p>Чтобы определить местоположение без GPS (для офлайн версии), нажмите на кнопку "Определить моё местоположение по IP"</p>
+        <button id="close-btn">Закрыть</button>
+    </div>
+</div>
+
 <script>
     const elements = document.getElementById('control')
     const showBtn = document.getElementById('showBtn')
     const hideBtn = document.getElementById('hideBtn')
+    const popupBtn = document.getElementById('showInfo')
+    const popup = document.getElementById('popup')
+    const closePopup = document.getElementById('close-btn')
+    
+    closePopup.onclick = function closeInfo() {
+        popup.style.display = 'none'
+    }
 
+    popupBtn.onclick = function showInfo() {
+        popup.style.display = 'flex'
+    }
+    
     showBtn.onclick = function() {
         elements.style.display = 'block'
         showBtn.style.display = 'none'
@@ -538,6 +569,41 @@ if ('serviceWorker' in navigator) {
 
       
     </script>
+    <script>
+    function IPLocation() {
+    // Ваш токен API для ipinfo (не забудьте заменить на свой реальный токен)
+    const ipinfoToken = '72febb8af57cd5';
+
+    // Функция для получения местоположения по IP
+    function fetchLocation() {
+        fetch(`https://ipinfo.io/json?token=${ipinfoToken}`)
+            .then(response => response.json())
+            .then(data => {
+                // Извлечение координат из ответа
+                const coords = data.loc.split(',').map(Number);
+                
+                // Обновление метки или добавление новой
+                if (userPlacemark) {
+                    userPlacemark.geometry.setCoordinates(coords);
+                } else {
+                    userPlacemark = new ymaps.Placemark(coords, { balloonContent: 'Вы здесь!' }, { preset: 'islands#redIcon' });
+                    map.geoObjects.add(userPlacemark);
+                }
+                
+                // Установка центра карты и открытие балуна
+                map.setCenter(coords, 15);
+                userPlacemark.balloon.open();
+            })
+            .catch(error => {
+                console.error('Ошибка получения местоположения:', error);
+                alert('Не удалось определить ваше местоположение.');
+            });
+    }
+
+    // Вызов функции для получения и установки местоположения
+    fetchLocation();
+}
+</script>
 <!--<div id="popup">
     <div id="popup-content">
         <p>Грибные зоны принадлежат сайту гдегрибы.рф. Сайт "Mushfind" не несёт ответственность за актуальность данных у себя на сайте.</p>
