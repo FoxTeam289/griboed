@@ -16,15 +16,17 @@ self.addEventListener('install', event => {
 })
 
 self.addEventListener('fetch', event => {
-	event.respondWith(
-		caches.match(event.request).then(response => {
-			if (response) {
-				return response // Возвращаем кэшированный ресурс
-			}
-			return fetch(event.request) // Пробуем загрузить из сети
-		})
-	)
-})
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;  // Возвращаем кэшированный ресурс
+        }
+        return fetch(event.request).catch(() => caches.match('/fallback.html'));
+      })
+  );
+});
+
 
 self.addEventListener('activate', event => {
 	const cacheWhitelist = [CACHE_NAME]
