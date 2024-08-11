@@ -434,6 +434,7 @@ select {
     border: none;
     border-radius: 5px;
     font-size: 16px;
+    max-width: 337px;
 }
 #showBtn {
     padding: 10px 20px;
@@ -452,20 +453,50 @@ select {
 <script src="https://api-maps.yandex.ru/2.1/?apikey=86c4a0b5-0c50-44da-a0d8-a9b213634759&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
+    <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/security/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  });
+}
+
+    </script>
     <main>
         <div id="map"></div>
         <div id="control" style="display: none;" class="controls">
-            <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button>
+          <!--  <button onclick="setCoordinates()"><i class="fas fa-map-marker-alt"></i> Поставить точку там, где я</button> -->
             <button onclick="window.location.href='https://mushfind.tb.ru/page2'"><i class="fas fa-map-pin"></i>Совместный поход</button>
-            <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
+           <button onclick="setUserLocation()"><i class="fas fa-location-arrow"></i> Установить мое местоположение</button>
             <button onclick="handleManualCoordinates()"><i class="fas fa-location-arrow"></i> Указать мое местоположение</button>
             <select id="forestSelect" onchange="setForestLocation()"></select>
             <button onclick="searchNearbyPanoramas()"><i class="fas fa-street-view"></i> Найти ближайшие панорамы</button>
-            <button onclick="returnToMarkedPoint()"><i class="fas fa-route"></i> Вернуться к точке </button>
+         <!--   <button onclick="returnToMarkedPoint()"><i class="fas fa-route"></i> Вернуться к точке </button> -->
             <button id="choose_one" style="display: none;" onclick="voteMushroomZone(true)"><i class="fas fa-thumbs-up"></i> Есть грибы</button>
             <button id="choose_two" style="display: none;" onclick="voteMushroomZone(false)"><i class="fas fa-thumbs-down"></i> Нет грибов</button>
             <button onclick="routeToForest()"><i class="fas fa-tree"></i> Маршрут к выбранному лесу</button>
-            <button onclick="window.location.href='https://foxyprofi.itch.io/offline'"><i class="fas fa-download"></i> Сохранить изменения</button>
+            <button id="offlineModeBtn"><i fa fa-download>В оффлайн</button></i>
+
+<script>
+  document.getElementById('offlineModeBtn').addEventListener('click', () => {
+    caches.open('offline-cache-v1').then(cache => {
+      cache.addAll([
+        '/index.html',
+        '/bestforest.html',
+        '/otziv.html',
+        '/go.html',
+        '/documentation.html'
+      ]);
+    });
+    alert('Теперь сайт доступен в оффлайн режиме!');
+  });
+</script>
+
             <button onclick="OpenMapI('https://гдегрибы.рф')"><i class="fas fa-eye"></i> Посмотреть все грибные зоны </button>
             <button id="hideBtn"><i class="fa-solid fa-eye-slash"></i> Нажмите сюда, чтобы убрать меню </button>
     </div>
@@ -740,8 +771,7 @@ select {
 
     var map, userPlacemark, mushroomZonePlacemark, forestPlacemark, targetPlacemark, multiRoute;
      // Данные лесов
-     var forests = [
-    { name: 'леса городского округа Клин', coords: [56.148798, 36.365382], rating: 'нет оценок', mushrooms: ['нет оценок'] },
+     var forests = [  { name: 'леса городского округа Клин', coords: [56.148798, 36.365382], rating: 'нет оценок', mushrooms: ['нет оценок'] },
     { name: 'леса городского округа Клин №2', coords: [56.157039, 36.356656], rating: 'нет оценок', mushrooms: ['нет оценок'] },
     { name: 'леса городского округа Клин №3', coords: [56.156372, 36.359731], rating: 'нет оценок', mushrooms: ['нет оценок'] },
     { name: 'леса городского округа Клин №4', coords: [56.139209, 36.385806], rating: 'нет оценок', mushrooms: ['нет оценок'] },
@@ -936,7 +966,8 @@ select {
     { name: 'Национальный парк Юго-Восточный Казахстан', coords: [42.0000, 69.0000], rating: 'нет оценок', mushrooms: ['нет оценок'] },
     { name: 'Национальный парк Центрально-Восточный Казахстан', coords: [48.0000, 73.0000], rating: 'нет оценок', mushrooms: ['нет оценок'] },
     { name: 'Национальный парк Северо-Центральный Казахстан', coords: [53.0000, 69.0000], rating: 'нет оценок', mushrooms: ['нет оценок'] },
-    { name: 'Национальный парк Юго-Центральный Казахстан', coords: [42.0000, 69.0000], rating: 'нет оценок', mushrooms: ['нет оценок'] },{
+    { name: 'Национальный парк Юго-Центральный Казахстан', coords: [42.0000, 69.0000], rating: 'нет оценок', mushrooms: ['нет оценок'] },
+    {
         "name": "Лес в Silberwald",
         "coords": [
             48.3532711,
@@ -9312,7 +9343,7 @@ function returnToMarkedPoint() {
             alert('Геолокация не поддерживается вашим браузером');
         }
     } else {
-        alert('Поставленная точка не установлена. Пожалуйста, установите своё местоположение с помощью функции setCoordinates.');
+        alert('Поставленная точка не установлена. Пожалуйста, установите своё местоположение с помощью клика на карту.');
     }
 }
 
