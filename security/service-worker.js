@@ -1,56 +1,50 @@
-const CACHE_NAME = 'offline-cache-v1'
+const CACHE_NAME = 'offline-cache-v1';
 const urlsToCache = [
   '/index.html',
   '/bestforest.html',
   '/otziv.html',
   '/go.html',
   '/documentation.html',
-  '/fallback.html' // Убедитесь, что этот файл существует и доступен
+  '/fallback.html' // Файл для отображения при отсутствии подключения
 ];
 
+// Кэширование файлов при установке Service Worker
 self.addEventListener('install', event => {
-  console.log('Service Worker installing.');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
-      .catch(err => console.error('Cache open failed:', err))
   );
 });
 
+// Обработка запросов
 self.addEventListener('fetch', event => {
-  console.log('Service Worker fetching:', event.request.url);
   event.respondWith(
     caches.match(event.request)
       .then(response => {
         if (response) {
-          console.log('Serving from cache:', event.request.url);
-          return response;
+          return response; // Вернуть кэшированный ресурс, если он есть
         }
         return fetch(event.request)
-          .catch(() => {
-            console.log('Serving fallback page');
-            return caches.match('/fallback.html');
-          });
+          .catch(() => caches.match('/fallback.html')); // Вернуть резервную страницу при отсутствии подключения
       })
-      .catch(err => console.error('Cache match failed:', err))
   );
 });
 
-
+// Удаление старых кэшей
 self.addEventListener('activate', event => {
-	const cacheWhitelist = [CACHE_NAME]
-	event.waitUntil(
-		caches.keys().then(cacheNames => {
-			return Promise.all(
-				cacheNames.map(cacheName => {
-					if (cacheWhitelist.indexOf(cacheName) === -1) {
-						return caches.delete(cacheName) // Удаляем старые кэши
-					}
-				})
-			)
-		})
-	)
-})
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName); // Удаление старых кэшей
+          }
+        })
+      );
+    })
+  );
+});
+
