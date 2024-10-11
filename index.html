@@ -87,6 +87,21 @@
 		<script src="app.js" defer></script>
 	</head>
 	<body>
+		  <div class="chatbox" id="chatbox">
+    <span class="close-btn" id="closeChat">&times;</span>
+    <div class="chat-content">
+      <li class="chat incoming">
+        <i class="fas fa-tree"></i>
+        <p>Привет! Я - MushBoy 🌲 Как я могу тебе помочь?</p>
+      </li>
+      </div>
+    <div class="chat-input">
+      <textarea placeholder="Напишите сообщение..." rows="1"></textarea>
+      <span class="fas fa-paper-plane"></span>
+    </div>
+  </div>
+
+  <button class="chatbot-toggler" id="toggleChat"><i class="fas fa-comment-dots"></i></button>
 		<div class="wrapper">
 			<div class="content">
 				<header class="main-header">
@@ -328,40 +343,7 @@
 	  z-index: 99999;
     }
   }
-	#toggleChat {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999999;
-}
-
-.chatbot-toggler {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
   </style>
-</head>
-<body>
-  <div class="chatbox" id="chatbox">
-    <span class="close-btn" id="closeChat">&times;</span>
-    <div class="chat-content">
-      <li class="chat incoming">
-        <i class="fas fa-tree"></i>
-        <p>Привет! Я - MushBoy 🌲 Как я могу тебе помочь?</p>
-      </li>
-      </div>
-    <div class="chat-input">
-      <textarea placeholder="Напишите сообщение..." rows="1"></textarea>
-      <span class="fas fa-paper-plane"></span>
-    </div>
-  </div>
-
-  <button class="chatbot-toggler" id="toggleChat"><i class="fas fa-comment-dots"></i></button>
-
-  <!-- Подключение Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <script>
     const toggleButton = document.getElementById('toggleChat');
