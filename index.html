@@ -328,6 +328,19 @@
 	  z-index: 99999;
     }
   }
+	#toggleChat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999999;
+}
+
+.chatbot-toggler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
   </style>
 </head>
 <body>
@@ -451,7 +464,7 @@
     // If no keywords are found in the message, respond with default message and redirect
     messageElement.textContent = "Не знаю ответ на этот вопрос :( . Можете связаться с нашей поддержкой по почте foxy09876@yandex.ru. А ещё я буду очень рад, если вы скажете, что я не смог ответить на ваш вопрос и расширете мою базу знаний :)";
     setTimeout(() => {
-      window.location.href = "mushfind.ru";
+      window.location.href = "/";
     }, 100000);
     chatbox.scrollTo(0, chatbox.scrollHeight);
   };
