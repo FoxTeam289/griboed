@@ -116,7 +116,7 @@
 				>
 					<div class="main-article__content">
 						<h2 class="main-article__header">
-							<a>Наслаждайтесь функциями ;)</a>
+							<a>Меню — наверху.</a>
 						</h2>
 						<p class="main-article__paragraph">
 							С сервисом "Mushfind" вы не заблудитесь в лесу! Ведь сервис
@@ -135,6 +135,365 @@
 					<br />
 					<div class="copy2">*Могут, но это не точно.</div>
 				</article>
+
+<!--Чат-->
+<style>
+    /* CSS для стилизации чат-бота в лесном стиле */
+    .chatbox {
+      display: none; /* Скрываем чат по умолчанию */
+      flex-direction: column;
+      list-style-type: none;
+      margin: 0;
+      padding: 20px;
+      background-color: #e8f5e9; /* Светло-зеленый фон */
+      height: 400px;
+      width: 300px; /* Установите фиксированную ширину для чата */
+      border: 2px solid #388e3c; /* Зеленая рамка */
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Тень */
+      position: fixed; /* Фиксируем чат */
+      bottom: 20px; /* Расстояние от низа */
+      right: 20px; /* Расстояние от правого края */
+      transform-origin: bottom right;
+      transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	  z-index: 999999;
+    }
+
+    .chatbox.show {
+      display: flex; /* Показываем чат при добавлении класса .show */
+      flex-direction: column;
+      transform: scale(1);
+    }
+
+    .chat-content {
+  flex: 1;
+  overflow-y: auto; /* Позволяет прокручивать чат */
+  max-height: calc(100% - 70px); /* Устанавливаем максимальную высоту для контейнера с сообщениями */
+}
+
+
+    .chat {
+      flex: 1;
+      margin: 10px 0;
+      padding: 10px;
+      clear: both;
+      overflow-wrap: break-word;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.3s forwards; /* Анимация появления сообщений */
+	  z-index: 99999;
+    }
+
+    .chat.incoming {
+      text-align: left;
+      background-color: #c8e6c9; /* Светло-зеленый фон для входящих сообщений */
+    }
+
+    .chat.outgoing {
+      text-align: right;
+      background-color: #b2dfdb; /* Светло-голубой фон для исходящих сообщений */
+    }
+
+    .chat p {
+      margin: 5px 0;
+      color: #004d40; /* Темно-зеленый текст */
+      font-family: 'Comic Sans MS', cursive; /* Красивый шрифт */
+      font-size: 14px; /* Размер шрифта */
+      transition: color 0.3s; /* Анимация цвета текста */
+    }
+
+    .chat p:hover {
+      color: #1b5e20; /* Темно-зеленый цвет при наведении */
+    }
+
+    .chatbot-toggler {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #388e3c; /* Зеленый цвет */
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 24px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      transition: background-color 0.3s, transform 0.5s, opacity 0.3s;
+    }
+
+    .chatbot-toggler:hover {
+      background-color: #2e7d32; /* Темнее при наведении */
+    }
+
+    .chatbot-toggler.hide {
+      opacity: 0; /* Скрываем кнопку с анимацией */
+      transform: scale(0.5) rotate(360deg); /* Уменьшаем кнопку при скрытии с вращением */
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: #388e3c;
+      font-size: 20px;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: #2e7d32;
+      transform: scale(1.1);
+    }
+
+    .chat-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background-color: #e8f5e9; /* Тот же цвет, что и у чата */
+    }
+
+    .chat-input textarea {
+      width: calc(100% - 40px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      overflow: hidden;
+      min-height: 40px;
+      max-height: 150px;
+      transition: border-color 0.3s;
+      font-family: 'Comic Sans MS', cursive; /* Красивый шрифт */
+    }
+
+    .chat-input textarea:focus {
+      border-color: #388e3c; /* Цвет рамки при фокусе */
+    }
+
+    .chat-input span {
+      margin-left: 10px;
+      cursor: pointer;
+      color: #388e3c; /* Зеленый цвет */
+      font-size: 20px; /* Размер иконки отправки */
+    }
+
+    /* Анимация появления сообщений */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Стили для мобильных устройств */
+    @media (max-width: 480px) {
+      .chatbox {
+        width: 90%; /* Ширина чата на мобильных устройствах */
+        max-width: 350px; /* Максимальная ширина чата */
+      }
+
+      .chat-input textarea {
+        width: calc(100% - 40px);
+      }
+
+      .chatbot-toggler {
+        padding: 8px; /* Уменьшаем отступы для кнопки на мобильных устройствах */
+      }
+    }
+    @media (max-width: 480px) {
+    .chatbox {
+      width: 90%; /* Ширина чата на мобильных устройствах */
+      max-width: 350px; /* Максимальная ширина чата */
+      height: 300px; /* Высота чата на мобильных устройствах */
+      bottom: 10px; /* Расстояние от низа */
+      right: 10px; /* Расстояние от правого края */
+	  z-index: 99999;
+    }
+
+    .chat-input textarea {
+      width: calc(100% - 40px);
+      min-height: 30px; /* Минимальная высота для textarea на мобильных устройствах */
+      max-height: 120px; /* Максимальная высота для textarea на мобильных устройствах */
+	  z-index: 99999;
+    }
+
+    .chatbot-toggler {
+      padding: 8px; /* Уменьшаем отступы для кнопки на мобильных устройствах */
+      bottom: 10px; /* Расстояние от низа */
+      right: 10px; /* Расстояние от правого края */
+      font-size: 20px; /* Уменьшаем размер шрифта для кнопки на мобильных устройствах */
+	  z-index: 99999;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="chatbox" id="chatbox">
+    <span class="close-btn" id="closeChat">&times;</span>
+    <div class="chat-content">
+      <li class="chat incoming">
+        <i class="fas fa-tree"></i>
+        <p>Привет! Я - MushBoy 🌲 Как я могу тебе помочь?</p>
+      </li>
+      </div>
+    <div class="chat-input">
+      <textarea placeholder="Напишите сообщение..." rows="1"></textarea>
+      <span class="fas fa-paper-plane"></span>
+    </div>
+  </div>
+
+  <button class="chatbot-toggler" id="toggleChat"><i class="fas fa-comment-dots"></i></button>
+
+  <!-- Подключение Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <script>
+    const toggleButton = document.getElementById('toggleChat');
+    const closeButton = document.getElementById('closeChat');
+    const chatboxx = document.getElementById('chatbox');
+
+    toggleButton.addEventListener('click', () => {
+      chatboxx.style.display = 'flex';
+      chatboxx.classList.add('show'); // Показываем чат
+      toggleButton.classList.add('hide'); // Скрываем кнопку
+    });
+
+    closeButton.addEventListener('click', () => {
+      chatboxx.classList.remove('show'); // Скрываем чат
+      setTimeout(() => {
+        chatboxx.style.display = 'none';
+        toggleButton.classList.remove('hide'); // Показываем кнопку с задержкой
+      }, 300); // Задержка равна продолжительности анимации
+    });
+
+    </script>
+<script>
+  const chatbotToggler = document.querySelector(".chatbot-toggler");
+  const closeBtn = document.querySelector(".close-btn");
+  const chatbox = document.querySelector(".chatbox");
+  const chatInput = document.querySelector(".chat-input textarea");
+  const sendChatBtn = document.querySelector(".chat-input span");
+  
+  let userMessage = null;
+  const inputInitHeight = chatInput.scrollHeight;
+  
+  // API configuration
+  const API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
+  const API_KEY = "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";
+  
+  // Knowledge base for responses
+  const knowledgeBase = {
+    "привет": "Здравствуйте! Как я могу вам помочь?",
+    "как дела": "Я программа, но спасибо, что спросили!",
+    "что ты можешь": "Я могу помочь вам с вопросами о наших продуктах.",
+    "контакт": "Вы можете связаться с нами по почте:  foxy09876@yandex.ru.",
+    "грибы": "Грибные места вы можете найти перейдя на страничку mushfind.ru/go.html --> Откройте меню --> Нажмите на кнопку 'Посмотреть грибные зоны'",
+    "отзыв": "Вы можете написать отзыв о леса, чтобы помочь другим пользователям, для этого перейдите на страничку 'Написать отзыв' в меню",
+
+  };
+  
+  // Function to match user input with knowledge base keys
+  const matchKeyword = (message, keywords) => {
+    for (let key in keywords) {
+      const regex = new RegExp(key + '[а-я]*[.,!?]*', 'i'); // Match word with possible endings and punctuation
+      if (regex.test(message)) {
+        return keywords[key];
+      }
+    }
+    return null;
+  };
+  
+  // Translate text function
+  const translateText = async (text, targetLang) => {
+    try {
+      const response = await fetch(`https://libretranslate.com/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          q: text,
+          source: "auto",
+          target: targetLang,
+          format: "text"
+        })
+      });
+      const data = await response.json();
+      return data.translatedText || text; // Return original text if translation fails
+    } catch (error) {
+      console.error("Translation error:", error);
+      return text; // Fallback to original text on error
+    }
+  };
+  
+  const createChatLi = (message, className) => {
+    const chatLi = document.createElement("li");
+    chatLi.classList.add("chat", `${className}`);
+    let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">MushBoy</span><p></p>`;
+    chatLi.innerHTML = chatContent;
+    chatLi.querySelector("p").textContent = message;
+    return chatLi;
+  };
+  
+  const generateResponse = async (chatElement) => {
+    const messageElement = chatElement.querySelector("p");
+  
+    // Check if the message contains any of the keywords
+    const response = matchKeyword(userMessage.toLowerCase(), knowledgeBase);
+    if (response) {
+      const translatedResponse = await translateText(response, "ru");
+      messageElement.textContent = translatedResponse;
+      chatbox.scrollTo(0, chatbox.scrollHeight);
+      return;
+    }
+  
+    // If no keywords are found in the message, respond with default message and redirect
+    messageElement.textContent = "Не знаю ответ на этот вопрос :( . Можете связаться с нашей поддержкой по почте foxy09876@yandex.ru. А ещё я буду очень рад, если вы скажете, что я не смог ответить на ваш вопрос и расширете мою базу знаний :)";
+    setTimeout(() => {
+      window.location.href = "mushfind.ru";
+    }, 100000);
+    chatbox.scrollTo(0, chatbox.scrollHeight);
+  };
+  
+  const chatContent = document.querySelector(".chat-content");
+
+const handleChat = () => {
+  userMessage = chatInput.value.trim();
+  if (!userMessage) return;
+
+  chatInput.value = "";
+  chatInput.style.height = `${inputInitHeight}px`;
+
+  chatContent.appendChild(createChatLi(userMessage, "outgoing")); // Append to chat-content
+  chatContent.scrollTo(0, chatContent.scrollHeight);
+
+  setTimeout(() => {
+    const incomingChatLi = createChatLi("Печатаю...", "incoming");
+    chatContent.appendChild(incomingChatLi); // Append to chat-content
+    chatContent.scrollTo(0, chatContent.scrollHeight);
+    generateResponse(incomingChatLi);
+  }, 600);
+};
+
+  
+  chatInput.addEventListener("input", () => {
+    chatInput.style.height = `${inputInitHeight}px`;
+    chatInput.style.height = `${chatInput.scrollHeight}px`;
+  });
+  
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+      e.preventDefault();
+      handleChat();
+    }
+  });
+  
+  sendChatBtn.addEventListener("click", handleChat);
+  closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+  chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+  </script>
+
 				<!-- T975 -->
 				<div
 					class="t975"
