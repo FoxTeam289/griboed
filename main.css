@@ -416,3 +416,230 @@ button:hover {
         text-shadow: 3px 3px 15px;
     }
 }
+
+/*Новый год*/
+.t970__widget-preview-container {
+    min-height: 350px
+}
+
+.t970 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 50001;
+    display: block
+}
+
+.t970_preview {
+    position: absolute;
+    z-index: 1000
+}
+
+.t970__widget-input {
+    display: none
+}
+
+.t970__widget {
+    position: fixed;
+    z-index: 1;
+    cursor: pointer
+}
+
+.t970_preview .t970__widget {
+    position: absolute
+}
+
+.t970_santa .t970__widget {
+    background-image: url('https://static.tildacdn.com/tild6430-6261-4566-b833-396330613231/santa1.png');
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 220px
+}
+
+.t970_gift .t970__widget {
+    background-image: url('https://static.tildacdn.com/tild3333-3539-4934-b338-336663313439/gift1.png');
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    bottom: 20px;
+    left: 33px;
+    width: 70px;
+    height: 160px
+}
+
+.t970__message-wrapper {
+    position: fixed;
+    bottom: 40px;
+    left: 137px;
+    max-width: 350px;
+    min-width: 200px;
+    margin-right: 30px;
+    opacity: 0;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: all ease .3s;
+    box-sizing: border-box;
+    pointer-events: none
+}
+
+.t970_preview .t970__message-wrapper {
+    position: absolute;
+    width: 400px
+}
+
+.t970__message {
+    padding: 21px 65px 20px 30px;
+    display: block;
+    box-sizing: border-box
+}
+
+.t970__message-arrow_before,.t970__message-arrow_after {
+    position: absolute;
+    left: -13px;
+    bottom: 45px;
+    height: 30px;
+    width: 30px;
+    background: inherit;
+    box-sizing: border-box;
+    transform: skewX(45deg);
+    box-shadow: inherit;
+    z-index: -1;
+    border-top: inherit;
+    border-left: inherit
+}
+
+.t970__message-arrow_after {
+    box-shadow: none;
+    z-index: 3
+}
+
+.t970__message::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: -25px;
+    bottom: -25px;
+    width: 277px;
+    height: 173px;
+    max-height: 100%;
+    max-width: 300px;
+    pointer-events: none;
+    z-index: 4
+}
+
+.t970_santa .t970__message::after {
+    background-image: url('https://static.tildacdn.com/tild6161-3462-4132-b333-303439613330/branch1.png');
+    background-position-x: right;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+.t970_gift .t970__message:after {
+    background-image: url('https://static.tildacdn.com/tild6465-3338-4435-b865-663136646336/branch2.png');
+    background-position-x: right;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+.t970__message-txt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    margin: 0 0 1.5em;
+    color: #fff
+}
+
+.t970_preview .t970__message-txt {
+    max-height: 215px
+}
+
+.t970__btn-close {
+    position: absolute;
+    top: 16px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    padding: 5px;
+    outline: none;
+    cursor: pointer
+}
+
+.t970__btn-close svg {
+    display: block
+}
+
+.t970__widget-input:checked~.t970__message-wrapper,.t970__message-wrapper_active {
+    opacity: 1;
+    transform: translateY(0);
+    z-index: auto;
+    pointer-events: auto
+}
+
+.t970_gift .t970__widget-input:checked+.t970__widget,.t970_preview.t970_gift .t970__widget {
+    background-image: url('https://static.tildacdn.com/tild3239-3165-4233-b333-396632613930/gift2.png');
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 230px;
+    left: 26px
+}
+
+.t970_santa .t970__widget-input:checked+.t970__widget,.t970_preview.t970_santa .t970__widget {
+    background-image: url('https://static.tildacdn.com/tild6465-6532-4637-b230-666235383665/santa2.png');
+    background-position-x: left;
+    background-position-y: bottom;
+    background-size: contain;
+    background-repeat: no-repeat
+}
+
+@media screen and (max-width: 960px) {
+    .t970_santa .t970__widget {
+        width:122px;
+        height: 179px
+    }
+
+    .t970__message-wrapper {
+        bottom: 30px;
+        left: 120px
+    }
+
+    .t970__message {
+        padding: 19px 57px 20px 27px;
+        max-width: 450px;
+        min-width: 200px
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .t970_santa .t970__widget {
+        bottom:-30px
+    }
+
+    .t970__message-wrapper {
+        bottom: 180px;
+        left: 30px
+    }
+
+    .t970_gift .t970__message-wrapper {
+        bottom: 186px;
+        left: 30px
+    }
+
+    .t970__message-arrow_before,.t970__message-arrow_after {
+        left: 45px;
+        bottom: -15px;
+        transform: skewY(-45deg)
+    }
+}
