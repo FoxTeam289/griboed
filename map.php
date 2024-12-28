@@ -1,14 +1,20 @@
 <?php
 session_start();
-error_reporting(0);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if (!isset($_SESSION['username'])) {
     header("Location: index.php");
     exit();
 }
 
-$data = json_decode(file_get_contents('mushroom_zones.json'), true);
+// Проверяем, существует ли файл и не пуст ли он
+if (file_exists('mushroom_zones.json') && filesize('mushroom_zones.json') > 0) {
+    $data = json_decode(file_get_contents('mushroom_zones.json'), true);
+} else {
+    $data = ['zones' => []]; // Инициализируем пустым массивом, если файл пуст или не существует
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['image'])) {
     $imagePath = 'uploads/' . basename($_FILES['image']['name']);
@@ -59,7 +65,7 @@ $zones = $data['zones'];
     <title>Карта грибных мест</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/assets/styles/dist/map.css?version=<?php echo rand(0, 9999) ?>">
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=56ebea6b-96ca-4b67-9d7f-3f1febf1e2df&lang=ru_RU" type="text/javascript"></script>
 </head>
 
 <body>
@@ -102,7 +108,9 @@ $zones = $data['zones'];
 
             zones.forEach(function (zone) {
                 var placemark = new ymaps.Placemark(zone.location, {
-                    balloonContent: '<strong>Автор:</strong> ' + zone.username + '<br><img src="' + zone.image + '" alt="Грибная зона" class="mapImg"><br><p>Голоса: Есть грибы - ' + zone.votes.yes + ', Нет грибов - ' + zone.votes.no + '</p><div class="btnMapContainer"><button onclick="vote(\'' + zone.id + '\', \'yes\')" class="btnMap">Есть грибы</button><button onclick="vote(\'' + zone.id + '\', \'no\')" class="btnMap">Нет грибов</button></div>'
+                    balloonContent: '<strong>Автор:</strong> ' + zone.username + '
+<img src="' + zone.image + '" alt="Грибная зона" class="mapImg">
+<p>Голоса: Есть грибы - ' + zone.votes.yes + ', Нет грибов - ' + zone.votes.no + '</p><div class="btnMapContainer"><button onclick="vote(\'' + zone.id + '\', \'yes\')" class="btnMap">Есть грибы</button><button onclick="vote(\'' + zone.id + '\', \'no\')" class="btnMap">Нет грибов</button></div>'
                 });
                 myMap.geoObjects.add(placemark);
             });

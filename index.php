@@ -3,20 +3,41 @@ session_start();
 error_reporting(0);
 ini_set('display_errors', 0);
 
+$error_message = "";
+
+if (isset($_SESSION['username'])) {
+    header("Location: profile.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode(file_get_contents('data.json'), true);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
     if ($_POST['action'] == 'register') {
-        $data['users'][] = ['username' => $_POST['username'], 'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)];
-        file_put_contents('data.json', json_encode($data));
-        $_SESSION['username'] = $_POST['username'];
-        header("Location: chat.php");
-    } elseif ($_POST['action'] == 'login') {
         foreach ($data['users'] as $user) {
-            if ($user['username'] == $_POST['username'] && password_verify($_POST['password'], $user['password'])) {
-                $_SESSION['username'] = $_POST['username'];
-                header("Location: chat.php");
+            if ($user['username'] === $username) {
+                $error_message = "Данное имя пользователя уже используется. Возможно, вы регистрируетесь, вместо входа.";
+                break;
             }
         }
+        if ($error_message == "") {
+            $data['users'][] = ['username' => $username, 'password' => password_hash($password, PASSWORD_DEFAULT)];
+            file_put_contents('data.json', json_encode($data));
+            $_SESSION['username'] = $username;
+            header("Location: profile.php");
+        }
+    } elseif ($_POST['action'] == 'login') {
+        $found_user = false;
+        foreach ($data['users'] as $user) {
+            if ($user['username'] == $username && password_verify($password, $user['password'])) {
+                $_SESSION['username'] = $username;
+                header("Location: profile.php");
+                exit();
+            }
+        }
+        $error_message = "Неверный логин или пароль";
     }
 }
 ?>
@@ -41,6 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="field-container">
                 <input type="password" name="password" placeholder="Пароль" required>
             </div>
+            <?php if ($error_message != ""): ?>
+                <div class="field-container">
+                    <p style="color:red;"><?php echo $error_message; ?></p>
+                </div>
+            <?php endif; ?>
             <div class="btns">
                 <div class="is-1">
                     <div class="field-container">

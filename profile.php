@@ -95,6 +95,9 @@ $user_zones = array_filter($zones['zones'], function ($zone) use ($username) {
                             placeholder="Город">
                         <button type="submit">Обновить профиль</button>
                     </form>
+                    <form method="post" action="logout.php">
+                        <button type="submit">Выйти из профиля</button>
+                    </form>
                 <?php else: ?>
                     <p><strong>Имя:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
                     <p><strong>Город:</strong> <?php echo htmlspecialchars($user['city']); ?></p>
@@ -107,12 +110,8 @@ $user_zones = array_filter($zones['zones'], function ($zone) use ($username) {
                 <?php foreach ($user_zones as $zone): ?>
                     <div class="zone">
                         <img src="<?php echo htmlspecialchars($zone['image']); ?>" alt="Грибная зона" class="imgZona">
-                        <p><strong>Место:</strong> <a
-                                href="map.php?zoneId=<?php echo htmlspecialchars($zone['id']); ?>">Посмотреть на карте</a>
-                        </p>
-                        <p><strong>Голоса:</strong> Да - <?php echo htmlspecialchars($zone['votes']['yes']); ?>, Нет -
-                            <?php echo htmlspecialchars($zone['votes']['no']); ?>
-                        </p>
+                        <p><strong>Место:</strong> <a href="map.php?zoneId=<?php echo htmlspecialchars($zone['id']); ?>">Посмотреть на карте</a></p>
+                        <p><strong>Голоса:</strong> Да - <?php echo htmlspecialchars($zone['votes']['yes']); ?>, Нет - <?php echo htmlspecialchars($zone['votes']['no']); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
