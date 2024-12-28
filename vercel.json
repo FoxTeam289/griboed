@@ -6,5 +6,11 @@
         "*.php": {
             "runtime": "vercel-php@0.7.3"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/:path*",
+            "destination": "/api/:path*"
+        }
+    ]
 }
