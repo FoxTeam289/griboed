@@ -1,0 +1,191 @@
+@import url("https://gki-webik.ru/mfs/s?path=/fonts/OpenSans/OpenSans-Regular.ttf");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #041707;
+  background-image: url("/assets/images/1.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: "Open Sans Regular", sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+}
+.container form {
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(4, 23, 7, 0.2823529412);
+  padding: 40px;
+  border-radius: 40px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+  -webkit-box-shadow: 0 0 5px rgba(22, 83, 8, 0.4196078431);
+          box-shadow: 0 0 5px rgba(22, 83, 8, 0.4196078431);
+}
+@media screen and (max-width: 400px) {
+  .container form {
+    padding: 20px;
+  }
+}
+.container form img {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+.container form img.bg {
+  max-height: 270px;
+  -o-object-position: top;
+     object-position: top;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 40px;
+  margin-bottom: 10px;
+}
+.container form input {
+  padding: 10px 10px 10px 0;
+  width: 100%;
+  font-size: 17px;
+  height: 50px;
+  outline: none;
+  border: 0;
+  border-bottom: 2px solid rgba(188, 194, 193, 0.4901960784);
+  background: transparent;
+  color: rgba(188, 194, 193, 0.5843137255);
+  -webkit-transition: border-bottom-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  transition: border-bottom-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+@media screen and (max-width: 420px) {
+  .container form input {
+    font-size: 16px;
+  }
+}
+.container form input:focus {
+  border-bottom-color: rgba(221, 221, 221, 0.7411764706);
+  color: #bcc2c1;
+}
+.container form input:focus::-webkit-input-placeholder {
+  color: #bcc2c1;
+}
+.container form input:focus::-moz-placeholder {
+  color: #bcc2c1;
+}
+.container form input:focus:-ms-input-placeholder {
+  color: #bcc2c1;
+}
+.container form input:focus::-ms-input-placeholder {
+  color: #bcc2c1;
+}
+.container form input:focus::placeholder {
+  color: #bcc2c1;
+}
+.container form input::-webkit-input-placeholder {
+  color: rgba(188, 194, 193, 0.6705882353);
+}
+.container form input::-moz-placeholder {
+  color: rgba(188, 194, 193, 0.6705882353);
+}
+.container form input:-ms-input-placeholder {
+  color: rgba(188, 194, 193, 0.6705882353);
+}
+.container form input::-ms-input-placeholder {
+  color: rgba(188, 194, 193, 0.6705882353);
+}
+.container form input::placeholder {
+  color: rgba(188, 194, 193, 0.6705882353);
+}
+.container form .btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 20px;
+}
+.container form .btns .is-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3px;
+}
+@media screen and (max-width: 350px) {
+  .container form .btns .is-1 {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+.container form .btns .is-1 .field-container {
+  width: 100%;
+}
+.container form .btns .is-2 button {
+  background-color: black;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+}
+.container form .btns .is-2 button img {
+  width: 30px;
+  height: 30px;
+}
+.container form .btns .is-2 button:hover {
+  background-color: rgba(0, 0, 0, 0.3607843137);
+}
+.container form .btns button {
+  width: 100%;
+  padding: 10px;
+  font-size: 17px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out;
+}
+@media screen and (max-width: 420px) {
+  .container form .btns button {
+    font-size: 15px;
+  }
+}
+.container form .btns button:hover {
+  background-color: #dbdbdb;
+}

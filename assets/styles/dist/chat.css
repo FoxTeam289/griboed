@@ -1,0 +1,313 @@
+@import url("https://gki-webik.ru/mfs/s?path=/fonts/OpenSans/OpenSans-Regular.ttf");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #041707;
+}
+
+.box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 50px 40px;
+  gap: 20px;
+}
+@media screen and (max-width: 875px) {
+  .box {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+@media screen and (max-width: 515px) {
+  .box {
+    margin: 30px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .box {
+    margin: 30px 20px;
+  }
+}
+@media screen and (max-width: 350px) {
+  .box {
+    margin: 30px 10px;
+  }
+}
+
+.container {
+  padding: 20px;
+  width: 100%;
+  border-radius: 20px;
+  background: #1e1e21;
+  color: #fff;
+  min-height: 200px;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+  font-family: "Open Sans Regular", sans-serif;
+}
+@media screen and (max-width: 875px) {
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+@media screen and (max-width: 515px) {
+  .container {
+    padding: 15px;
+  }
+}
+.container.is-1 {
+  max-width: 400px;
+  width: 100%;
+}
+@media screen and (min-width: 876px) {
+  .container.is-1 {
+    position: sticky;
+    top: 50px;
+  }
+}
+.container h2 {
+  margin: 0;
+  padding-bottom: 20px;
+  color: #c3c7ca;
+}
+.container h2 span {
+  color: #f1f7fc;
+}
+
+.message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: rgba(48, 48, 53, 0.4196078431);
+  -webkit-transition: background-color 0.15s;
+  transition: background-color 0.15s;
+}
+
+.message:hover {
+  background-color: rgba(48, 48, 53, 0.5019607843);
+}
+
+.message img.avatar {
+  border-radius: 50%;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+
+.message img.chat-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.message-content {
+  max-width: 100%;
+}
+
+.message-content strong {
+  display: block;
+  font-size: 16px;
+  color: #c4c4c4;
+}
+
+.message-content small {
+  display: block;
+  font-size: 12px;
+  color: #c4c4c4;
+  margin-top: 5px;
+}
+
+.message-content p {
+  margin: 5px 0 0 0;
+  font-size: 14px;
+  color: #c4c4c4;
+}
+
+a {
+  color: #b7b7bc;
+  text-decoration: none;
+  -webkit-transition: -webkit-box-shadow 0.15s ease-in-out;
+  transition: -webkit-box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+a:hover {
+  color: #81b3ff;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+  gap: 15px;
+}
+form textarea {
+  background: #303035;
+  width: 100%;
+  min-height: 170px;
+  padding: 15px;
+  border: 1px solid #414147;
+  border-radius: 10px;
+  color: rgba(171, 182, 192, 0.6117647059);
+  font-size: 15px;
+  font-family: "Open Sans Regular", sans-serif;
+  -webkit-transition: -webkit-box-shadow 0.3s ease;
+  transition: -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+  resize: vertical;
+  max-height: 400px;
+}
+form textarea:focus {
+  color: #c6c9cc;
+}
+form select {
+  background: #303035;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #414147;
+  border-radius: 10px;
+  color: rgba(171, 182, 192, 0.6117647059);
+  font-size: 15px;
+  cursor: pointer;
+  font-family: "Open Sans Regular", sans-serif;
+  -webkit-transition: -webkit-box-shadow 0.3s ease;
+  transition: -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+}
+form select option {
+  color: rgba(171, 182, 192, 0.6117647059);
+  background: #303035;
+}
+form select option:disabled {
+  color: rgba(171, 182, 192, 0.6117647059);
+  background: #202024;
+}
+form select:focus {
+  color: #c6c9cc;
+}
+form input[type=file] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #414147;
+  border-radius: 10px;
+  color: rgba(171, 182, 192, 0.6117647059);
+  font-size: 15px;
+  cursor: pointer;
+  font-family: "Open Sans Regular", sans-serif;
+  -webkit-transition: background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+}
+form input[type=file]:hover {
+  background: rgba(48, 48, 53, 0.3568627451);
+}
+form input[type=file]:focus {
+  color: #c6c9cc;
+  background: #303035;
+}
+form button {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #414147;
+  border-radius: 10px;
+  color: rgba(171, 182, 192, 0.6117647059);
+  font-size: 15px;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Open Sans Regular", sans-serif;
+  -webkit-transition: background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, -webkit-box-shadow 0.3s ease;
+}
+form button:hover {
+  background: rgba(48, 48, 53, 0.3568627451);
+}
+form button:focus {
+  color: #c6c9cc;
+  background: #303035;
+}
+form button i {
+  margin-right: 5px;
+}
+form textarea:focus,
+form input:focus,
+form select:focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(100, 117, 126, 0.2941176471);
+          box-shadow: 0 0 0 2px rgba(100, 117, 126, 0.2941176471);
+  outline: none;
+}
+.mobile-menu {
+  display: none;
+  background: #1e1e21;
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.mobile-menu a {
+  color: #c9c9c9;
+  text-decoration: none;
+  font-size: 18px;
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: #0072ff;
+}
+
+.mobile-menu i {
+  margin-right: 8px;
+}
+
+.background video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
